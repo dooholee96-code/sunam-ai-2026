@@ -1,0 +1,15 @@
+{
+  "rules": {
+    "events": {
+      "$event": {
+        "state":   { ".read": true, ".write": true },
+        "answers": {
+          "$poll": {
+            "$uid": { ".read": true, ".write": true, ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() < 10" }
+          },
+          ".read": true
+        }
+      }
+    }
+  }
+}

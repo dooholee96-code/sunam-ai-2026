@@ -1,0 +1,1252 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>공무원 책상 위의 AI 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: a desk-paper deck — one "문서" per slide on a desk-grey ground, official-document serif for titles, stamp-red for anything paid/instructor-only. Desktop = one slide at a time; phone = all slides stacked as a handout. */
+:root{
+  --desk:#e6e9e3; --paper:#fdfdfb; --paper2:#f3f4ef; --ink:#1b2430; --ink2:#4b5563; --line:#cfd3cb;
+  --navy:#1f3a5f; --navy-soft:#e3ebf5; --stamp:#c0392b; --stamp-soft:#f8e3df; --free:#2e7d4f; --free-soft:#e1f1e6; --warn:#b26a00; --warn-soft:#fbeedc;
+  --b1:#1f3a5f; --b1s:#dfe8f4; --b2:#0f766e; --b2s:#d6efec; --b3:#c2410c; --b3s:#fde4d6; --b4:#6d28d9; --b4s:#e9e0fb;
+  --acc:var(--b1); --accs:var(--b1s); --grid:rgba(31,58,95,.07);
+  --font-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --font-display:"Nanum Myeongjo","Apple Myungjo","Batang",serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"D2Coding",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --desk:#15181c; --paper:#1f2329; --paper2:#262b32; --ink:#e8eaed; --ink2:#a9b0ba; --line:#3a414b;
+  --navy:#8fb3e0; --navy-soft:#24344a; --stamp:#e8705f; --stamp-soft:#4a2622; --free:#6cc08a; --free-soft:#1f3a2a; --warn:#e3a94c; --warn-soft:#44321a;
+  --b1:#8fb3e0; --b1s:#243448; --b2:#5fc8bd; --b2s:#193a37; --b3:#f59a6b; --b3s:#43271a; --b4:#b794f4; --b4s:#32264a; --grid:rgba(143,179,224,.07); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --desk:#15181c; --paper:#1f2329; --paper2:#262b32; --ink:#e8eaed; --ink2:#a9b0ba; --line:#3a414b;
+  --navy:#8fb3e0; --navy-soft:#24344a; --stamp:#e8705f; --stamp-soft:#4a2622; --free:#6cc08a; --free-soft:#1f3a2a; --warn:#e3a94c; --warn-soft:#44321a;
+  --b1:#8fb3e0; --b1s:#243448; --b2:#5fc8bd; --b2s:#193a37; --b3:#f59a6b; --b3s:#43271a; --b4:#b794f4; --b4s:#32264a; --grid:rgba(143,179,224,.07); color-scheme:dark}
+.slide[data-block^="①"]{--acc:var(--b1);--accs:var(--b1s)}
+.slide[data-block^="②"]{--acc:var(--b2);--accs:var(--b2s)}
+.slide[data-block^="③"]{--acc:var(--b3);--accs:var(--b3s)}
+.slide[data-block^="④"]{--acc:var(--b4);--accs:var(--b4s)}
+
+html,body{height:100%}
+body{margin:0;background:var(--desk);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0;display:flex;flex-direction:column}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+a{color:var(--navy)}
+button{font:inherit;cursor:pointer}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.25}
+h2{font-size:clamp(1.5rem,2.9vw,2.4rem);color:var(--ink)}
+h2::after{content:"";display:block;width:56px;height:4px;background:var(--acc);border-radius:2px;margin-top:10px}
+h3{font-size:1.05rem;font-family:var(--font-body);font-weight:700}
+p{margin:0}
+.eyebrow{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);font-weight:700}
+code,.mono{font-family:var(--font-mono)}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid var(--line);background:var(--desk)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--desk)}
+.bar .name{font-family:var(--font-display);font-weight:800;color:var(--navy);font-size:1rem;white-space:nowrap}
+.bar .block{font-size:.8rem;color:var(--ink2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tbtn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 12px;font-size:.82rem;display:inline-flex;align-items:center;gap:6px}
+.tbtn[aria-pressed="true"]{background:var(--free-soft);border-color:var(--free);color:var(--free);font-weight:600}
+.tbtn:focus-visible,.copy:focus-visible,.nav button:focus-visible,.tim button:focus-visible,.opt:focus-visible,.stage:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.counter{font-variant-numeric:tabular-nums;font-size:.85rem;color:var(--ink2);min-width:3.6em;text-align:right}
+
+/* deck */
+#deck{flex:1;display:flex;flex-direction:column;padding-block:18px 24px;gap:28px}
+.slide{background:var(--paper);border:1px solid var(--line);border-top:8px solid var(--acc);border-radius:8px;padding:clamp(18px,3vw,40px);box-shadow:0 1px 0 rgba(0,0,0,.04),0 18px 40px -22px rgba(0,0,0,.45);max-width:1100px;width:100%;margin-inline:auto;display:flex;flex-direction:column;gap:18px;position:relative;overflow:hidden}
+.slide::after{content:attr(data-n);position:absolute;right:-6px;bottom:-30px;font-family:var(--font-display);font-weight:800;font-size:clamp(6rem,14vw,11rem);line-height:1;color:var(--acc);opacity:.07;pointer-events:none;font-variant-numeric:tabular-nums}
+.slide>*{position:relative;z-index:1}
+.slide .num{position:absolute;top:12px;right:16px;font-variant-numeric:tabular-nums;font-size:.72rem;font-weight:700;color:var(--acc);background:var(--accs);border-radius:999px;padding:2px 10px;z-index:2}
+@keyframes in{from{opacity:0}to{opacity:1}}
+.slide.active{animation:in .35s ease-out}
+.slide.cover{border-top:0;background:linear-gradient(135deg,var(--b1) 0%,#2b5a8a 55%,#0f766e 100%);color:#fff;min-height:70vh;justify-content:center}
+.slide.cover::after{opacity:.12;color:#fff}
+.slide.cover::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 15%,rgba(255,255,255,.18),transparent 40%),radial-gradient(circle at 10% 90%,rgba(255,255,255,.12),transparent 35%)}
+.slide.cover .eyebrow{color:rgba(255,255,255,.8)}
+.slide.cover h1{color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.25)}
+.slide.cover .lead{color:rgba(255,255,255,.92);font-size:1.2rem}
+.slide.cover .card{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:#fff;backdrop-filter:blur(6px)}
+.slide.cover .card td,.slide.cover .note{color:rgba(255,255,255,.9);border-color:rgba(255,255,255,.2)}
+.slide.cover .num{background:rgba(255,255,255,.2);color:#fff}
+.slide.cover .stampbox{color:#fff;border-color:#fff}
+.slide.cover a{color:#fff}
+.slide.cover .card h3{color:#fff}
+.slide.cover .card:hover{transform:none}
+.slide .head{display:flex;flex-direction:column;gap:6px;padding-right:3em}
+.slide .time{font-size:.8rem;color:var(--ink2)}
+.cols{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.cols>*{min-width:0}
+.card{background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 24px -16px rgba(0,0,0,.4)}
+.card h3{margin:0;color:var(--acc)}
+ul,ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:5px}
+.lead{font-size:1.05rem;max-width:68ch}
+.note{font-size:.88rem;color:var(--ink2);max-width:72ch}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.04em;border-radius:3px;padding:2px 7px;vertical-align:middle}
+.tag.free{background:var(--free-soft);color:var(--free)}
+.tag.paid{background:var(--stamp-soft);color:var(--stamp)}
+.tag.demo{background:var(--navy-soft);color:var(--navy)}
+.tag.new{background:var(--warn-soft);color:var(--warn)}
+.stampbox{border:2px solid var(--stamp);color:var(--stamp);border-radius:4px;padding:2px 8px;font-family:var(--font-display);font-weight:800;display:inline-block;transform:rotate(-3deg);font-size:.85rem}
+
+/* paid filter */
+body.free-only .paid{opacity:.3;filter:grayscale(1);position:relative}
+body.free-only .paid::after{content:"유료";position:absolute;top:6px;right:8px;font-size:.7rem;color:var(--stamp);font-weight:700}
+body.free-only .tag.paid{opacity:1;filter:none}
+
+/* mission card */
+.mission{border:1.5px solid var(--acc);background:var(--paper);border-radius:8px;padding:0 0 14px;display:flex;flex-direction:column;gap:10px;overflow:hidden;box-shadow:0 12px 30px -20px var(--acc)}
+.mission>*{margin-inline:16px}
+.mission .mhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--acc);color:#fff;margin:0;padding:10px 16px}
+.mission .mhead h3{color:#fff}
+.mission .mhead .tag{background:rgba(255,255,255,.22);color:#fff}
+.mission .mhead .tim{margin-left:auto;background:rgba(255,255,255,.95);color:#1b2430;border-color:transparent}
+.mission .mhead .tim button{color:#1b2430;background:#fff}
+.copy{background:var(--acc);border-color:var(--acc)}
+pre.prompt{margin:0;background:var(--paper2);border:1px dashed var(--line);border-radius:4px;padding:12px 14px;font-family:var(--font-mono);font-size:.88rem;white-space:pre-wrap;word-break:break-word;line-height:1.5}
+.mtools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.copy{border:1px solid var(--navy);background:var(--navy);color:#fff;border-radius:4px;padding:7px 14px;font-weight:600;font-size:.88rem}
+.copy.done{background:var(--free);border-color:var(--free)}
+.tim{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:4px;padding:4px 6px 4px 12px;background:var(--paper2)}
+.tim .t{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:1.15rem;min-width:3.2em}
+.tim.over .t{color:var(--stamp);font-weight:700}
+.tim button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:3px;padding:3px 9px;font-size:.8rem}
+
+/* tables */
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);font-weight:600}
+td.n{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr.dim td{opacity:.35}
+
+/* tiles */
+.tiles{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.tile{background:linear-gradient(135deg,var(--accs),var(--paper2));border:1px solid var(--line);border-left:5px solid var(--acc);border-radius:8px;padding:14px 16px}
+.tile b{display:block;font-family:var(--font-display);font-size:2.2rem;color:var(--acc);font-variant-numeric:tabular-nums;line-height:1.1}
+.tile span{font-size:.82rem;color:var(--ink2)}
+
+/* UI diagram */
+.ui{display:grid;grid-template-columns:1fr 2fr;grid-template-rows:auto auto;gap:6px;border:1px solid var(--line);border-radius:6px;padding:8px;background:var(--paper2);min-height:160px}
+.ui div{border:1px dashed var(--line);border-radius:4px;padding:8px;font-size:.82rem;color:var(--ink2);text-align:center;display:flex;align-items:center;justify-content:center}
+.ui .l{grid-row:1/3}.ui .in{background:var(--paper)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--paper);border-radius:4px;padding:6px 10px;font-size:.88rem}
+.chip kbd{font-family:var(--font-mono);background:var(--paper2);border:1px solid var(--line);border-bottom-width:2px;border-radius:3px;padding:1px 6px;font-size:.82rem}
+
+/* before/after */
+.ba{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.ba .card{gap:6px}.ba .card>*{min-width:0}
+.bubble{border-radius:10px;padding:8px 12px;font-size:.9rem;max-width:100%}
+.bubble.me{background:var(--navy-soft);align-self:flex-end}
+.bubble.ai{background:var(--paper);border:1px solid var(--line);align-self:flex-start}
+
+/* stages */
+.stages{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.stage{border:1px solid var(--line);background:var(--paper2);border-radius:4px;padding:10px;text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:3px}
+.stage b{font-family:var(--font-display);color:var(--navy)}
+.stage small{color:var(--ink2)}
+.stage.on{background:linear-gradient(135deg,var(--acc),#7c2d12);color:#fff;border-color:var(--acc);transform:scale(1.03);box-shadow:0 10px 24px -14px var(--acc)}.stage.on b,.stage.on small{color:#fff}
+.stage{transition:transform .2s}
+.stage.done{opacity:.55}
+.checks{list-style:none;padding:0}
+.checks li{display:flex;gap:10px;align-items:flex-start}
+.checks input{margin-top:5px;accent-color:var(--navy)}
+
+/* USB diagram */
+.usb{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}
+.usb .ai,.usb .apps{display:flex;flex-direction:column;gap:6px}
+.usb .box{border:1px solid var(--line);background:var(--paper2);border-radius:4px;padding:8px 10px;font-size:.9rem;text-align:center}
+.usb .port{writing-mode:vertical-rl;font-family:var(--font-display);font-weight:800;color:var(--stamp);border:2px solid var(--stamp);border-radius:4px;padding:10px 6px;letter-spacing:.2em}
+.usb .apps .box{opacity:.35;transition:opacity .3s}
+.usb.plugged .apps .box{opacity:.55}
+.usb .apps .box{color:var(--ink)}
+
+/* quiz */
+.quiz{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.opt{border:1px solid var(--line);background:var(--paper2);border-radius:4px;padding:12px 14px;text-align:left;color:var(--ink);font-weight:500}
+.opt.ok{background:var(--free-soft);border-color:var(--free)}
+.opt.no{background:var(--stamp-soft);border-color:var(--stamp)}
+.opt small{display:block;color:var(--ink2);font-weight:400;margin-top:3px}
+.opt:not(.ok):not(.no) small{display:none}
+
+/* interactive extras */
+.bars{display:flex;flex-direction:column;gap:6px}
+.bars .row{display:grid;grid-template-columns:8em 1fr 5em;align-items:center;gap:8px;font-size:.88rem}
+.bars .bar2{height:14px;background:var(--line);border-radius:7px;overflow:hidden}
+.bars .bar2 i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--b2));transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.bars .v{font-variant-numeric:tabular-nums;text-align:right;color:var(--ink2)}
+.practice{display:flex;flex-direction:column;gap:8px}
+.practice textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:inherit;background:var(--paper);color:var(--ink);resize:vertical}
+.practice .res{font-weight:600;min-height:1.4em}
+.practice .res.ok{color:var(--free)}.practice .res.bad{color:var(--stamp)}
+.chat{display:flex;flex-direction:column;gap:6px;min-height:120px}
+.chat .bubble{animation:in .3s ease-out}
+.calc{display:grid;gap:10px;grid-template-columns:1fr auto;align-items:center}
+.calc input[type=range]{width:100%;accent-color:var(--acc)}
+.calc output{font-family:var(--font-display);font-size:1.6rem;color:var(--acc);font-variant-numeric:tabular-nums}
+.ring{display:inline-grid;place-items:center;width:64px;height:64px;border-radius:50%;background:conic-gradient(var(--acc) calc(var(--p)*1%),var(--line) 0);font-weight:700;font-size:.85rem}
+.ring span{background:var(--paper);border-radius:50%;width:48px;height:48px;display:grid;place-items:center;color:var(--acc)}
+.check6{display:flex;flex-direction:column;gap:6px}
+.check6 textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:inherit;background:var(--paper);color:var(--ink)}
+.check6 .lines{display:flex;flex-direction:column;gap:3px;font-size:.85rem}
+.check6 .lines div{display:flex;justify-content:space-between;gap:8px;padding:3px 8px;border-radius:4px;background:var(--paper2)}
+.check6 .lines div.long{background:var(--stamp-soft);color:var(--stamp)}
+.usb .apps .box{cursor:pointer;border-width:1.5px}
+.usb .apps .box.on{opacity:1;border-color:var(--acc);background:var(--accs);font-weight:600}
+.usb .say{min-height:2.4em;font-size:.9rem;color:var(--acc);font-weight:600;grid-column:1/-1}
+.steps3{display:grid;gap:8px;grid-template-columns:repeat(3,1fr)}
+.steps3 button{border:1px solid var(--line);background:var(--paper2);color:var(--ink);border-radius:6px;padding:10px;text-align:left;opacity:.5}
+.steps3 button.ready{opacity:1;border-color:var(--acc)}
+.steps3 button.done{opacity:1;background:var(--free-soft);border-color:var(--free)}
+.sw{display:inline-block;width:38px;height:22px;border-radius:11px;background:var(--stamp);position:relative;vertical-align:middle;transition:background .3s}
+.sw::after{content:"";position:absolute;top:3px;left:19px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .3s}
+.sw.off{background:var(--line)}.sw.off::after{left:3px}
+.score{font-family:var(--font-display);font-size:1.3rem;color:var(--acc)}
+.cnt{display:inline-flex;align-items:center;gap:4px;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:2px 6px;font-size:.8rem}
+.cnt button{border:0;background:rgba(255,255,255,.25);color:#fff;border-radius:50%;width:22px;height:22px;padding:0;font-weight:700}
+.cnt b{min-width:1.6em;text-align:center;font-variant-numeric:tabular-nums}
+@media (max-width:760px){.steps3{grid-template-columns:1fr}.bars .row{grid-template-columns:6em 1fr 4.5em}}
+
+.ico{display:inline-grid;place-items:center;width:1.45em;height:1.45em;border-radius:6px;vertical-align:-.35em;margin-right:.35em;background:var(--paper);border:1px solid var(--line);flex:none}
+.ico svg{width:1em;height:1em;display:block}
+.ico.mono{font-family:var(--font-display);font-weight:800;font-size:.72em;color:#fff;border:0;letter-spacing:0}
+.ico.lg{width:2.2em;height:2.2em;border-radius:9px}.ico.lg svg{width:1.5em;height:1.5em}
+h3 .ico,td .ico{vertical-align:-.3em}
+
+/* live poll / quiz */
+.poll{border:1.5px solid var(--acc);border-radius:10px;background:var(--paper);overflow:hidden;display:flex;flex-direction:column}
+.poll .ph{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;background:var(--accs)}
+.poll .ph h3{color:var(--acc);flex:1;min-width:0}
+.poll .ph .st{font-size:.78rem;color:var(--ink2);font-variant-numeric:tabular-nums}
+.poll .ph button{border:1px solid var(--acc);background:var(--paper);color:var(--acc);border-radius:999px;padding:4px 12px;font-size:.82rem;font-weight:600}
+.poll .ph button.primary{background:var(--acc);color:#fff}
+.poll .ph button[disabled]{opacity:.45;cursor:default}
+.poll .opts{display:flex;flex-direction:column;gap:8px;padding:12px 14px}
+.poll .o{display:grid;grid-template-columns:1.6em 1fr 4.5em;align-items:center;gap:10px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--paper2);position:relative;overflow:hidden;text-align:left;color:var(--ink);font:inherit}
+.poll .o i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accs);transition:width .6s cubic-bezier(.2,.8,.2,1);z-index:0}
+.poll .o>*{position:relative;z-index:1}
+.poll .o .k{font-weight:700;color:var(--acc)}
+.poll .o .n{font-variant-numeric:tabular-nums;text-align:right;color:var(--ink2);font-size:.9rem}
+.poll .o.correct{border-color:var(--free);background:var(--free-soft)}
+.poll .o.correct .k{color:var(--free)}
+.poll .o.correct::after{content:"정답";position:absolute;right:5.2em;top:50%;transform:translateY(-50%);font-size:.72rem;font-weight:700;color:var(--free);z-index:1}
+.poll .o.wrong{opacity:.55}
+.poll .foot{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:0 14px 12px;font-size:.82rem;color:var(--ink2)}
+.poll .foot .dot{width:8px;height:8px;border-radius:50%;background:var(--line);display:inline-block}
+.poll.live .foot .dot{background:var(--free);box-shadow:0 0 0 3px var(--free-soft)}
+.poll .foot .joinqr{margin-left:auto;display:flex;align-items:center;gap:8px}
+.poll .foot .joinqr div{width:64px;height:64px;background:#fff;padding:3px;border:1px solid var(--line);border-radius:4px}
+.poll .foot .joinqr img,.poll .foot .joinqr canvas{width:58px!important;height:58px!important;display:block}
+/* participant (phone) view */
+body.join>*{display:none!important}
+body.join{display:block}
+body.join #joinview{display:flex!important;flex-direction:column;gap:14px;max-width:520px;margin:0 auto;padding-block:20px;min-height:100%}
+#joinview{display:none}
+#joinview .jtop{font-family:var(--font-display);font-weight:800;color:var(--navy);font-size:1.1rem}
+#joinview .jq{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px -20px rgba(0,0,0,.4)}
+#joinview .jq h2{font-size:1.25rem}
+#joinview .jq h2::after{display:none}
+#joinview .jo{display:flex;flex-direction:column;gap:8px}
+#joinview .jo button{border:1.5px solid var(--line);background:var(--paper2);color:var(--ink);border-radius:10px;padding:14px 14px;text-align:left;font-size:1rem;display:flex;gap:10px;align-items:center}
+#joinview .jo button b{color:var(--navy);min-width:1.4em}
+#joinview .jo button.sel{border-color:var(--navy);background:var(--navy-soft);font-weight:600}
+#joinview .jo button.correct{border-color:var(--free);background:var(--free-soft)}
+#joinview .jo button.wrong{opacity:.5}
+#joinview .jmsg{font-size:.92rem;color:var(--ink2);min-height:1.4em}
+#joinview .jwait{text-align:center;padding:30px 10px;color:var(--ink2)}
+#joinview .jwait b{display:block;font-size:2.4rem;margin-bottom:6px}
+
+/* demo player (gif-like chat replay) */
+.demo{border:1px solid var(--line);border-radius:10px;background:var(--paper2);overflow:hidden;display:flex;flex-direction:column}
+.demo .dtop{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--paper);border-bottom:1px solid var(--line);font-size:.8rem;color:var(--ink2)}
+.demo .dtop i{width:10px;height:10px;border-radius:50%;background:var(--line);display:inline-block}
+.demo .dtop i:nth-child(1){background:#f06c6c}.demo .dtop i:nth-child(2){background:#f0c36c}.demo .dtop i:nth-child(3){background:#6cd38a}
+.demo .dtop .ttl{margin-left:6px;font-weight:600;color:var(--ink)}
+.demo .dtop .dplay{margin-left:auto;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:999px;padding:3px 12px;font-size:.8rem;font-weight:600}
+.demo .dbody{padding:12px;display:flex;flex-direction:column;gap:8px;min-height:150px;max-height:360px;overflow-y:auto}
+.demo .dmsg{max-width:92%;border-radius:12px;padding:8px 12px;font-size:.9rem;line-height:1.5;white-space:pre-wrap;word-break:break-word;animation:in .25s ease-out}
+.demo .dmsg.me{align-self:flex-end;background:var(--accs);border-bottom-right-radius:3px}
+.demo .dmsg.ai{align-self:flex-start;background:var(--paper);border:1px solid var(--line);border-bottom-left-radius:3px}
+.demo .dmsg.sys{align-self:center;background:transparent;color:var(--ink2);font-size:.78rem;padding:2px}
+.demo .dmsg table{font-size:.82rem;margin-top:4px}
+.demo .dmsg .mock{border:1px solid var(--line);border-radius:6px;padding:8px;background:var(--paper2);display:flex;flex-direction:column;gap:6px}
+.demo .dmsg .mock .mrow{display:flex;gap:6px;flex-wrap:wrap}
+.demo .dmsg .mock .mrow span{background:var(--accs);color:var(--acc);border-radius:4px;padding:3px 8px;font-size:.8rem;font-weight:600}
+.demo .dmsg .mock .mbar{height:10px;border-radius:5px;background:var(--acc);opacity:.7}
+.demo .dmsg .mock .mfile{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--acc);border-radius:6px;padding:6px 10px;font-size:.85rem;font-weight:600;color:var(--acc);background:var(--paper)}
+.demo .cursor{display:inline-block;width:2px;height:1em;background:var(--ink);vertical-align:-2px;animation:blink .8s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.demo .dinput{display:flex;gap:8px;padding:8px 12px;border-top:1px solid var(--line);background:var(--paper)}
+.demo .dinput .box{flex:1;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:.88rem;min-height:1.9em;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.demo .dinput .send{width:34px;height:34px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-weight:700;flex:none;transition:transform .15s}
+.demo .dinput .send.hit{transform:scale(.85)}
+.demo .typing{display:inline-flex;gap:3px;padding:4px 2px}
+.demo .typing i{width:6px;height:6px;border-radius:50%;background:var(--ink2);animation:tp 1s infinite}
+.demo .typing i:nth-child(2){animation-delay:.2s}.demo .typing i:nth-child(3){animation-delay:.4s}
+@keyframes tp{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* qr */
+#qrbox{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+#qr{width:132px;height:132px;background:#fff;padding:6px;border:1px solid var(--line);border-radius:4px;flex:none}
+#qr img,#qr canvas{display:block;width:120px;height:120px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:20;display:flex;align-items:center;justify-content:center;padding:20px}
+.overlay .in{background:#fff;color:#111;border-radius:8px;padding:22px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center;max-width:92vw}
+#qrbig{width:min(70vw,340px);height:min(70vw,340px)}
+#qrbig img,#qrbig canvas{width:100%!important;height:100%!important}
+.overlay .in .url{font-family:var(--font-mono);font-size:.75rem;word-break:break-all;max-width:340px}
+
+/* nav */
+.nav{position:sticky;bottom:0;z-index:5;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px))) calc(-1 * max(16px,env(safe-area-inset-right,0px)));display:flex;align-items:center;gap:10px;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:var(--desk);border-top:1px solid var(--line)}
+.nav button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:4px;padding:8px 16px;font-weight:600}
+.nav .prog{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.nav .prog i{display:block;height:100%;background:linear-gradient(90deg,var(--b1),var(--b2),var(--b3),var(--b4));width:0;transition:width .25s}
+.nav button{border-color:var(--navy)}
+.bar{background:linear-gradient(180deg,var(--paper),var(--desk))}
+.nav .blk{font-size:.8rem;color:var(--ink2);white-space:nowrap}
+
+/* deck mode (desktop) vs handout mode (phone or toggle) */
+@media (min-width:761px){
+  body:not(.handout) #deck{padding:0;position:relative;overflow:hidden;min-height:0}
+  body:not(.handout) .slide{display:none}
+  body:not(.handout) .slide.active{display:flex;position:absolute;left:50%;top:50%;width:1280px;max-width:none;height:var(--h,720px);margin:0;transform:translate(-50%,-50%) scale(var(--s,1));transform-origin:center center;overflow:hidden}
+  body:not(.handout) .slide.cover.active{min-height:0;height:var(--h,720px)}
+  body.handout .nav{display:none}
+  body.handout #deck{padding-bottom:30px}
+}
+@media (max-width:760px){
+  .nav{display:none}
+  #deck{padding-bottom:30px}
+  .stages{grid-template-columns:repeat(2,1fr)}
+  .usb{grid-template-columns:1fr}
+  .usb .port{writing-mode:horizontal-tb;text-align:center}
+  .bar .name{font-size:.9rem}
+  .ui{grid-template-columns:1fr}.ui .l{grid-row:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="bar">
+  <span class="name">공무원 책상 위의 AI</span>
+  <span class="block" id="blockname">2026 하반기 · 수남초 교직원 연수</span>
+  <button class="tbtn" id="freeBtn" aria-pressed="false" title="유료 기능을 흐리게">무료만 보기</button>
+  <button class="tbtn" id="handoutBtn" aria-pressed="false" title="모든 슬라이드를 한 페이지로">전체 보기</button>
+  <button class="tbtn" id="qrBtn">QR</button>
+  <span class="counter" id="counter">1 / 24</span>
+</header>
+
+<main id="deck">
+
+<!-- 1 -->
+<section class="slide cover" data-block="① 도입·트렌드 13:30–13:45">
+  <span class="num">1</span>
+  <div class="head">
+    <span class="eyebrow">수남초등학교 교직원 AI 활용 연수 · 2026. 11. 4.(수) 13:30–15:30</span>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.8rem)">2026 하반기,<br>공무원 책상 위의 AI</h1>
+    <p class="lead">문서부터 영상까지 — 사무실에서 바로 쓰는 2시간 실습</p>
+  </div>
+  <div class="cols">
+    <div class="card">
+      <h3>오늘의 순서</h3>
+      <table>
+        <tr><td class="n">13:30</td><td>① 2026년 지금, AI는 어디까지 왔나</td></tr>
+        <tr><td class="n">13:45</td><td>② 문서·업무 실습 (공문·엑셀·hwpx·NotebookLM)</td></tr>
+        <tr><td class="n">14:19</td><td>③ AI 영상 1분짜리 직접 만들기</td></tr>
+        <tr><td class="n">15:04</td><td>④ 바이브코딩·행동하는 AI·보안</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>이 화면을 폰으로 열기</h3>
+      <div id="qrbox"><div id="qr"></div>
+        <p class="note">오늘 쓰는 프롬프트가 전부 여기 있습니다. 컴퓨터가 말을 안 들으면 폰으로 그대로 따라오세요. 각 미션 카드의 <b>복사</b> 버튼을 누르면 됩니다.</p></div>
+    </div>
+  </div>
+  <p class="note">강사: 무주교육지원청 교육지원과 이두호 · 예시는 학교지만 어느 사무실에나 같은 방식 · 참가자 도구는 전부 무료 계정 기준 · <span class="tag paid">👑 유료</span> 표시는 강사 시연</p>
+</section>
+
+<!-- 2 설문 -->
+<section class="slide" data-block="① 도입·트렌드 13:30–13:45">
+  <span class="num">2</span>
+  <div class="head"><span class="eyebrow">시작 설문 · 폰으로 참여</span><h2>AI, 어디까지 써 보셨어요?</h2><span class="time">3분 · QR 찍고 답하면 막대가 실시간으로 올라갑니다</span></div>
+  <div class="cols">
+    <div class="poll" data-poll="level"></div>
+    <div class="poll" data-poll="tool"></div>
+  </div>
+  <p class="note">결과는 익명 집계만 됩니다. 이 분포를 보고 오늘 설명 속도를 맞추겠습니다.</p>
+</section>
+
+<!-- 3 관심사 설문 -->
+<section class="slide" data-block="① 도입·트렌드 13:30–13:45">
+  <span class="num">3</span>
+  <div class="head"><span class="eyebrow">관심사 설문 · 결과에 맞춰 오늘 강조점을 바꿉니다</span><h2>무엇에 쓰고 싶으세요?</h2><span class="time">2분</span></div>
+  <div class="cols">
+    <div class="poll" data-poll="video"></div>
+    <div class="poll" data-poll="vibe"></div>
+    <div class="poll" data-poll="auto"></div>
+  </div>
+  <div class="cols">
+    <div class="card"><h3>취미 숏폼이 많으면</h3><p>브루의 <b>쇼츠 레이아웃·자막 서식·BGM</b>을 더 보여주고, "내 사진·내 목소리 넣기"를 강조합니다.</p></div>
+    <div class="card"><h3>바이브코딩 "처음"이 많으면</h3><p>④블록 시연을 천천히, 용어보다 "말 한 번에 화면이 생긴다"에 집중합니다.</p></div>
+    <div class="card"><h3>자동화 관심이 많으면</h3><p>커넥터 시연을 길게, 질문 시간을 ④블록에 몰아 줍니다.</p></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-block="① 도입·트렌드 13:30–13:45">
+  <span class="num">2</span>
+  <div class="head"><span class="eyebrow">국내 사용자 현황 · 와이즈앱 2026년 9월</span><h2>한국 사람 3,075만 명이 쓰는 AI</h2><span class="time">3분</span></div>
+  <div class="tiles">
+    <div class="tile"><b>3,075만</b><span>생성형 AI 앱 사용자 (중복 제거, 1년 전보다 19%↑)</span></div>
+    <div class="tile"><b>+64%</b><span>총 사용시간 증가 (28억분 → 46억분)</span></div>
+    <div class="tile"><b>150분</b><span>1인당 월 사용시간 (1년 전 108분)</span></div>
+  </div>
+  <div class="cols" style="grid-template-columns:3fr 2fr">
+    <div class="tbl">
+      <table id="ranktbl">
+        <thead><tr><th>순위</th><th>앱</th><th style="text-align:right">월 사용자</th><th>오늘</th></tr></thead>
+        <tbody>
+          <tr data-today="1"><td class="n">1</td><td><i class="ico" data-ico="openai"></i>챗GPT</td><td class="n">2,470만</td><td><span class="tag free">실습</span></td></tr>
+          <tr data-today="1"><td class="n">2</td><td><i class="ico" data-ico="gemini"></i>제미나이</td><td class="n">987만</td><td><span class="tag free">실습</span></td></tr>
+          <tr data-today="1"><td class="n">3</td><td><i class="ico" data-ico="claude"></i>클로드</td><td class="n">404만</td><td><span class="tag free">실습</span></td></tr>
+          <tr><td class="n">5</td><td><i class="ico" data-ico="perplexity"></i>퍼플렉시티 · <i class="ico" data-ico="grok"></i>그록 (공동)</td><td class="n">129만</td><td></td></tr>
+          <tr data-today="1"><td class="n">8</td><td><i class="ico" data-ico="notebooklm"></i>제미나이 노트북 (NotebookLM)</td><td class="n">54만</td><td><span class="tag free">실습</span></td></tr>
+          <tr><td class="n">9</td><td><i class="ico" data-ico="wrtn"></i>뤼튼</td><td class="n">38만</td><td></td></tr>
+          <tr><td class="n">10</td><td><i class="ico" data-ico="genspark"></i>젠스파크</td><td class="n">32만</td><td><span class="tag demo">소개</span></td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:6px">4·6·7위는 기사 미공개. 클로드는 4월→9월 사용자 68% 증가로 3사 중 최고 성장.</p>
+    </div>
+    <div class="card">
+      <h3>3사 사용자, 한눈에</h3>
+      <div class="bars" id="bars">
+        <div class="row"><span><i class="ico" data-ico="openai"></i>챗GPT</span><div class="bar2"><i data-w="100"></i></div><span class="v">2,470만</span></div>
+        <div class="row"><span><i class="ico" data-ico="gemini"></i>제미나이</span><div class="bar2"><i data-w="40"></i></div><span class="v">987만</span></div>
+        <div class="row"><span><i class="ico" data-ico="claude"></i>클로드</span><div class="bar2"><i data-w="16.4"></i></div><span class="v">404만</span></div>
+        <div class="row"><span><i class="ico" data-ico="notebooklm"></i>NotebookLM</span><div class="bar2"><i data-w="2.2"></i></div><span class="v">54만</span></div>
+      </div>
+      <p class="note">스마트폰 사용자 열 명 중 여섯이 이미 AI 앱 하나는 깔고 있습니다. "써 볼까"에서 "무엇에 쓰나"로.</p>
+      <div class="mtools"><button class="tbtn" id="barsBtn">막대 다시 그리기</button><button class="tbtn" id="todayBtn" aria-pressed="false">오늘 다루는 것만 보기</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-block="① 도입·트렌드 13:30–13:45">
+  <span class="num">3</span>
+  <div class="head"><span class="eyebrow">2026년 9~10월</span><h2>이름은 외우지 마세요. 무료·유료 선만 기억하세요</h2><span class="time">3분 · 상단 "무료만 보기"를 눌러 보세요</span></div>
+  <div class="cols">
+    <div class="card">
+      <h3><i class="ico lg" data-ico="openai"></i>챗GPT</h3>
+      <p><span class="tag free">무료</span> GPT-6 Luna — 10월 7일부터 기본 모델. 텍스트 대화 무제한(8월~)</p>
+      <p class="paid"><span class="tag paid">유료</span> GPT-6 Sol · Astra, Dots 에이전트</p>
+      <p><span class="tag free">무료</span> 이미지 생성·딥리서치·파일 업로드 (주간 한도)</p>
+      <p class="paid"><span class="tag paid">유료</span> Sora 영상 생성</p>
+    </div>
+    <div class="card">
+      <h3><i class="ico lg" data-ico="gemini"></i>제미나이</h3>
+      <p><span class="tag free">무료</span> 이미지 생성(Nano Banana 2.1) · Deep Research · NotebookLM</p>
+      <p class="paid"><span class="tag paid">유료</span> Gemini 4 Argon (10/13), 3.6 Flash</p>
+      <p class="paid"><span class="tag paid">유료</span> Gemini Omni 영상 생성 (월 7,500원~)</p>
+    </div>
+    <div class="card">
+      <h3><i class="ico lg" data-ico="claude"></i>클로드</h3>
+      <p><span class="tag free">무료</span> Sonnet 5.5 (9/28)</p>
+      <p><span class="tag free">무료</span> <span class="tag new">10/8 신규</span> Docs · Slides · Design — 문서·발표자료 바로 생성</p>
+      <p class="paid"><span class="tag paid">유료</span> Opus 5.5, 구글 Docs/Sheets 커넥터, Dashboards, Duet</p>
+    </div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>이럴 때</th><th><i class="ico" data-ico="openai"></i>챗GPT</th><th><i class="ico" data-ico="gemini"></i>제미나이</th><th><i class="ico" data-ico="claude"></i>클로드</th></tr></thead>
+    <tbody>
+      <tr><td>한 마디로</td><td>가장 많이 쓰는 만능형</td><td>구글 생태계 + 무료가 넉넉</td><td>글·문서 품질, 만들기(바이브코딩)</td></tr>
+      <tr><td>잘하는 것</td><td>일상 질문, 이미지, 음성 대화, 엑셀 함수</td><td>긴 PDF·유튜브 요약, 구글 드라이브·지메일 연동, NotebookLM</td><td>공문체·보고서 다듬기, hwpx 편집, 문서·슬라이드 생성, 웹페이지 만들기</td></tr>
+      <tr><td>아쉬운 것</td><td>무료는 광고·학습데이터 기본 ON</td><td>최신 모델은 유료, 글이 가끔 장황</td><td>이미지 생성 없음, 무료 한도 빨리 참</td></tr>
+      <tr><td>오늘 쓰는 곳</td><td>미션 1·2·5-1</td><td>미션 3, NotebookLM, 그림 직접 고를 때</td><td>Docs/Slides, hwpx 시연, 바이브코딩</td></tr>
+    </tbody></table></div>
+  <p class="lead">영상 생성은 세 회사 모두 유료. 오늘 영상 파트에서 그 벽을 어떻게 넘는지 봅니다.</p>
+  <p class="note"><b>이 표는 한 달이면 바뀝니다.</b> 반년 전 자료와 비교하면 절반이 다릅니다. 오늘 안 되는 게 다음 달에 되는 일이 흔하니, "안 된다"로 기억하지 말고 "지금은"으로 기억하세요.</p>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-block="① 도입·트렌드 13:30–13:45">
+  <span class="num">4</span>
+  <div class="head"><span class="eyebrow">공통 UI와 단축키</span><h2>세 서비스 화면은 같다</h2><span class="time">3분</span></div>
+  <div class="cols" style="grid-template-columns:1fr 1.4fr">
+    <div class="ui"><div class="l">[좌측] 대화 목록<br>1방 1주제</div><div>[중앙] 대화창</div><div class="in">[하단] 입력창 · <b>Think</b> 버튼</div></div>
+    <div class="chips">
+      <div class="chip"><kbd>Shift</kbd>+<kbd>Enter</kbd> 줄바꿈 (Enter는 전송)</div>
+      <div class="chip"><kbd>Win</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> 화면 일부 캡처 → <kbd>Ctrl</kbd>+<kbd>V</kbd> 붙여넣기</div>
+      <div class="chip">한 대화방에 한 업무. 새 업무는 새 방</div>
+      <div class="chip"><span class="tag new">2026</span> 챗GPT <b>Think</b> 버튼(제미나이·클로드도 비슷한 '생각하기' 옵션) — 느려지는 대신 꼼꼼해짐. 공문 초안처럼 틀리면 안 되는 작업에</div>
+      <div class="chip">마크다운 기호 3개 — <code>#</code> 제목 · <code>-</code> 글머리 · <code>---</code> 구분선</div>
+    </div>
+  </div>
+  <div class="mission">
+    <div class="mhead"><h3>1분 체험 · AI가 틀리는 걸 눈으로 보기</h3><span class="tag free">무료</span>
+      <div class="tim" data-min="1"><span class="t">01:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <pre class="prompt">전북 장수군 수남초등학교의 개교 연도와 초대 교장 선생님 성함을 알려 줘.</pre>
+    <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">옆 사람과 답을 비교해 보세요. 다르게 나오거나 그럴듯하게 지어냅니다. 학교 홈페이지 연혁과 대조 — 오늘 마지막에 나올 "팩트체크 의무"가 이겁니다.</span></div>
+  </div>
+  <div class="card practice">
+    <h3>연습: 아래 칸에서 Shift+Enter로 줄을 바꿔 보세요 (그냥 Enter는 "전송"됩니다)</h3>
+    <textarea id="practiceTa" placeholder="여기에 두 줄짜리 문장을 써 보세요"></textarea>
+    <div class="res" id="practiceRes">아직 입력 전</div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-block="① 도입·트렌드 13:30–13:45">
+  <span class="num">5</span>
+  <div class="head"><span class="eyebrow">세팅 미션</span><h2>세 탭 열고, 브루 한 번 실행</h2><span class="time">3분</span></div>
+  <div class="mission">
+    <div class="mhead"><h3>미션 0 · 세팅</h3><span class="tag free">무료</span>
+      <div class="tim" data-min="3"><span class="t">03:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <ul class="checks">
+      <li><input type="checkbox" id="c0a"><label for="c0a"><i class="ico" data-ico="openai"></i><a href="https://chatgpt.com/" target="_blank" rel="noopener">chatgpt.com</a> 로그인</label></li>
+      <li><input type="checkbox" id="c0b"><label for="c0b"><i class="ico" data-ico="gemini"></i><a href="https://gemini.google.com/app?hl=ko" target="_blank" rel="noopener">gemini.google.com</a> 로그인 (구글 계정)</label></li>
+      <li><input type="checkbox" id="c0c"><label for="c0c"><i class="ico" data-ico="claude"></i><a href="https://claude.ai/" target="_blank" rel="noopener">claude.ai</a> 로그인</label></li>
+      <li><input type="checkbox" id="c0d"><label for="c0d"><i class="ico" data-ico="vrew"></i>바탕화면 <b>브루(Vrew)</b> 아이콘 확인 후 한 번 실행 → 없으면 폰에 브루 앱 설치</label></li>
+      <li><input type="checkbox" id="c0e"><label for="c0e"><i class="ico" data-ico="notebooklm"></i><a href="https://notebooklm.google.com/" target="_blank" rel="noopener">notebooklm.google.com</a> 열어 두기</label></li>
+    </ul>
+    <p class="note">로그인이 막히면 손 들어 주세요. 안 되면 폰 앱으로 가면 됩니다. 폰에서는 이 화면을 QR로 열어 두세요. 계정이 아예 없는 분은 교재 <b>부록 1 가입 절차</b>를 보고 옆 사람과 함께 만들어 주세요 — 휴대폰 인증 포함 3분.</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-block="② 문서·업무 실습 13:45–14:19">
+  <span class="num">6</span>
+  <div class="head"><span class="eyebrow">올해의 프롬프트</span><h2>내가 쓰지 말고, AI에게 묻게 하기</h2><span class="time">6분</span></div>
+  <div class="cols">
+    <div class="card"><h3>① 어렵지 않습니다</h3><p>LLM은 어려워 보이지만 "내가 원하는 것"을 말로 명확히 하면 끝입니다. 사람에게 부탁하듯 쓰면 됩니다.</p></div>
+    <div class="card"><h3>② 길게 쓰는 데 매몰되지 마세요</h3><p>길고 상세한 프롬프트가 결과를 더 가깝게 만드는 건 맞지만 절대 조건은 아닙니다. 짧게 던지고 고쳐 가는 게 더 빠를 때가 많습니다.</p></div>
+    <div class="card"><h3>③ 그래도 막히면, 묻게 하세요</h3><p>뭘 적어야 할지 모를 때는 AI에게 질문을 시킵니다. 전문가들도 "먼저 되물어라"는 도구(grill-me 같은 것)를 일부러 깔아 씁니다.</p></div>
+  </div>
+  <div class="cols">
+    <div class="card">
+      <h3>① 메타 프롬프팅 — 프롬프트를 AI에게 만들게</h3>
+      <pre class="prompt">우리 회사(학교) 공문·안내문 초안을 잘 뽑는 프롬프트를 만들어 줘. 내가 매번 바꾸는 부분은 [괄호]로 표시해 줘.</pre>
+      <p class="note">전문가가 쓴 것 같은 템플릿이 나온다. 메모장에 저장해 두고 괄호만 바꿔 쓴다.</p>
+    </div>
+    <div class="card">
+      <h3>② ABA — 답하기 전에 묻게 (Ask Before Answering)</h3>
+      <pre class="prompt">… 바로 쓰지 말고, 필요한 정보가 있으면 나에게 먼저 질문해 줘.</pre>
+      <p class="note">부탁 끝에 한 줄만 붙인다. AI가 인터뷰하듯 일시·대상·톤을 묻고 나서 쓴다. 뭘 어떻게 시켜야 할지 모를 때 가장 효과가 크다.</p>
+    </div>
+  </div>
+  <div class="ba">
+    <div class="card"><span class="eyebrow">흔한 방식</span>
+      <div class="bubble me">너는 행정실 주무관이야. 학부모 안내문 써 줘. 공문체, 300자, 일시·장소·대상·문의처 포함…</div>
+      <div class="bubble ai">(바로 작성) 내용이 비어 있거나 어림짐작으로 채워짐</div></div>
+    <div class="demo" data-demo="aba" data-title="ABA 방식 — 챗GPT"></div>
+  </div>
+  <div class="cols">
+    <div class="card"><h3>붙여 두면 편한 한 줄</h3><p>"<b>결론 먼저, 3줄 이내로.</b>" — 긴 답을 읽기 싫을 때. AI가 되묻는 것도 결국 <b>맥락·제약·형식</b> 세 가지라, 이 셋을 미리 적으면 질문 한 번에 끝납니다.</p></div>
+    <div class="card"><h3>초보가 흔히 하는 실수 6</h3><ul style="font-size:.9rem"><li>원하는 걸 안 정하고 시작</li><li>한 번에 열 가지 요청</li><li>내 상황 설명 없이 질문</li><li>형식(길이·표·말투)을 안 정함</li><li>결과를 검토 없이 그대로 사용</li><li>한 번 틀렸다고 포기</li></ul></div>
+    <div class="card"><span class="eyebrow">안내문 A</span><p style="font-size:.9rem">학부모님께. 학생 안전을 위해 11월 17일부터 28일까지 급식실 환기 설비 교체 공사를 실시합니다. 공사 기간 중 후문 통행이 제한되오니 정문을 이용하여 주시기 바랍니다. 문의: 행정실.</p></div>
+    <div class="card"><span class="eyebrow">안내문 B</span><p style="font-size:.9rem">안녕하세요, 학부모님. 11월 17일(월)부터 28일(금)까지 급식실 환기 설비를 교체합니다. 이 기간에는 후문을 닫고 정문만 엽니다. 불편하시더라도 협조 부탁드립니다. 궁금한 점은 행정실로 연락 주세요.</p></div>
+    <div class="poll" data-poll="q1"></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-block="② 문서·업무 실습 13:45–14:19">
+  <span class="num">7</span>
+  <div class="head"><span class="eyebrow">미션 1</span><h2>공문·안내문 초안, ABA로</h2><span class="time">7분 · 챗GPT 또는 제미나이</span></div>
+  <div class="mission">
+    <div class="mhead"><h3>미션 1 · 괄호에서 내 일에 가까운 주제 하나만 고르기</h3><span class="tag free">무료</span>
+      <div class="tim" data-min="6"><span class="t">06:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <pre class="prompt">너는 초등학교 행정실 주무관이야. [체육관 대관 신청 안내 / 급식 알레르기 조사 안내 / 교내 공사 기간 안내] 중 하나를 골라 학부모에게 보낼 안내문을 공문체로 써 줘. 바로 쓰지 말고, 필요한 정보를 한 번에 3개 이내로 나에게 질문하고 내 답을 받은 뒤 써 줘. 다 쓰면 제목은 #, 항목은 - 기호로, 300자 이내로.</pre>
+    <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">AI가 물으면 여러분 학교 상황으로 답하세요. 메신저로 답하듯.</span></div>
+  </div>
+  <div class="demo" data-demo="m1" data-title="시연 — 미션 1이 실제로 흘러가는 모습"></div>
+  <div class="cols">
+    <div class="card"><h3>그 다음 한 가지</h3><p>이 초안을 <b>범정부 오피스</b> 한글 플러그인의 <b>G서식변신</b>에 넣으면 공문 서식으로 바로 정렬됩니다. <a href="https://www.innovation.go.kr/" target="_blank" rel="noopener">혁신포털</a>에서 내려받기(교재 부록에 설치 캡처).</p></div>
+    <div class="card"><h3>왜 질문을 3개로 제한하나</h3><p>제한이 없으면 AI가 열 개씩 묻습니다. "한 번에 3개 이내"가 실무에서 제일 편한 숫자입니다.</p></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-block="② 문서·업무 실습 13:45–14:19">
+  <span class="num">8</span>
+  <div class="head"><span class="eyebrow">미션 2</span><h2>표 사진을 엑셀로</h2><span class="time">5분 · 다른 연수에서 제일 반응 좋았던 것</span></div>
+  <div class="mission">
+    <div class="mhead"><h3>미션 2 · 바탕화면 견적서 사진을 대화창에 끌어다 놓기</h3><span class="tag free">무료</span>
+      <div class="tim" data-min="5"><span class="t">05:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <pre class="prompt">첨부한 사진 속 표를 읽어서 엑셀에 바로 붙일 수 있는 표로 바꿔 줘. 열 제목은 사진 그대로, 금액은 숫자만, 마지막 줄에 합계를 추가해 줘.</pre>
+    <div class="mtools"><button class="copy">프롬프트 복사</button></div>
+  </div>
+  <div class="demo" data-demo="m2" data-title="시연 — 사진 한 장이 표가 되는 과정"></div>
+  <div class="cols">
+    <div class="card"><h3>실무에서는</h3><p>화면에 보이는 표를 <kbd class="mono">Win+Shift+S</kbd>로 캡처 → 대화창에 <kbd class="mono">Ctrl+V</kbd>. 결과 표를 드래그 복사해서 엑셀에 붙이면 셀이 나뉩니다.</p></div>
+    <div class="card"><h3>숫자는 꼭 대조</h3><p>사진이 흐리면 8을 3으로 읽는 일이 있습니다. 합계가 원본과 맞는지만 보면 대부분 잡힙니다.</p></div>
+    <div class="card"><h3>다음 장에서</h3><p>엑셀은 사진 변환 말고도 세 가지를 더 시킬 수 있습니다. 함수, 정리·분석, 반복작업.</p></div>
+  </div>
+</section>
+
+<!-- 9 엑셀 -->
+<section class="slide" data-block="② 문서·업무 실습 13:45–14:19">
+  <span class="num">9</span>
+  <div class="head"><span class="eyebrow">엑셀 × AI</span><h2>엑셀에 AI 쓰는 세 가지 수준</h2><span class="time">4분 · 1단계만 각자 해 보기 · <span class="tag new">시간 없으면 시연만</span></span></div>
+  <div class="stages" style="grid-template-columns:repeat(3,1fr)">
+    <div class="stage on"><b>1 · 함수 묻기</b><span>캡처 + "이 셀에 들어갈 함수"</span><small>오늘 실습 · 무료</small></div>
+    <div class="stage"><b>2 · 정리·분석</b><span>파일 올리고 "월별 합계 표와 차트"</span><small>무료 (업로드 한도)</small></div>
+    <div class="stage"><b>3 · 반복작업</b><span>"이 작업을 매크로로" → VBA 코드</span><small>강사 시연 · 교재 부록</small></div>
+  </div>
+  <div class="mission">
+    <div class="mhead"><h3>1단계 · 엑셀 화면 캡처(Win+Shift+S) → 붙여넣기(Ctrl+V) → 질문</h3><span class="tag free">무료</span>
+      <div class="tim" data-min="3"><span class="t">03:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <pre class="prompt">첨부한 엑셀 화면에서 H5셀에 "C열이 '납품완료'인 행의 D열 금액 합계"가 나오게 하는 함수를 알려 줘. 셀에 바로 붙일 수 있게 한 줄로, 그리고 왜 그 함수인지 한 문장으로.</pre>
+    <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">오류가 날 때는 그 화면을 캡처해서 "왜 #VALUE!가 나와?" — 원인과 고친 수식을 같이 줍니다.</span></div>
+  </div>
+  <div class="demo" data-demo="excel" data-title="시연 — 함수 묻기 → 파일 올려 분석 → 매크로까지"></div>
+  <div class="cols">
+    <div class="card"><h3>2단계 주의</h3><p>파일을 올리면 그 안의 이름·연락처가 AI 회사 서버로 갑니다. <b>개인정보 열은 지우고</b> 올리거나, 숫자만 남긴 사본으로.</p></div>
+    <div class="card"><h3>3단계는 이렇게</h3><p>"E열 숫자 뒤에 kg 붙이는 매크로 만들어 줘" → 코드 복사 → 엑셀 Alt+F11 → 붙여넣기 → Alt+F8 실행. 교재 부록 2에 캡처로.</p></div>
+    <div class="card paid"><h3>엑셀 안에 들어온 AI <span class="tag paid">유료</span></h3><p>M365 코파일럿은 엑셀 안에서 바로 시킬 수 있지만 유료. 무료로는 "캡처해서 묻기"가 가장 현실적.</p></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-block="② 문서·업무 실습 13:45–14:19">
+  <span class="num">9</span>
+  <div class="head"><span class="eyebrow">미션 3</span><h2>한글 파일(hwpx), AI가 읽고 고친다</h2><span class="time">6분 · 시연 2분 포함</span></div>
+  <div class="cols" style="grid-template-columns:1.2fr 1fr">
+    <div class="card">
+      <h3>왜 hwpx인가</h3>
+      <ul>
+        <li><b>2026년 5월</b> 온나라 .hwp 첨부 제한 — 중앙부처 선행, 지방·교육청 5. 18.부터</li>
+        <li>온메일 10월까지 hwpx 전환, 공직자통합메일은 10월부터 hwp 첨부 제한</li>
+        <li>hwpx는 AI가 읽는 형식, hwp는 잘 못 읽음 → <b>저장은 hwpx로</b></li>
+      </ul>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th><i class="ico" data-ico="openai"></i>챗GPT</th><th><i class="ico" data-ico="gemini"></i>제미나이</th><th><i class="ico" data-ico="claude"></i>클로드</th></tr></thead>
+      <tbody>
+        <tr><td>hwpx 읽기·요약</td><td>○ (4/17~)</td><td>○</td><td>○</td></tr>
+        <tr><td>고쳐서 hwpx로 반환</td><td>×</td><td>×</td><td>○ <span class="tag demo">시연</span></td></tr>
+        <tr><td>NotebookLM</td><td colspan="3">hwp·hwpx 불가 → PDF로 저장해서 넣기</td></tr>
+      </tbody></table></div>
+  </div>
+  <div class="mission">
+    <div class="mhead"><h3>미션 3 · 예시 공문 hwpx를 챗GPT나 제미나이에 올리고</h3><span class="tag free">무료</span>
+      <div class="tim" data-min="4"><span class="t">04:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <pre class="prompt">이 공문에서 우리 학교가 해야 할 일, 제출 기한, 담당자 연락처를 세 줄로 정리해 줘.</pre>
+    <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note"><span class="tag demo">강사 시연</span> 클로드에 같은 파일 → "일시를 11월 20일로, 담당자를 홍길동으로 바꾸고 서식은 그대로 hwpx로 다시 줘"</span></div>
+  </div>
+  <div class="demo" data-demo="hwpx" data-title="시연 — hwpx 읽기(공통) → 고쳐서 돌려받기(클로드)"></div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-block="② 문서·업무 실습 13:45–14:19">
+  <span class="num">10</span>
+  <div class="head"><span class="eyebrow">10월 8일부터 무료</span><h2>클로드로 문서·슬라이드 바로 만들기</h2><span class="time">5분 · 시연 2분 + 실습 3분 · <span class="tag new">시간 없으면 시연만</span></span></div>
+  <div class="mission">
+    <div class="mhead"><h3>미션 1의 안내문을 클로드에 붙이고</h3><span class="tag free">무료</span><span class="tag new">Docs · Slides · Design</span>
+      <div class="tim" data-min="4"><span class="t">04:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <pre class="prompt">위 안내문 내용으로 학부모 설명회용 슬라이드 3장을 만들어 줘. 1장 제목·일시, 2장 프로그램 표, 3장 신청 방법·문의처. 글자는 크게, 한 장에 글 세 줄 이내.</pre>
+    <div class="mtools"><button class="copy">프롬프트 복사</button></div>
+  </div>
+  <div class="cols">
+    <div class="card"><h3>무엇이 나오나</h3><p>편집 가능한 슬라이드. 파워포인트(.pptx)나 PDF로 내려받을 수 있습니다. 문서(Docs)로 시키면 워드·PDF.</p></div>
+    <div class="card"><h3>어디에 쓰나</h3><p>회의 자료, 간단 보고서, 학부모 설명회 자료의 초안. 디자인은 손대지 않고 내용만 고치면 됩니다.</p></div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-block="② 문서·업무 실습 13:45–14:19">
+  <span class="num">11</span>
+  <div class="head"><span class="eyebrow">NotebookLM · 거짓말 0%</span><h2>지침서에게 묻기</h2><span class="time">4분 · <span class="tag new">시간 없으면 시연만</span></span></div>
+  <div class="cols">
+    <div class="card"><h3>넣어 둘 것</h3><ul><li>학교회계 집행 지침 PDF</li><li>교육공무직 복무 관련 규정</li><li>시설 안전 점검 매뉴얼</li></ul><p class="note">넣어준 자료만 보고 답하고, 답 끝에 출처 번호 [1][2]가 붙는다. 원리는 "창고에서 꺼내 읽기"(RAG) — AI의 뇌를 바꾸는 게 아니라 내 자료를 옆에 두고 읽게 하는 것이라 거짓말이 거의 없다.</p></div>
+    <div class="card"><h3>매번 같은 지침으로 일하려면</h3><p>챗GPT <b>프로젝트</b> · 제미나이 <b>Gems</b> · 클로드 <b>프로젝트</b>에 지침 PDF와 "우리 학교 공문 톤"을 한 번 넣어 두면, 그 방에서는 매번 안 적어도 같은 기준으로 씁니다. NotebookLM이 "읽기"용이면 이건 "쓰기"용.</p></div>
+    <div class="card"><h3>만들어 주는 것</h3><p><span class="tag new">보고서 · 슬라이드 · 인포그래픽</span> 지침서를 한 장 인포그래픽이나 설명 슬라이드로. <span class="tag new">비디오 개요</span> 설명 영상까지.</p><p class="note">구글 계정 100% 무료. hwp는 못 넣으니 PDF로 저장해서.</p></div>
+  </div>
+  <div class="mission">
+    <div class="mhead"><h3>미션 4 · 지침 PDF 하나 업로드 (없으면 QR 폴더의 예시 PDF)</h3><span class="tag free">무료</span>
+      <div class="tim" data-min="5"><span class="t">05:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <pre class="prompt">이 지침에서 실무자가 제일 자주 틀리는 항목 3가지를 출처와 함께 알려 줘.</pre>
+    <div class="mtools"><button class="copy">프롬프트 복사</button><a class="tbtn" href="https://notebooklm.google.com/" target="_blank" rel="noopener">notebooklm.google.com</a></div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-block="② 문서·업무 실습 13:45–14:19">
+  <span class="num">12</span>
+  <div class="head"><span class="eyebrow">업무보조 도구 지도</span><h2>책상 위에 두면 좋은 도구들</h2><span class="time">3분 · 용어 3개 포함</span></div>
+  <div class="cols">
+    <div class="card"><h3><i class="ico" data-ico="gov"></i>범정부 오피스 <span class="tag free">무료</span></h3><p>한글 플러그인. AI 초안을 공문 서식으로 1초 정렬(<b>G서식변신</b>). <a href="https://www.innovation.go.kr/" target="_blank" rel="noopener">혁신포털</a></p></div>
+    <div class="card"><h3><i class="ico" data-ico="notebooklm"></i>NotebookLM <span class="tag free">무료</span></h3><p>지침서·규정 전용 오픈북. 출처 번호, 오디오·비디오 개요.</p></div>
+    <div class="card"><h3><i class="ico" data-ico="vrew"></i>브루(Vrew) <span class="tag free">무료</span></h3><p>대본→음성→자막→영상, PDF→영상, 촬영본 자막·더빙. 무료 월 200크레딧. 오늘 영상 파트의 주인공.</p></div>
+    <div class="card"><h3><i class="ico" data-ico="canva"></i>캔바(Canva) <span class="tag free">무료</span></h3><p>포스터·현수막·카드뉴스. AI 이미지를 넣고 글자 올리기에 가장 쉬움.</p></div>
+    <div class="card"><h3><i class="ico" data-ico="genspark"></i>젠스파크 <span class="tag demo">소개</span></h3><p>여러 AI를 한 번에 돌려 비교하는 에이전트형. 국내 10위. 이름만.</p></div>
+    <div class="card"><h3><i class="ico" data-ico="claude"></i>Claude Docs·Slides <span class="tag free">무료</span></h3><p>10월부터 무료. 회의자료·설명회 슬라이드 초안.</p></div>
+    <div class="card"><h3>업무 PC 설치형 유틸 <span class="tag free">무료·오픈소스</span></h3><p><i class="ico" data-ico="sharex"></i><b>ShareX</b> 캡처·OCR·GIF · <i class="ico" data-ico="copyq"></i><b>CopyQ</b> 공문 상용구 클립보드 · <i class="ico" data-ico="lossless"></i><b>LosslessCut</b> 영상 자르기 · <i class="ico" data-ico="stirling"></i><b>Stirling PDF</b> PDF 합치기·OCR을 <u>외부 업로드 없이</u> 내 PC에서</p></div>
+  </div>
+  <div class="card">
+    <h3>헷갈리는 용어 3개 — 실무자는 가운데 것만 알면 됩니다</h3>
+    <div class="tbl"><table>
+      <tr><td><b>API</b></td><td>개발자용 수도꼭지. 프로그램끼리 AI를 부르는 통로. 우리가 직접 쓸 일 없음.</td></tr>
+      <tr><td><b>MCP · 커넥터</b></td><td>AI에 꽂는 USB. 드라이브·캘린더·메일을 AI에 연결. 앱 설정에서 "커넥터"로 보임. ④블록에서 시연.</td></tr>
+      <tr><td><b>에이전트</b></td><td>시키면 혼자 여러 단계를 수행하는 AI. Dots·Duet 같은 것. 권한 = 위험.</td></tr>
+      <tr><td><b>스킬</b></td><td>AI에게 주는 업무 매뉴얼 파일. "우리 학교 공문 양식대로 써"를 매번 안 적어도 되게 저장해 두는 것. 10월부터 공개 표준.</td></tr>
+    </table></div>
+  </div>
+  <div class="poll" data-poll="q2"></div>
+  <p class="note">퍼플렉시티는 검색 관심도가 반으로 줄어 넣지 않았습니다. 이제 영상으로 갑니다.</p>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-block="③ AI 영상 제작 14:19–15:04">
+  <span class="num">13</span>
+  <div class="head"><span class="eyebrow">AI 영상, 2026년의 현실</span><h2>"생성"은 유료, 그래서 오늘은 "조립"</h2><span class="time">3분</span></div>
+  <div class="tbl"><table>
+    <thead><tr><th>서비스</th><th>영상 생성</th><th>조건</th></tr></thead>
+    <tbody>
+      <tr class="paid"><td><i class="ico" data-ico="gemini"></i>제미나이 Gemini Omni (구 Veo)</td><td><span class="tag paid">유료</span></td><td>Google AI Plus 월 7,500원~, 한 번에 10초, SynthID 워터마크</td></tr>
+      <tr class="paid"><td><i class="ico" data-ico="openai"></i>챗GPT Sora</td><td><span class="tag paid">유료</span></td><td>유료 티어만</td></tr>
+    </tbody></table></div>
+  <div class="cols">
+    <div class="card"><h3>학교에 필요한 건</h3><p>10초짜리 신기한 영상이 아니라 <b>1분짜리 안내 영상</b>. 대본 + 목소리 + 자막 + 그림을 조립하면 됩니다.</p></div>
+    <div class="card"><h3>오늘의 조립 재료 (전부 무료)</h3><p>대본 → 챗GPT · 그림 → 제미나이 · 목소리·자막·편집 → <b>브루(Vrew)</b>. 이미 PPT·PDF가 있으면 브루 "슬라이드로 비디오"로 바로.</p></div>
+    <div class="card"><h3>브루 하나로 끝내는 이유</h3><p>대본·목소리·자막·그림·내보내기가 한 화면이고, 한국어 UI에 무료 월 200크레딧. 숏폼을 올릴 거면 하나 더 — 유튜브가 AI 양산 영상 제재를 강화하고 있어 <b>내 사진·내 목소리·내 이야기</b>를 한 조각이라도 넣는 게 안전합니다.</p></div>
+    <div class="card"><h3>영상 길이를 움직여 보세요</h3>
+      <div class="calc"><input type="range" id="lenRange" min="10" max="180" step="10" value="60"><output id="lenOut">60초</output></div>
+      <p class="note" id="lenNote"></p></div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide paid" data-block="③ AI 영상 제작 14:19–15:04">
+  <span class="num">14</span>
+  <div class="head"><span class="eyebrow">강사 시연</span><h2>유료 영상 생성은 이런 것 — Gemini Omni</h2><span class="time">5분 · <span class="tag paid">👑 Google AI Pro</span></span></div>
+  <pre class="prompt">가을 산길을 드론이 낮게 날아가며 찍은 10초 영상. 단풍이 바람에 떨어지고, 멀리 작은 마을과 학교 운동장이 보인다. 따뜻한 오후 햇빛, 세로 화면.</pre>
+  <div class="cols">
+    <div class="card"><h3>보면서 기억할 것</h3><ul><li>한 번에 10초. 장면 이어붙이기(Scene extension)로 늘림</li><li>생성 영상에는 보이지 않는 <b>SynthID</b> 워터마크</li><li>안내 영상의 "도입 5초"로 쓰기 좋음</li></ul></div>
+    <div class="card"><h3>생성에 1~2분</h3><p>기다리는 동안 다음 장의 4단계를 설명합니다. 실패하면 녹화본으로.</p></div>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-block="③ AI 영상 제작 14:19–15:04">
+  <span class="num">15</span>
+  <div class="head"><span class="eyebrow">지금부터 33분</span><h2>영상 제작 3단계</h2><span class="time">주제: 내가 사는 동네 가을 자랑, 1분 세로 숏폼</span></div>
+  <div class="stages" id="stages" style="grid-template-columns:repeat(3,1fr)">
+    <button class="stage on"><b>1 · 대본</b><span>챗GPT · 6문장</span><small>5분</small></button>
+    <button class="stage"><b>2 · 브루 조립</b><span>목소리 · 그림(AI 생성) · 자막</span><small>23분</small></button>
+    <button class="stage"><b>3 · 내보내기</b><span>720p → 폰으로</span><small>5분</small></button>
+  </div>
+  <p class="lead">그림까지 브루 안에서 만듭니다. 그림을 직접 고르고 싶은 분만 제미나이를 씁니다. 끝까지 가는 게 중요합니다.</p>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-block="③ AI 영상 제작 14:19–15:04">
+  <span class="num">16</span>
+  <div class="head"><span class="eyebrow">미션 5-1 · 대본</span><h2>6문장 내레이션</h2><span class="time">5분 · 챗GPT 또는 제미나이, 새 대화방</span></div>
+  <div class="mission">
+    <div class="mhead"><h3>괄호 안만 바꾸기 — 동네 이름과 자랑거리</h3><span class="tag free">무료</span>
+      <div class="tim" data-min="5"><span class="t">05:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <pre class="prompt">내가 사는 동네 [장수군 장수읍]의 가을을 자랑하는 1분 세로 숏폼 내레이션을 써 줘.
+- 자랑거리: [사과, 방화동 단풍, 마을 장날]
+- 조건: 딱 6문장, 한 문장 20자 이내, 구어체, 첫 문장은 질문으로, 마지막 문장은 "올가을, 한 번 와 보세요"로.
+- 문장마다 어떤 장면을 보여줄지 괄호 안에 한 줄로 적어 줘.</pre>
+    <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">6문장을 메모장에 복사. 괄호 안 장면 설명이 다음 단계 그림 프롬프트가 됩니다.</span></div>
+  </div>
+  <div class="demo" data-demo="script" data-title="시연 — 6문장 대본이 나오는 모습"></div>
+  <div class="card check6">
+    <h3>결과 검사기: AI가 준 6문장을 여기 붙여 보세요</h3>
+    <textarea id="scriptTa" placeholder="한 줄에 한 문장씩 붙여넣기"></textarea>
+    <div class="lines" id="scriptLines"></div>
+    <p class="note" id="scriptSum">문장 수와 글자 수를 세어 20자 넘는 문장을 표시합니다. 넘으면 "더 짧게"라고 다시 시키면 됩니다.</p>
+  </div>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-block="③ AI 영상 제작 14:19–15:04">
+  <span class="num">18</span>
+  <div class="head"><span class="eyebrow">미션 5-2 · 브루 조립</span><h2>브루(Vrew)에서 목소리·그림·자막 한 번에</h2><span class="time">23분 · 강사 한 바퀴 5분 → 각자 18분</span></div>
+  <div class="mission">
+    <div class="mhead"><h3>순서대로 — 화면 왼쪽 위부터</h3><span class="tag free">무료 월 200크레딧 · 1분 영상 ≈ 10크레딧</span><span class="ring" id="vrewRing" style="--p:0"><span>0%</span></span>
+      <div class="tim" data-min="18"><span class="t">18:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <ol class="checks" style="padding-left:0">
+      <li><input type="checkbox" id="v1"><label for="v1">브루 실행 → 로그인 → <b>새로 만들기</b> → <b>텍스트로 비디오 만들기</b></label></li>
+      <li><input type="checkbox" id="v2"><label for="v2">화면 비율 <b>쇼츠(9:16)</b> 선택 → 비디오 스타일은 아무거나</label></li>
+      <li><input type="checkbox" id="v3"><label for="v3">대본 칸에 미션 5-1의 6문장 붙여넣기 (괄호 안 장면 설명은 지우기). 대본이 없으면 <b>AI 글쓰기</b>에 주제만</label></li>
+      <li><input type="checkbox" id="v4"><label for="v4">AI 목소리: 한국어 하나 고르고 <b>미리듣기</b>(미리듣기는 크레딧 소모 없음)</label></li>
+      <li><input type="checkbox" id="v5"><label for="v5">이미지: <b>AI 이미지 생성</b> 선택 (Basic 모델, 1크레딧/장). 직접 만든 그림이 있으면 "내 파일"</label></li>
+      <li><input type="checkbox" id="v6"><label for="v6"><b>만들기</b> → 문장마다 그림·목소리·자막이 생긴 걸 확인</label></li>
+      <li><input type="checkbox" id="v7"><label for="v7">틀린 자막은 클릭해서 고치기 · 마음에 안 드는 그림은 클릭 → <b>이미지 교체</b>(다시 생성 또는 내 파일)</label></li>
+      <li><input type="checkbox" id="v8"><label for="v8">오른쪽 <b>자막 서식</b>에서 글자 크게·배경 넣기 → <b>배경음악</b> 무료 에셋 하나, 볼륨 낮게</label></li>
+    </ol>
+  </div>
+  <div class="cols">
+    <div class="card"><h3>막히는 곳 1 · 그림이 가로</h3><p>2번에서 비율을 안 바꾼 것. 새로 만들기부터.</p></div>
+    <div class="card"><h3>막히는 곳 2 · 목소리 안 나옴</h3><p>스피커·이어폰 확인 → 다른 목소리 선택 → 그래도 안 되면 자막만으로 진행.</p></div>
+    <div class="card"><h3>막히는 곳 3 · 자막이 한 덩어리</h3><p>대본을 문장마다 줄바꿈해서 다시 붙이기. 긴 문장은 클립 위에서 Enter로 나누기, 백스페이스로 합치기.</p></div>
+    <div class="card"><h3>그림을 직접 고르고 싶으면</h3><p>제미나이에 "세로 9:16, 따뜻한 수채화 일러스트, [장면 설명], 사람 얼굴·글자 없이" → 다운로드 → 7번에서 "내 파일"로 교체. 같은 스타일로 3~4장이면 충분.</p></div>
+    <div class="card"><h3>업무용 지름길: PDF·슬라이드로 비디오</h3><p>새로 만들기 → <b>슬라이드로 비디오 만들기</b>에 설명회 PPT·지침 PDF를 넣으면 장마다 내레이션 영상. 안내 영상은 이게 제일 빠릅니다.</p></div>
+    <div class="card"><h3>촬영한 영상도</h3><p>행사 촬영본을 넣으면 자막 자동, 무음 삭제, 장면 전환 감지, 번역 자막 + AI 더빙. "내 목소리 만들기"는 한 문장 녹음.</p></div>
+    <div class="card"><h3>폰으로 하는 분</h3><p>브루 앱에서 같은 메뉴 이름. 이미지는 "AI 생성"으로. 내보내기는 갤러리 저장.</p></div>
+  </div>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-block="③ AI 영상 제작 14:19–15:04">
+  <span class="num">19</span>
+  <div class="head"><span class="eyebrow">미션 5-3 · 내보내기</span><h2>720p로 내보내고 폰으로 보내기</h2><span class="time">5분</span></div>
+  <div class="mission">
+    <div class="mhead"><h3>오른쪽 위 내보내기 → 영상 파일 → 720p</h3><span class="tag free">무료는 워터마크 + 720p</span>
+      <div class="tim" data-min="5"><span class="t">05:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <ul><li>1분 영상은 보통 1분 안에 나옵니다. 무료는 구석에 브루 워터마크(라이트 플랜부터 제거)</li><li>카카오톡 "나에게 보내기"로 폰에 전송 — 오늘 집에 가져가는 결과물</li><li>내보내기 옵션: MP4 영상 · 자막 파일(SRT) · 오디오만 · 투명 자막 — 오늘은 MP4</li></ul>
+  </div>
+  <p class="lead">AI가 만든 게 아니라 여러분이 AI로 만든 겁니다. 말할 거리와 선택은 여러분 거였습니다.</p>
+  <div class="poll" data-poll="q3"></div>
+</section>
+
+<!-- LLM 외 AI -->
+<section class="slide" data-block="③ AI 영상 제작 14:19–15:04">
+  <span class="num">21</span>
+  <div class="head"><span class="eyebrow">챗봇 말고도</span><h2>LLM이 아닌 AI 중 쓸모 있는 것들</h2><span class="time">3분 · 이름과 용도만</span></div>
+  <div class="cols">
+    <div class="card"><h3><i class="ico" data-ico="clova"></i>회의록 — 클로바노트 <span class="tag free">무료</span></h3><p>회의 녹음 → 화자 구분 받아쓰기 → 요약. 어느 직장에서든 당장 제일 쓸모 있는 것. 네이버 계정.</p></div>
+    <div class="card"><h3><i class="ico" data-ico="deepl"></i>번역 — DeepL · <i class="ico" data-ico="papago"></i>파파고 <span class="tag free">무료</span></h3><p>외국인 학부모 안내문, 해외 자료. 챗봇보다 빠르고 문서 통째로.</p></div>
+    <div class="card"><h3><i class="ico" data-ico="suno"></i>음악 — Suno <span class="tag free">무료 월 한도</span></h3><p>"학교 행사 입장 음악, 밝은 브라스" → 2분 곡. 무료는 워터마크·비상업 한정, 교내 행사용엔 충분.</p></div>
+    <div class="card"><h3><i class="ico" data-ico="tripo"></i>3D — Tripo <span class="tag free">무료 월 200크레딧</span></h3><p>사진 한 장 → 3D 모형. 학교 조형물·교구 시안, 3D 프린터와 연결. 비상업 한정.</p></div>
+    <div class="card"><h3><i class="ico" data-ico="typecast"></i>음성 — 타입캐스트 · <i class="ico" data-ico="elevenlabs"></i>ElevenLabs <span class="tag free">체험 무료</span></h3><p>안내 방송, 영상 내레이션. 브루에 내장된 음성보다 자연스러움.</p></div>
+    <div class="card"><h3><i class="ico" data-ico="removebg"></i>이미지 손질 — remove.bg · 업스케일 <span class="tag free">무료</span></h3><p>배경 지우기, 저해상도 로고 키우기. 포스터 만들 때 세트로.</p></div>
+  </div>
+  <p class="note">공통 규칙: 무료 플랜은 대부분 "비상업·워터마크". 학교 내부용은 괜찮고, 외부 홍보물에 쓸 땐 라이선스 확인.</p>
+</section>
+
+<!-- 20 -->
+<section class="slide" data-block="④ 바이브코딩·행동하는 AI·보안 15:04–15:30">
+  <span class="num">20</span>
+  <div class="head"><span class="eyebrow">강사 시연 · 클로드 무료</span><h2>바이브코딩: 말로 만드는 업무 도구</h2><span class="time">4분</span></div>
+  <pre class="prompt">우리 학교 급식 알레르기 조회표를 한 화면짜리 웹페이지로 만들어 줘. 학년·반을 고르면 알레르기 항목별 학생 수가 보이고, 항목을 누르면 대체 식단 안내가 나오게. 데이터는 가상으로 채워 줘. 큰 글씨, 폰에서도 보이게.</pre>
+  <div class="demo" data-demo="vibe" data-title="시연 — 말 한 번에 조회표가 생기는 모습 (클로드)"></div>
+  <div class="cols">
+    <div class="card"><h3>장난이 아니라 업무</h3><p>한때는 MBTI 테스트 만들기 같은 장난 수준이었지만, 지금은 국내 업무 활용 사례의 절반 이상이 이 방식(클로드)입니다.</p></div>
+    <div class="card"><h3>사무실에서 만들 수 있는 것</h3><p>작은 조회표, 계산기, 체크리스트. 코드는 한 줄도 안 봅니다. 고치고 싶으면 "항목에 색을 넣어 줘"라고 말하면 됩니다.</p></div>
+    <div class="card"><h3>어디까지 가나</h3><p>영국 물리 교과서 10개 단원을 한 사람이 AI로 3D 실험 학습 페이지로 만들어 무료 공개(Every Joule, 2026.10). 교과서도 말로 만드는 시대.</p></div>
+    <div class="card"><h3>순서는 늘 같습니다</h3><p>원하는 것 한 문단 → 작게 하나 만들기 → 보고 고치기 반복. 전문가도 "명세 → 나누기 → 검토" 순서로 합니다. 영상·문서도 똑같습니다: <b>결과를 먼저 정하고 → 짧은 샘플로 기준을 맞춘 뒤 → 잘된 기준을 저장해 다음 작업에 붙이기.</b></p></div>
+    <div class="card"><h3>단 하나의 규칙</h3><p><b>실제 학생 데이터는 넣지 않는다.</b> 가상 데이터로 만들고, 실제 데이터는 내 컴퓨터에서만.</p></div>
+  </div>
+</section>
+
+<!-- 21 -->
+<section class="slide" data-block="④ 바이브코딩·행동하는 AI·보안 15:04–15:30">
+  <span class="num">21</span>
+  <div class="head"><span class="eyebrow">지난 두 달의 공통점</span><h2>답하는 AI에서 행동하는 AI로</h2><span class="time">4분 · USB 그림을 클릭해 보세요</span></div>
+  <div class="cols">
+    <div class="card paid"><h3>오픈AI Dots <span class="tag paid">유료</span></h3><p>9/29. 4,000개 앱에 연결된 상시 에이전트. "매주 월요일 아침 지난주 민원 메일 요약해 둬"</p></div>
+    <div class="card paid"><h3>클로드 Duet <span class="tag paid">대기자</span></h3><p>10/21. 뒤에서 계속 일하는 개인 에이전트. 미국 Pro·Max부터.</p></div>
+    <div class="card paid"><h3>구글 Gemini Agents <span class="tag paid">보도</span></h3><p>업무 자동화 에이전트를 AI가 직접 만들어 주는 방향으로 준비 중이라는 보도.</p></div>
+  </div>
+  <div class="usb" id="usb">
+    <div class="ai"><div class="box"><b>AI</b> (챗GPT · 제미나이 · 클로드)</div><div class="box">오른쪽 앱을 하나씩 눌러 꽂아 보세요</div></div>
+    <div class="port">MCP</div>
+    <div class="apps">
+      <button class="box" data-say="“지침 PDF 찾아서 요약해 줘” — 드라이브를 읽습니다"><i class="ico" data-ico="gdrive"></i>구글 드라이브</button>
+      <button class="box" data-say="“마감 3일 전 알림 잡아 줘” — 일정을 만듭니다"><i class="ico" data-ico="gcal"></i>캘린더</button>
+      <button class="box" data-say="“지난주 민원 메일 요약해 둬” — 메일을 읽습니다"><i class="ico" data-ico="gmail"></i>메일</button>
+      <button class="box" data-say="“이 표를 시트에 넣고 합계 내 줘” — 셀을 씁니다"><i class="ico" data-ico="excel"></i>엑셀 · 시트</button>
+    </div>
+    <div class="say" id="usbSay"></div>
+  </div>
+  <p class="note">설치 없이 지금 되는 자동화의 상한선: <b>커넥터 + 예약 작업</b>("매주 월요일 9시에 지난주 메일 요약해 둬", 챗GPT·클로드 유료 플랜). 그 이상은 Zapier·코딩이 필요합니다.</p>
+  <p class="note"><b>MCP = AI에 꽂는 USB 규격.</b> 앱에서는 "커넥터"라는 이름으로 보입니다. 10/22 "스킬"(AI에게 주는 업무 매뉴얼 규격)도 리눅스재단 산하 표준이 됐습니다. USB가 도구 연결이면 스킬은 업무 지침서.</p>
+</section>
+
+<!-- 22 -->
+<section class="slide paid" data-block="④ 바이브코딩·행동하는 AI·보안 15:04–15:30">
+  <span class="num">22</span>
+  <div class="head"><span class="eyebrow">강사 시연</span><h2>클로드 커넥터 — 한 문장으로 네 가지 일</h2><span class="time">7분 · <span class="tag paid">👑 Claude Pro</span> · 개인 구글 계정</span></div>
+  <pre class="prompt">내 드라이브에서 학교회계 집행 지침 파일을 찾아서, 11월에 학교가 제출해야 하는 서류와 마감일을 표로 정리해 줘. 그리고 각 마감일 3일 전에 내 구글 캘린더에 알림 일정을 만들어 줘.</pre>
+  <div class="demo" data-demo="mcp" data-title="시연 — 한 문장, 네 가지 행동 (클로드 + 커넥터)"></div>
+  <div class="cols">
+    <div class="card"><h3>AI가 하는 일</h3><ol><li>파일 찾기</li><li>읽기</li><li>표 만들기</li><li>캘린더 일정 생성</li></ol></div>
+    <div class="card"><h3>내가 한 일</h3><p>한 문장.</p></div>
+    <div class="card"><h3>아직 하지 말 것</h3><p>학교 업무 계정에 연결하기. 이유는 다음 장.</p></div>
+  </div>
+  <div class="card"><h3>커넥터만으로 되는 "비서" 조합 6 — 결제·설치 없이</h3>
+    <div class="tbl"><table>
+      <tr><td><i class="ico" data-ico="gmail"></i>메일 + AI</td><td>답장 필요한 메일 골라 초안 쓰기</td><td><i class="ico" data-ico="gdrive"></i>드라이브 + AI</td><td>폴더 속 파일을 표로 정리, 중복 찾기</td></tr>
+      <tr><td><i class="ico" data-ico="gcal"></i>캘린더 + AI</td><td>공문 속 날짜를 일정으로 등록</td><td><i class="ico" data-ico="youtube"></i>유튜브 + AI(제미나이)</td><td>연수 영상 링크 → 핵심 노트</td></tr>
+      <tr><td><i class="ico" data-ico="clova"></i>회의록 + AI</td><td>클로바노트 결과 → 슬라이드 3장</td><td><i class="ico" data-ico="excel"></i>엑셀 + AI</td><td>집계표 → 보고용 발표자료</td></tr>
+    </table></div>
+    <p class="note">SNS의 "AI 비서 30명" 게시물에서 Zapier·유료 도구 없이 되는 것만 추린 것입니다.</p>
+  </div>
+</section>
+
+<!-- 23 -->
+<section class="slide" data-block="④ 바이브코딩·행동하는 AI·보안 15:04–15:30">
+  <span class="num">23</span>
+  <div class="head"><span class="eyebrow">행동하는 AI의 그림자</span><h2>권한을 주면, 권한이 새어 나간다</h2><span class="time">3분</span></div>
+  <div class="cols">
+    <div class="card"><h3>오픈클로의 교훈</h3><p>작년 말 "내 PC를 대신 움직이는 AI"로 화제가 됐던 오픈소스. 올해 해킹 공격 대상이 됐고 대기업들이 사내 사용을 금지했습니다. 내 컴퓨터를 대신 움직이는 AI는 그 권한을 누가 가로채면 그대로 무기가 됩니다.</p></div>
+    <div class="card"><h3>큰 회사도 예외 없음</h3><p>2026년 10월, 클로드 개발사가 공개 보고: 테스트 중 AI 모델이 외부 기관·미국 정부 사이트에 시키지 않은 제출(경찰 제보 등)을 했고, 이후 테스트 단계 인터넷 접근을 제한.</p></div>
+    <div class="card"><h3>그래서 학교 계정은</h3><p>AI에 "행동" 권한을 주는 커넥터는 개인 계정에서 먼저 써 보고, 업무 계정 연결은 기관 지침이 나올 때까지 보류.</p></div>
+  </div>
+  <p class="lead">AI가 할 수 있는 일이 늘수록 어디까지 맡길지는 사람이 정합니다. 공공기관은 그 선이 더 안쪽에 있어야 합니다.</p>
+</section>
+
+<!-- 24 -->
+<section class="slide" data-block="④ 바이브코딩·행동하는 AI·보안 15:04–15:30">
+  <span class="num">24</span>
+  <div class="head"><span class="eyebrow">보안 3원칙 + 1 · 마무리</span><h2>다음 중 AI에 넣어도 되는 것은?</h2><span class="time">8분</span></div>
+  <div class="cols">
+    <div class="poll" data-poll="q4"></div>
+    <div class="poll" data-poll="final"></div>
+  </div>
+  <div class="cols">
+    <div class="card"><h3>1. 개인정보 절대 입력 금지</h3><p>학생·학부모·직원 정보</p></div>
+    <div class="card"><h3>2. 미공개 내부 자료 금지</h3><p>확정되지 않은 의사결정 자료</p></div>
+    <div class="card"><h3>3. 팩트 체크 의무</h3><p>최종 책임은 결재하는 "나"에게</p></div>
+    <div class="card" style="border-color:var(--stamp)"><h3>+1. 학습데이터 제공 끄기 <span class="tag new">지금 같이</span></h3><p>챗GPT 무료는 기본 ON. 아래 순서를 눌러 따라가 보세요.</p>
+      <div class="steps3" id="steps3">
+        <button class="ready">① 프로필 → 설정</button>
+        <button>② 데이터 제어</button>
+        <button>③ "모두를 위한 모델 개선" <span class="sw" id="sw"></span></button>
+      </div></div>
+  </div>
+  <div class="card"><h3>가져가는 요청문 8 — 폰으로 복사해 두세요</h3>
+    <ul style="font-size:.9rem;columns:2;column-gap:24px">
+      <li>"바로 쓰지 말고, 필요한 정보가 있으면 먼저 질문해 줘"</li>
+      <li>"이 공문에서 우리 학교가 할 일·기한·담당자를 세 줄로"</li>
+      <li>"첨부 사진 속 표를 엑셀에 붙일 수 있게, 합계 포함"</li>
+      <li>"이 셀에 들어갈 함수를 한 줄로, 이유도 한 문장"</li>
+      <li>"이 메모를 학부모에게 보낼 정중한 답변 3문장으로"</li>
+      <li>"이 안내문으로 설명회 슬라이드 3장"</li>
+      <li>"이 지침에서 제일 자주 틀리는 항목 3개, 출처와 함께"</li>
+      <li>"결론 먼저, 3줄 이내로"</li>
+    </ul></div>
+  <div class="card"><h3>오늘 만든 것 네 가지</h3><p>공문 초안 · 엑셀 표 · hwpx 요약 · 영상 한 편 — 전부 무료 계정으로. 내일 출근해서 평소 쓰던 공문 하나를 "바로 쓰지 말고 먼저 물어봐"로 시켜 보세요.</p><p class="note">그리고 하나. 오늘 "유료"·"안 됨"이라고 한 것들은 다음 달에 바뀔 수 있습니다. 반년 뒤 이 자료를 다시 보면 절반은 달라져 있을 겁니다. 그러니 도구 이름이 아니라 <b>시키는 법</b>을 가져가세요.</p>
+<p class="lead" style="margin-top:6px">질문 받겠습니다.</p></div>
+</section>
+
+</main>
+
+<nav class="nav" aria-label="슬라이드 이동">
+  <button id="prev">◀ 이전</button>
+  <div class="prog"><i id="progI"></i></div>
+  <span class="blk" id="blk2"></span>
+  <button id="next">다음 ▶</button>
+</nav>
+
+<div id="joinview">
+  <div class="jtop">공무원 책상 위의 AI · 참가자 화면</div>
+  <div class="jq" id="jq"><div class="jwait"><b>…</b>연결 중</div></div>
+  <p class="jmsg" id="jmsg"></p>
+  <p class="note">이 창은 닫지 말고 두세요. 강사가 질문을 열면 자동으로 바뀝니다. 이름·개인정보는 저장되지 않습니다.</p>
+</div>
+
+<div class="overlay" id="qrOverlay" hidden>
+  <div class="in"><div id="qrbig"></div><div class="url" id="qrUrl"></div><p style="font-size:.85rem;margin:0">폰 카메라로 찍으면 이 자료가 열립니다</p><button class="tbtn" id="qrClose">닫기</button></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script>
+// ===== 서비스 아이콘 (Simple Icons CC0 아이콘 세트 + 없는 것은 머리글자 배지) =====
+const ICONS={"openai": {"h": "#412991", "p": "M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"}, "gemini": {"h": "#8E75B2", "p": "M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"}, "claude": {"h": "#D97757", "p": "m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"}, "canva": {"h": "#00C4CC", "p": "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM6.962 7.68c.754 0 1.337.549 1.405 1.2.069.583-.171 1.097-.822 1.406-.343.171-.48.172-.549.069-.034-.069 0-.137.069-.206.617-.514.617-.926.548-1.508-.034-.378-.308-.618-.583-.618-1.2 0-2.914 2.674-2.674 4.629.103.754.549 1.646 1.509 1.646.308 0 .65-.103.96-.24.5-.264.799-.47 1.097-.8-.073-.885.704-2.046 1.851-2.046.515 0 .926.205.96.583.068.514-.377.582-.514.582s-.378-.034-.378-.17c-.034-.138.309-.07.275-.378-.035-.206-.24-.274-.446-.274-.72 0-1.131.994-1.029 1.611.035.275.172.549.447.549.205 0 .514-.31.617-.755.068-.308.343-.514.583-.514.102 0 .17.034.205.171v.138c-.034.137-.137.548-.102.651 0 .069.034.171.17.171.092 0 .436-.18.777-.459.117-.59.253-1.298.253-1.357.034-.24.137-.48.617-.48.103 0 .171.034.205.171v.138l-.136.617c.445-.583 1.097-.994 1.508-.994.172 0 .309.102.309.274 0 .103 0 .274-.069.446-.137.377-.309.96-.412 1.474 0 .137.035.274.207.274.171 0 .685-.206 1.096-.754l.007-.004c-.002-.068-.007-.134-.007-.202 0-.411.035-.754.104-.994.068-.274.411-.514.617-.514.103 0 .205.069.205.171 0 .035 0 .103-.034.137-.137.446-.24.857-.24 1.269 0 .24.034.582.102.788 0 .034.035.069.07.069.068 0 .548-.445.89-1.028-.308-.206-.48-.549-.48-.96 0-.72.446-1.097.858-1.097.343 0 .617.24.617.72 0 .308-.103.65-.274.96h.102a.77.77 0 0 0 .584-.24.293.293 0 0 1 .134-.117c.335-.425.83-.74 1.41-.74.48 0 .924.205.959.582.068.515-.378.618-.515.618l-.002-.002c-.138 0-.377-.035-.377-.172 0-.137.309-.068.274-.376-.034-.206-.24-.275-.446-.275-.686 0-1.13.891-1.028 1.611.034.275.171.583.445.583.206 0 .515-.308.652-.754.068-.274.343-.514.583-.514.103 0 .17.034.205.171 0 .069 0 .206-.137.652-.17.308-.171.48-.137.617.034.274.171.48.309.583.034.034.068.102.068.102 0 .069-.034.138-.137.138-.034 0-.068 0-.103-.035-.514-.205-.72-.548-.789-.891-.205.24-.445.377-.72.377-.445 0-.89-.411-.96-.926a1.609 1.609 0 0 1 .075-.649c-.203.13-.422.203-.623.203h-.17c-.447.652-.927 1.098-1.27 1.303a.896.896 0 0 1-.377.104c-.068 0-.171-.035-.205-.104-.095-.152-.156-.392-.193-.667-.481.527-1.145.805-1.453.805-.343 0-.548-.206-.582-.55v-.376c.102-.754.377-1.2.377-1.337a.074.074 0 0 0-.069-.07c-.24 0-1.028.824-1.166 1.373l-.103.445c-.068.309-.377.515-.582.515-.103 0-.172-.035-.206-.172v-.137l.046-.233c-.435.31-.87.508-1.075.508-.308 0-.48-.172-.514-.412-.206.274-.445.412-.754.412-.352 0-.696-.24-.862-.593-.244.275-.523.553-.852.764-.48.309-1.028.549-1.68.549-.582 0-1.097-.309-1.371-.583-.412-.377-.651-.96-.686-1.509-.205-1.68.823-3.84 2.4-4.8.378-.205.755-.343 1.132-.343zm9.77 3.291c-.104 0-.172.172-.172.343 0 .274.137.583.309.755a1.74 1.74 0 0 0 .102-.583c0-.343-.137-.515-.24-.515z"}, "deepl": {"h": "#0F2B46", "p": "M20.907 4.93953 12.68543.18573a1.3577 1.3577 0 0 0-1.3709 0L3.09298 4.9565a1.3766 1.3766 0 0 0-.68639 1.18233v9.52646a1.3766 1.3766 0 0 0 .68639 1.19363l8.22157 4.75946.06223.03583 4.04856 2.3458-.01131-2.06106.0075-1.1446.0038.01885v-.38467c0-.23006.1188-.43371.29605-.56005l.264-.15086.12633-.06977h-.0075l4.80283-2.7795a1.3803 1.3803 0 0 0 .68639-1.19551V6.13505a1.3803 1.3803 0 0 0-.68642-1.19552m-9.85269 9.68863a1.4275 1.4275 0 0 1-.39976 1.3841 1.4086 1.4086 0 0 1-1.97054 0 1.4199 1.4199 0 0 1 0-2.06294 1.4086 1.4086 0 0 1 2.0422.07543l3.32822-1.91585.6864.38656zm5.77019-2.41367a1.4086 1.4086 0 0 1-1.97054 0 1.4256 1.4256 0 0 1-.3696-1.47837l-.0132.0075-3.7525-2.1723-.05657.05656a1.4086 1.4086 0 0 1-1.97053 0 1.4199 1.4199 0 0 1 0-2.06293 1.4086 1.4086 0 0 1 1.97242 0c.3941.37713.52422.91832.39033 1.40672l3.7808 2.20059.01886-.01886a1.4086 1.4086 0 0 1 1.97242 0 1.42746 1.42746 0 0 1 0 2.06105z"}, "naver": {"h": "#03C75A", "p": "M16.273 12.845 7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845Z"}, "elevenlabs": {"h": "#000000", "p": "M4.6035 0v24h4.9317V0zm9.8613 0v24h4.9317V0z"}, "suno": {"h": "#000000", "p": "M16.5 0C20.642 0 24 5.373 24 12h-9c0 6.627-3.358 12-7.5 12C3.358 24 0 18.627 0 12h9c0-6.627 3.358-12 7.5-12Z"}, "firebase": {"h": "#DD2C00", "p": "M19.455 8.369c-.538-.748-1.778-2.285-3.681-4.569-.826-.991-1.535-1.832-1.884-2.245a146 146 0 0 0-.488-.576l-.207-.245-.113-.133-.022-.032-.01-.005L12.57 0l-.609.488c-1.555 1.246-2.828 2.851-3.681 4.64-.523 1.064-.864 2.105-1.043 3.176-.047.241-.088.489-.121.738-.209-.017-.421-.028-.632-.033-.018-.001-.035-.002-.059-.003a7.46 7.46 0 0 0-2.28.274l-.317.089-.163.286c-.765 1.342-1.198 2.869-1.252 4.416-.07 2.01.477 3.954 1.583 5.625 1.082 1.633 2.61 2.882 4.42 3.611l.236.095.071.025.003-.001a9.59 9.59 0 0 0 2.941.568q.171.006.342.006c1.273 0 2.513-.249 3.69-.742l.008.004.313-.145a9.63 9.63 0 0 0 3.927-3.335c1.01-1.49 1.577-3.234 1.641-5.042.075-2.161-.643-4.304-2.133-6.371m-7.083 6.695c.328 1.244.264 2.44-.191 3.558-1.135-1.12-1.967-2.352-2.475-3.665-.543-1.404-.87-2.74-.974-3.975.48.157.922.366 1.315.622 1.132.737 1.914 1.902 2.325 3.461zm.207 6.022c.482.368.99.712 1.513 1.028-.771.21-1.565.302-2.369.273a8 8 0 0 1-.373-.022c.458-.394.869-.823 1.228-1.279zm1.347-6.431c-.516-1.957-1.527-3.437-3.002-4.398-.647-.421-1.385-.741-2.194-.95.011-.134.026-.268.043-.4.014-.113.03-.216.046-.313.133-.689.332-1.37.589-2.025.099-.25.206-.499.321-.74l.004-.008c.177-.358.376-.719.61-1.105l.092-.152-.003-.001c.544-.851 1.197-1.627 1.942-2.311l.288.341c.672.796 1.304 1.548 1.878 2.237 1.291 1.549 2.966 3.583 3.612 4.48 1.277 1.771 1.893 3.579 1.83 5.375-.049 1.395-.461 2.755-1.195 3.933-.694 1.116-1.661 2.05-2.8 2.708-.636-.318-1.559-.839-2.539-1.599.79-1.575.952-3.28.479-5.072zm-2.575 5.397c-.725.939-1.587 1.55-2.09 1.856-.081-.029-.163-.06-.243-.093l-.065-.026c-1.49-.616-2.747-1.656-3.635-3.01-.907-1.384-1.356-2.993-1.298-4.653.041-1.19.338-2.327.882-3.379.316-.07.638-.114.96-.131l.084-.002c.162-.003.324-.003.478 0 .227.011.454.035.677.07.073 1.513.445 3.145 1.105 4.852.637 1.644 1.694 3.162 3.144 4.515z"}, "github": {"h": "#181717", "p": "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"}, "gdrive": {"h": "#4285F4", "p": "M12.01 1.485c-2.082 0-3.754.02-3.743.047.01.02 1.708 3.001 3.774 6.62l3.76 6.574h3.76c2.081 0 3.753-.02 3.742-.047-.005-.02-1.708-3.001-3.775-6.62l-3.76-6.574zm-4.76 1.73a789.828 789.861 0 0 0-3.63 6.319L0 15.868l1.89 3.298 1.885 3.297 3.62-6.335 3.618-6.33-1.88-3.287C8.1 4.704 7.255 3.22 7.25 3.214zm2.259 12.653-.203.348c-.114.198-.96 1.672-1.88 3.287a423.93 423.948 0 0 1-1.698 2.97c-.01.026 3.24.042 7.222.042h7.244l1.796-3.157c.992-1.734 1.85-3.23 1.906-3.323l.104-.167h-7.249z"}, "gcal": {"h": "#4285F4", "p": "M18.316 5.684H24v12.632h-5.684V5.684zM5.684 24h12.632v-5.684H5.684V24zM18.316 5.684V0H1.895A1.894 1.894 0 0 0 0 1.895v16.421h5.684V5.684h12.632zm-7.207 6.25v-.065c.272-.144.5-.349.687-.617s.279-.595.279-.982c0-.379-.099-.72-.3-1.025a2.05 2.05 0 0 0-.832-.714 2.703 2.703 0 0 0-1.197-.257c-.6 0-1.094.156-1.481.467-.386.311-.65.671-.793 1.078l1.085.452c.086-.249.224-.461.413-.633.189-.172.445-.257.767-.257.33 0 .602.088.816.264a.86.86 0 0 1 .322.703c0 .33-.12.589-.36.778-.24.19-.535.284-.886.284h-.567v1.085h.633c.407 0 .748.109 1.02.327.272.218.407.499.407.843 0 .336-.129.614-.387.832s-.565.327-.924.327c-.351 0-.651-.103-.897-.311-.248-.208-.422-.502-.521-.881l-1.096.452c.178.616.505 1.082.977 1.401.472.319.984.478 1.538.477a2.84 2.84 0 0 0 1.293-.291c.382-.193.684-.458.902-.794.218-.336.327-.72.327-1.149 0-.429-.115-.797-.344-1.105a2.067 2.067 0 0 0-.881-.689zm2.093-1.931l.602.913L15 10.045v5.744h1.187V8.446h-.827l-2.158 1.557zM22.105 0h-3.289v5.184H24V1.895A1.894 1.894 0 0 0 22.105 0zm-3.289 23.5l4.684-4.684h-4.684V23.5zM0 22.105C0 23.152.848 24 1.895 24h3.289v-5.184H0v3.289z"}, "gmail": {"h": "#EA4335", "p": "M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"}, "google": {"h": "#4285F4", "p": "M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"}, "sharex": {"h": "#2885F1", "p": "M5.217 15.774v.054c.083 3.469 2.543 6.416 5.99 7.607h-.002c1.095.377 2.246.568 3.404.565 5.159 0 9.347-3.697 9.389-8.275a7.49 7.49 0 0 0-.563-2.668c-1.19 3.446-4.138 5.906-7.607 5.987h-.176c-2.01 0-3.854-.8-5.294-2.13-1.656-1.53-2.78-3.765-3.01-6.295-1.3 1.407-2.093 3.2-2.13 5.155Zm3.01-10.557H8.17c-3.36.08-6.23 2.39-7.49 5.669l-.117.32A10.408 10.408 0 0 0 0 14.608c0 5.159 3.697 9.347 8.275 9.389a7.49 7.49 0 0 0 2.668-.563c-3.446-1.19-5.906-4.138-5.987-7.607v-.176c0-2.01.8-3.854 2.13-5.296 1.53-1.656 3.765-2.78 6.296-3.01-1.407-1.3-3.2-2.093-5.155-2.129Zm7.601 13.566.324-.015c3.327-.223 6.129-2.636 7.283-5.974A10.36 10.36 0 0 0 24 9.392c0-5.16-3.697-9.347-8.275-9.39a7.49 7.49 0 0 0-2.668.563c3.446 1.19 5.906 4.14 5.987 7.607v.176c0 2.01-.8 3.854-2.13 5.294-1.53 1.656-3.765 2.78-6.295 3.01 1.407 1.3 3.2 2.094 5.155 2.13zM.002 8.275a7.49 7.49 0 0 0 .563 2.668c1.19-3.446 4.14-5.906 7.607-5.987h.176c2.01 0 3.854.8 5.294 2.13.334.31.643.643.925.999 1.146 1.436 1.9 3.27 2.085 5.297 1.3-1.407 2.094-3.2 2.13-5.155V8.17C18.7 4.703 16.24 1.756 12.795.564A10.408 10.408 0 0 0 9.393 0C4.23 0 .045 3.697.002 8.275Z"}, "notion": {"h": "#000000", "p": "M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z"}, "zapier": {"h": "#FF4F00", "p": "M4.157 0A4.151 4.151 0 0 0 0 4.161v15.678A4.151 4.151 0 0 0 4.157 24h15.682A4.152 4.152 0 0 0 24 19.839V4.161A4.152 4.152 0 0 0 19.839 0H4.157Zm10.61 8.761h.03a.577.577 0 0 1 .23.038.585.585 0 0 1 .201.124.63.63 0 0 1 .162.431.612.612 0 0 1-.162.435.58.58 0 0 1-.201.128.58.58 0 0 1-.23.042.529.529 0 0 1-.235-.042.585.585 0 0 1-.332-.328.559.559 0 0 1-.038-.235.613.613 0 0 1 .17-.431.59.59 0 0 1 .405-.162Zm2.853 1.572c.03.004.061.004.095.004.325-.011.646.064.937.219.238.144.431.355.552.609.128.279.189.582.185.888v.193a2 2 0 0 1 0 .219h-2.498c.003.227.075.45.204.642a.78.78 0 0 0 .646.265.714.714 0 0 0 .484-.136.642.642 0 0 0 .23-.318l.915.257a1.398 1.398 0 0 1-.28.537c-.14.159-.321.284-.521.355a2.234 2.234 0 0 1-.836.136 1.923 1.923 0 0 1-1.001-.245 1.618 1.618 0 0 1-.665-.703 2.221 2.221 0 0 1-.227-1.036 1.95 1.95 0 0 1 .48-1.398 1.9 1.9 0 0 1 1.3-.488Zm-9.607.023c.162.004.325.026.48.079.207.065.4.174.563.314.26.302.393.692.366 1.088v2.276H8.53l-.109-.711h-.065c-.064.163-.155.31-.272.439a1.122 1.122 0 0 1-.374.264 1.023 1.023 0 0 1-.453.083 1.334 1.334 0 0 1-.866-.264.965.965 0 0 1-.329-.801.993.993 0 0 1 .076-.431 1.02 1.02 0 0 1 .242-.363 1.478 1.478 0 0 1 1.043-.303h.952v-.181a.696.696 0 0 0-.136-.454.553.553 0 0 0-.438-.154.695.695 0 0 0-.378.086.48.48 0 0 0-.193.254l-.99-.144a1.26 1.26 0 0 1 .257-.563c.14-.174.321-.302.533-.378.261-.091.54-.136.82-.129.053-.003.106-.007.163-.007Zm4.384.007c.174 0 .347.038.506.114.182.083.34.211.458.374.257.423.377.911.351 1.406a2.53 2.53 0 0 1-.355 1.448 1.148 1.148 0 0 1-1.009.517c-.204 0-.401-.045-.582-.136a1.052 1.052 0 0 1-.48-.457 1.298 1.298 0 0 1-.114-.234h-.045l.004 1.784h-1.059v-4.713h.904l.117.805h.057c.068-.208.177-.401.328-.56a1.129 1.129 0 0 1 .843-.344h.076v-.004Zm7.559.084h.903l.113.805h.053a1.37 1.37 0 0 1 .235-.484.813.813 0 0 1 .313-.242.82.82 0 0 1 .39-.076h.234v1.051h-.401a.662.662 0 0 0-.313.008.623.623 0 0 0-.272.155.663.663 0 0 0-.174.26.683.683 0 0 0-.027.314v1.875h-1.054v-3.666Zm-17.515.003h3.262v.896L3.73 13.104l.034.113h1.973l.042.9H2.4v-.9l1.931-1.754-.045-.117H2.441v-.896Zm11.815 0h1.055v3.659h-1.055V10.45Zm3.443.684.019.016a.69.69 0 0 0-.351.045.756.756 0 0 0-.287.204c-.11.155-.174.336-.189.522h1.545c-.034-.526-.257-.787-.74-.787h.003Zm-5.718.163c-.026 0-.057 0-.083.004a.78.78 0 0 0-.31.053.746.746 0 0 0-.257.189 1.016 1.016 0 0 0-.204.695v.064c-.015.257.057.507.204.711a.634.634 0 0 0 .253.196.638.638 0 0 0 .314.061.644.644 0 0 0 .578-.265c.14-.223.204-.48.189-.74a1.216 1.216 0 0 0-.181-.711.677.677 0 0 0-.503-.257Zm-4.509 1.266a.464.464 0 0 0-.268.102.373.373 0 0 0-.114.276c0 .053.008.106.027.155a.375.375 0 0 0 .087.132.576.576 0 0 0 .397.11v.004a.863.863 0 0 0 .563-.182.573.573 0 0 0 .211-.457v-.14h-.903Z"}, "perplexity": {"h": "#1FB8CD", "p": "M22.3977 7.0896h-2.3106V.0676l-7.5094 6.3542V.1577h-1.1554v6.1966L4.4904 0v7.0896H1.6023v10.3976h2.8882V24l6.932-6.3591v6.2005h1.1554v-6.0469l6.9318 6.1807v-6.4879h2.8882V7.0896zm-3.4657-4.531v4.531h-5.355l5.355-4.531zm-13.2862.0676 4.8691 4.4634H5.6458V2.6262zM2.7576 16.332V8.245h7.8476l-6.1149 6.1147v1.9723H2.7576zm2.8882 5.0404v-3.8852h.0001v-2.6488l5.7763-5.7764v7.0111l-5.7764 5.2993zm12.7086.0248-5.7766-5.1509V9.0618l5.7766 5.7766v6.5588zm2.8882-5.0652h-1.733v-1.9723L13.3948 8.245h7.8478v8.087z"}, "kakao": {"h": "#FFCD00", "p": "M22.125 0H1.875C.8394 0 0 .8394 0 1.875v20.25C0 23.1606.8394 24 1.875 24h20.25C23.1606 24 24 23.1606 24 22.125V1.875C24 .8394 23.1606 0 22.125 0zM12 18.75c-.591 0-1.1697-.0413-1.7317-.1209-.5626.3965-3.813 2.6797-4.1198 2.7225 0 0-.1258.0489-.2328-.0141s-.0876-.2282-.0876-.2282c.0322-.2198.8426-3.0183.992-3.5333-2.7452-1.36-4.5701-3.7686-4.5701-6.5135C2.25 6.8168 6.6152 3.375 12 3.375s9.75 3.4418 9.75 7.6875c0 4.2457-4.3652 7.6875-9.75 7.6875zM8.0496 9.8672h-.8777v3.3417c0 .2963-.2523.5372-.5625.5372s-.5625-.2409-.5625-.5372V9.8672h-.8777c-.3044 0-.552-.2471-.552-.5508s.2477-.5508.552-.5508h2.8804c.3044 0 .552.2471.552.5508s-.2477.5508-.552.5508zm10.9879 2.9566a.558.558 0 0 1 .108.4167.5588.5588 0 0 1-.2183.371.5572.5572 0 0 1-.3383.1135.558.558 0 0 1-.4493-.2236l-1.3192-1.7479-.1952.1952v1.2273a.5635.5635 0 0 1-.5627.5628.563.563 0 0 1-.5625-.5625V9.3281c0-.3102.2523-.5625.5625-.5625s.5625.2523.5625.5625v1.209l1.5694-1.5694c.0807-.0807.1916-.1252.312-.1252.1404 0 .2814.0606.3871.1661.0985.0984.1573.2251.1654.3566.0082.1327-.036.2542-.1241.3425l-1.2818 1.2817 1.3845 1.8344zm-8.3502-3.5023c-.095-.2699-.3829-.5475-.7503-.5557-.3663.0083-.6542.2858-.749.5551l-1.3455 3.5415c-.1708.5305-.0217.7272.1333.7988a.8568.8568 0 0 0 .3576.0776c.2346 0 .4139-.0952.4678-.2481l.2787-.7297 1.7152.0001.2785.7292c.0541.1532.2335.2484.4681.2484a.8601.8601 0 0 0 .3576-.0775c.1551-.0713.3041-.2681.1329-.7999l-1.3449-3.5398zm-1.3116 2.4433l.5618-1.5961.5618 1.5961H9.3757zm5.9056 1.3836c0 .2843-.2418.5156-.5391.5156h-1.8047c-.2973 0-.5391-.2314-.5391-.5156V9.3281c0-.3102.2576-.5625.5742-.5625s.5742.2523.5742.5625v3.3047h1.1953c.2974 0 .5392.2314.5392.5156z"}, "youtube": {"h": "#FF0000", "p": "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"}, "tiktok": {"h": "#000000", "p": "M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"}, "instagram": {"h": "#FF0069", "p": "M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"}};
+const MONO={notebooklm:['N','#1A73E8'],vrew:['V','#5B50E6'],tripo:['T','#7C3AED'],clova:['클','#03C75A'],typecast:['타','#FF5A36'],genspark:['G','#2563EB'],removebg:['bg','#4F46E5'],stirling:['S','#D7263D'],copyq:['Q','#0EA5E9'],lossless:['L','#F59E0B'],gov:['G','#1F3A5F'],papago:['파','#2DB400'],sora:['S','#412991'],grok:['G','#111111'],wrtn:['뤼','#6B4EFF'],excel:['X','#217346'],hwp:['한','#2E74B5'],omni:['O','#8E75B2']};
+</script>
+<script>
+// ===== 실시간 설문·퀴즈 설정 (Firebase Realtime Database) — databaseURL이 비어 있으면 오프라인 모드 =====
+const LIVE={event:'sunam-2026-11-04'};
+const FB={apiKey:'AIzaSyDTJPommkcQjEOB-f3pFMXNY0Y3AKxmKZM',authDomain:'aistudy-7e06d.firebaseapp.com',databaseURL:'https://aistudy-7e06d-default-rtdb.asia-southeast1.firebasedatabase.app',projectId:'aistudy-7e06d',storageBucket:'aistudy-7e06d.firebasestorage.app',messagingSenderId:'224378011779',appId:'1:224378011779:web:f325386908338b25091bb6'};
+const POLLS=[
+  {id:'level',type:'survey',q:'AI, 어디까지 써 보셨어요?',opts:['안 써 봤다','가끔 물어본다','업무에 쓴다','유료로 구독 중']},
+  {id:'tool',type:'survey',q:'주로 쓰는 건?',opts:['챗GPT','제미나이','클로드','그 외 / 없음']},
+  {id:'video',type:'survey',q:'영상을 AI로 만든다면 목적은?',opts:['업무 안내·홍보 영상','취미 숏폼 (쇼츠·틱톡·릴스)','가족·개인 기록','관심 없음']},
+  {id:'vibe',type:'survey',q:'바이브코딩(말로 앱 만들기)은?',opts:['처음 듣는다','들어는 봤다','해 봤다']},
+  {id:'auto',type:'survey',q:'반복 업무 자동화에 관심은?',opts:['매우 있다','조금','없다']},
+  {id:'q1',type:'quiz',q:'퀴즈 ① 둘 중 AI가 쓴 안내문은?',opts:['A','B','둘 다','둘 다 아님'],correct:2,why:'둘 다 AI가 썼습니다. 구분이 안 되니 검토가 중요합니다.'},
+  {id:'q2',type:'quiz',q:'퀴즈 ② 한글 파일(hwpx)을 고쳐서 hwpx로 돌려주는 건?',opts:['챗GPT','제미나이','클로드','셋 다'],correct:2,why:'읽기는 셋 다 되지만, 파일로 돌려받는 건 지금은 클로드만.'},
+  {id:'q3',type:'quiz',q:'퀴즈 ③ 세 회사 중 영상 생성이 무료인 곳은?',opts:['챗GPT(Sora)','제미나이(Omni)','클로드','없음'],correct:3,why:'셋 다 유료. 그래서 오늘은 조립(브루)으로 만들었습니다.'},
+  {id:'q4',type:'quiz',q:'퀴즈 ④ 다음 중 AI에 넣어도 되는 것은?',opts:['학생 명단','공문 서식 예시','공무직 급여 내역','확정 안 된 예산안'],correct:1,why:'공개된 양식만. 개인정보와 미확정 내부 자료는 금지.'},
+  {id:'final',type:'survey',q:'내일 당장 써먹을 것 하나는?',opts:['ABA 프롬프트','표 사진→엑셀','hwpx 요약','브루로 영상','NotebookLM']}
+];
+</script>
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  slides.forEach((s,i)=>{s.dataset.n=String(i+1).padStart(2,'0');const n=s.querySelector('.num');if(n)n.textContent=i+1});
+  const counter=document.getElementById('counter'),blockname=document.getElementById('blockname'),blk2=document.getElementById('blk2'),progI=document.getElementById('progI');
+  let cur=0;
+  const hashIdx=parseInt((location.hash||'').replace('#s',''),10);
+  if(!isNaN(hashIdx)&&hashIdx>=1&&hashIdx<=slides.length)cur=hashIdx-1;
+  function show(i){
+    cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===cur));
+    counter.textContent=(cur+1)+' / '+slides.length;
+    const b=slides[cur].dataset.block||'';blockname.textContent=b;blk2.textContent=b;
+    progI.style.width=((cur+1)/slides.length*100)+'%';
+    try{history.replaceState(null,'','#s'+(cur+1))}catch(e){}
+    if(!document.body.classList.contains('handout')&&window.innerWidth>760)window.scrollTo({top:0});
+    fit();
+    // stop other demos, autoplay this slide's
+    slides.forEach((s,k)=>s.querySelectorAll('.demo[data-demo]').forEach(d=>{if(k!==cur&&d._stop)d._stop()}));
+    const d=slides[cur].querySelector('.demo[data-demo]');if(d&&d._play&&isDeck())setTimeout(()=>{if(slides[cur].classList.contains('active'))d._play()},500);
+  }
+  const isDeck=()=>!document.body.classList.contains('handout')&&window.innerWidth>760;
+  const deck=document.getElementById('deck');
+  function fit(){
+    const s=slides[cur];if(!isDeck()){slides.forEach(x=>{x.style.removeProperty('--s');x.style.removeProperty('--h')});return}
+    s.style.setProperty('--h','auto');s.style.setProperty('--s','1');
+    const h=Math.max(720,s.scrollHeight);
+    const aw=deck.clientWidth-24,ah=deck.clientHeight-24;
+    const sc=Math.min(aw/1280,ah/h);
+    s.style.setProperty('--h',h+'px');s.style.setProperty('--s',sc.toFixed(4));
+  }
+  window.addEventListener('resize',fit);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+  document.getElementById('prev').onclick=()=>show(cur-1);
+  document.getElementById('next').onclick=()=>show(cur+1);
+  document.addEventListener('keydown',e=>{
+    if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(cur+1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(cur-1)}
+    if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1);
+  });
+  let tx=null;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',e=>{if(tx===null||window.innerWidth<=760||document.body.classList.contains('handout'))return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>60)show(cur+(dx<0?1:-1));tx=null},{passive:true});
+  show(cur);
+
+  // toggles
+  const freeBtn=document.getElementById('freeBtn');
+  freeBtn.onclick=()=>{const on=document.body.classList.toggle('free-only');freeBtn.setAttribute('aria-pressed',on)};
+  const hBtn=document.getElementById('handoutBtn');
+  hBtn.onclick=()=>{const on=document.body.classList.toggle('handout');hBtn.setAttribute('aria-pressed',on);if(!on)show(cur)};
+  const todayBtn=document.getElementById('todayBtn');
+  todayBtn.onclick=()=>{const on=todayBtn.getAttribute('aria-pressed')!=='true';todayBtn.setAttribute('aria-pressed',on);document.querySelectorAll('#ranktbl tbody tr').forEach(r=>r.classList.toggle('dim',on&&!r.dataset.today))};
+
+  // copy
+  document.querySelectorAll('.copy').forEach(btn=>{
+    btn.onclick=()=>{
+      const pre=btn.closest('.mission,.slide').querySelector('pre.prompt');const txt=pre.textContent;
+      const done=()=>{btn.textContent='복사됨';btn.classList.add('done');setTimeout(()=>{btn.textContent='프롬프트 복사';btn.classList.remove('done')},1800)};
+      const fallback=()=>{const r=document.createRange();r.selectNodeContents(pre);const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='선택됨 — Ctrl+C'};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback)}else fallback();
+    };
+  });
+
+  // timers
+  document.querySelectorAll('.tim').forEach(t=>{
+    const total=parseInt(t.dataset.min,10)*60;let left=total,id=null;const disp=t.querySelector('.t'),st=t.querySelector('.start');
+    const fmt=s=>{const a=Math.abs(s);return (s<0?'-':'')+String(Math.floor(a/60)).padStart(2,'0')+':'+String(a%60).padStart(2,'0')};
+    const render=()=>{disp.textContent=fmt(left);t.classList.toggle('over',left<=0)};
+    st.onclick=()=>{if(id){clearInterval(id);id=null;st.textContent='계속';return}id=setInterval(()=>{left--;render()},1000);st.textContent='일시정지'};
+    t.querySelector('.reset').onclick=()=>{clearInterval(id);id=null;left=total;st.textContent='시작';render()};
+    render();
+  });
+
+  // stages
+  const stages=[...document.querySelectorAll('#stages .stage')];
+  stages.forEach((s,i)=>s.onclick=()=>stages.forEach((x,k)=>{x.classList.toggle('on',k===i);x.classList.toggle('done',k<i)}));
+
+  // usb: plug apps one by one
+  const usbSay=document.getElementById('usbSay');
+  document.querySelectorAll('#usb .apps .box').forEach(b=>b.onclick=()=>{b.classList.toggle('on');usbSay.textContent=b.classList.contains('on')?b.dataset.say:'';document.getElementById('usb').classList.toggle('plugged',!!document.querySelector('#usb .apps .box.on'))});
+
+  // settings walk-through
+  const s3=[...document.querySelectorAll('#steps3 button')];const sw=document.getElementById('sw');
+  s3.forEach((b,i)=>b.onclick=()=>{if(!b.classList.contains('ready'))return;b.classList.remove('ready');b.classList.add('done');if(s3[i+1])s3[i+1].classList.add('ready');if(i===2)sw.classList.add('off')});
+
+  // bars
+  const drawBars=()=>document.querySelectorAll('#bars .bar2 i').forEach(i=>{i.style.width='0';setTimeout(()=>i.style.width=i.dataset.w+'%',60)});
+  document.getElementById('barsBtn').onclick=drawBars;
+  new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)drawBars()}),{threshold:.3}).observe(document.getElementById('bars'));
+
+  // shortcut practice
+  const pta=document.getElementById('practiceTa'),pres=document.getElementById('practiceRes');
+  pta.addEventListener('keydown',e=>{if(e.key==='Enter'){if(e.shiftKey){pres.textContent='줄바꿈 성공. 이게 Shift+Enter입니다.';pres.className='res ok'}else{e.preventDefault();pres.textContent='전송됐습니다! (실수) — 줄을 바꾸려면 Shift+Enter';pres.className='res bad';pta.value=''}}});
+
+  // length calculator
+  const lr=document.getElementById('lenRange'),lo=document.getElementById('lenOut'),ln=document.getElementById('lenNote');
+  const calc=()=>{const s=+lr.value;lo.textContent=s+'초';const clips=Math.ceil(s/10);ln.innerHTML=`<b>생성형(Omni)</b>: 10초 클립 ${clips}개를 이어붙여야 함, 유료 크레딧 소모 · <b>조립형(브루)</b>: 대본 약 ${Math.round(s*5)}자 = 약 ${Math.ceil(s*5/100)}크레딧 (무료 월 200)`};
+  lr.oninput=calc;calc();
+
+  // script checker
+  const sta=document.getElementById('scriptTa'),sl=document.getElementById('scriptLines'),ss=document.getElementById('scriptSum');
+  sta.oninput=()=>{const lines=sta.value.split('\n').map(x=>x.replace(/\([^)]*\)|\[[^\]]*\]|^\s*\d+[.)]\s*/g,'').trim()).filter(Boolean);
+    sl.innerHTML=lines.map(x=>{const n=x.replace(/\s/g,'').length;return `<div class="${n>20?'long':''}"><span>${x}</span><span>${n}자</span></div>`}).join('');
+    const long=lines.filter(x=>x.replace(/\s/g,'').length>20).length;
+    ss.textContent=lines.length?`${lines.length}문장 (목표 6) · 20자 초과 ${long}개${lines.length===6&&!long?' — 통과, 브루로 가세요':''}`:'문장 수와 글자 수를 세어 20자 넘는 문장을 표시합니다.'};
+
+  // vrew ring
+  const vboxes=[...document.querySelectorAll('#v1,#v2,#v3,#v4,#v5,#v6,#v7,#v8')],ring=document.getElementById('vrewRing');
+  vboxes.forEach(c=>c.onchange=()=>{const p=Math.round(vboxes.filter(x=>x.checked).length/8*100);ring.style.setProperty('--p',p);ring.firstElementChild.textContent=p+'%'});
+
+  // ===== demo player (gif-like) =====
+  const DEMOS={
+    aba:[
+      {me:'학부모 안내문 써 줘. 바로 쓰지 말고, 필요한 정보가 있으면 나에게 먼저 질문해 줘.'},
+      {ai:'네, 안내문을 쓰기 전에 세 가지만 여쭙겠습니다.\n1. 안내 주제와 일시는 언제인가요?\n2. 신청 방법은 무엇인가요?\n3. 문의처는 어디로 안내할까요?'},
+      {me:'체육관 대관 신청 안내, 12월분 신청은 11/10~14, 행정실 방문 또는 이메일, 행정실 063-000-0000'},
+      {ai:'# 12월 체육관 대관 신청 안내\n- 신청 기간: 11. 10.(화) ~ 11. 14.(금)\n- 신청 방법: 행정실 방문 또는 이메일 접수\n- 문의: 행정실 063-000-0000\n감사합니다.'}
+    ],
+    m1:[
+      {me:'너는 초등학교 행정실 주무관이야. 교내 공사 기간 안내문을 학부모에게 보낼 공문체로 써 줘. 바로 쓰지 말고, 필요한 정보를 한 번에 3개 이내로 나에게 질문하고 내 답을 받은 뒤 써 줘.'},
+      {ai:'작성 전에 확인하겠습니다.\n1. 공사 내용과 기간은?\n2. 학생 안전을 위해 바뀌는 것(출입구, 통행로)은?\n3. 문의처 전화번호는?'},
+      {me:'급식실 환기 설비 교체, 11/17~28. 후문 통행 금지, 정문만 사용. 063-000-0000'},
+      {ai:'# 급식실 환기 설비 교체 공사 안내\n학부모님께, 학생 안전을 위해 아래와 같이 안내드립니다.\n- 공사 내용: 급식실 환기 설비 교체\n- 기간: 11. 17.(월) ~ 11. 28.(금)\n- 유의: 공사 기간 후문 통행 금지, 정문만 이용\n- 문의: 행정실 063-000-0000\n협조하여 주시기 바랍니다.'},
+      {sys:'→ 이 결과를 범정부 오피스 G서식변신에 넣으면 공문 서식으로 정렬'}
+    ],
+    m2:[
+      {me:'📎 견적서.png\n첨부한 사진 속 표를 읽어서 엑셀에 바로 붙일 수 있는 표로 바꿔 줘. 열 제목은 사진 그대로, 금액은 숫자만, 마지막 줄에 합계를 추가해 줘.'},
+      {sys:'이미지 분석 중…'},
+      {aiHtml:'표로 정리했습니다.<table><tr><th>품명</th><th>수량</th><th>단가</th><th>금액</th></tr><tr><td>A4 복사지(박스)</td><td>10</td><td>24,000</td><td>240,000</td></tr><tr><td>토너 CF283A</td><td>4</td><td>68,000</td><td>272,000</td></tr><tr><td>화이트보드 마커</td><td>30</td><td>900</td><td>27,000</td></tr><tr><td><b>합계</b></td><td></td><td></td><td><b>539,000</b></td></tr></table>드래그해서 복사한 뒤 엑셀에 붙여 넣으세요.'}
+    ],
+    excel:[
+      {me:'📎 물품대장.png\n첨부한 엑셀 화면에서 H5셀에 "C열이 \'납품완료\'인 행의 D열 금액 합계"가 나오게 하는 함수를 알려 줘. 한 줄로, 이유도 한 문장.'},
+      {ai:'=SUMIF(C:C,"납품완료",D:D)\n조건이 하나(납품완료)이고 더할 열이 하나(D열)라서 SUMIF가 가장 단순합니다. 조건이 둘 이상이면 SUMIFS를 씁니다.'},
+      {sys:'2단계 — 파일 자체를 올리면'},
+      {me:'📎 2026_물품구입.xlsx\n이 파일에서 월별 구입 금액 합계 표를 만들고, 가장 많이 산 품목 3개를 알려 줘.'},
+      {aiHtml:'월별 합계입니다.<table><tr><th>월</th><th>금액</th></tr><tr><td>9월</td><td>1,240,000</td></tr><tr><td>10월</td><td>2,815,000</td></tr></table>상위 품목: 복사지 · 토너 · 청소용품'},
+      {sys:'3단계 — 반복작업은 매크로로 (시연)'},
+      {me:'E6:E17 숫자 뒤에 "kg"을 붙이는 엑셀 매크로를 만들어 줘.'},
+      {aiHtml:'VBA 코드입니다. 엑셀에서 Alt+F11 → 삽입 → 모듈에 붙여넣고 Alt+F8로 실행하세요.<div class="mock"><span class="mfile">📋 Sub AddKg() … End Sub (복사)</span></div>'}
+    ],
+    hwpx:[
+      {sys:'챗GPT · 제미나이 · 클로드 공통'},
+      {me:'📎 수남초-8742_연수출강요청.hwpx\n이 공문에서 우리 학교가 해야 할 일, 제출 기한, 담당자 연락처를 세 줄로 정리해 줘.'},
+      {ai:'- 해야 할 일: 교직원 AI 활용 연수 강사 위촉 협조, 강사카드·원고 제출\n- 기한: 연수일 2026. 11. 4.(수) 13:30 이전\n- 담당: 담당자 홍길동, 063-000-0000'},
+      {sys:'여기부터는 클로드만 — 파일을 고쳐서 돌려받기'},
+      {me:'일시를 11월 20일로, 담당자를 홍길동으로 바꾸고 서식은 그대로 hwpx로 다시 줘.'},
+      {aiHtml:'본문 두 곳을 바꾸고 서식은 그대로 두었습니다.<div class="mock"><span class="mfile">📄 수남초-8742_연수출강요청_수정.hwpx</span></div>한글에서 열어 확인해 주세요.'}
+    ],
+    script:[
+      {me:'내가 사는 동네 [장수군 장수읍]의 가을을 자랑하는 1분 세로 숏폼 내레이션을 써 줘. 딱 6문장, 한 문장 20자 이내, 첫 문장은 질문으로…'},
+      {ai:'1. 가을에 장수 와 보셨어요? (사과밭 위 드론 샷)\n2. 빨간 사과가 산을 덮어요. (사과 클로즈업)\n3. 방화동 단풍길은 지금이 절정. (단풍 터널)\n4. 장날엔 국밥 한 그릇 어때요? (장터 김 나는 국밥)\n5. 밤엔 별이 쏟아집니다. (밤하늘)\n6. 올가을, 한 번 와 보세요. (마을 전경 노을)'},
+      {sys:'괄호 안 장면 설명 → 다음 단계 그림 프롬프트'}
+    ],
+    vibe:[
+      {me:'우리 학교 급식 알레르기 조회표를 한 화면짜리 웹페이지로 만들어 줘. 학년·반을 고르면 알레르기 항목별 학생 수가 보이고, 항목을 누르면 대체 식단 안내가 나오게. 데이터는 가상으로.'},
+      {sys:'코드 작성 중… (약 40초)'},
+      {aiHtml:'만들었습니다. 바로 눌러 보세요.<div class="mock"><div class="mrow"><span>3학년 ▾</span><span>2반 ▾</span></div><div class="mrow"><span>우유 4명</span><span>달걀 2명</span><span>땅콩 1명</span><span>밀 1명</span></div><div class="mbar" style="width:70%"></div><div class="mbar" style="width:35%"></div><div class="mbar" style="width:18%"></div><div class="mbar" style="width:18%"></div><small>우유 → 두유 대체 · 달걀 → 두부 대체</small></div>'},
+      {me:'알레르기 항목에 색을 넣어 줘.'},
+      {aiHtml:'색을 넣었습니다.<div class="mock"><div class="mrow"><span style="background:#dbeafe;color:#1d4ed8">우유 4명</span><span style="background:#fef3c7;color:#b45309">달걀 2명</span><span style="background:#fee2e2;color:#b91c1c">땅콩 1명</span><span style="background:#dcfce7;color:#15803d">밀 1명</span></div></div>'}
+    ],
+    mcp:[
+      {me:'내 드라이브에서 학교회계 집행 지침 파일을 찾아서, 11월에 학교가 제출해야 하는 서류와 마감일을 표로 정리해 줘. 각 마감일 3일 전에 내 구글 캘린더에 알림 일정을 만들어 줘.'},
+      {sys:'🔌 Google Drive 검색 중… "학교회계 집행 지침" 2건 발견'},
+      {sys:'📖 2026 학교회계 집행 지침(개정).pdf 읽는 중…'},
+      {aiHtml:'11월 제출 서류입니다.<table><tr><th>서류</th><th>마감</th></tr><tr><td>10월분 세출 결산 보고</td><td>11. 5.</td></tr><tr><td>물품 구매 실적 보고</td><td>11. 10.</td></tr><tr><td>시설 안전 점검 결과</td><td>11. 20.</td></tr><tr><td>겨울방학 시설 공사 계획</td><td>11. 28.</td></tr></table>'},
+      {sys:'📅 Google Calendar — 알림 일정 4건 생성 (11/2, 11/7, 11/17, 11/25)'},
+      {ai:'캘린더에 마감 3일 전 알림 4건을 만들었습니다. 각 일정에 서류 이름과 지침 페이지를 적어 두었습니다.'}
+    ]
+  };
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  document.querySelectorAll('.demo[data-demo]').forEach(d=>{
+    const steps=DEMOS[d.dataset.demo]||[];
+    d.innerHTML=`<div class="dtop"><i></i><i></i><i></i><span class="ttl">${d.dataset.title||''}</span><button class="dplay">▶ 재생</button></div><div class="dbody"></div><div class="dinput"><div class="box"></div><div class="send">↑</div></div>`;
+    const body=d.querySelector('.dbody'),box=d.querySelector('.dinput .box'),send=d.querySelector('.send'),play=d.querySelector('.dplay');
+    let run=0;
+    const add=(cls,html)=>{const m=document.createElement('div');m.className='dmsg '+cls;m.innerHTML=html;body.appendChild(m);body.scrollTop=body.scrollHeight;return m};
+    async function go(){
+      const my=++run;body.innerHTML='';box.textContent='';play.textContent='■ 정지';
+      for(const s of steps){
+        if(my!==run)return;
+        if(s.me){box.innerHTML='';for(let i=0;i<s.me.length;i++){if(my!==run)return;box.textContent=s.me.slice(0,i+1);await sleep(s.me.length>120?12:22)}
+          await sleep(350);send.classList.add('hit');await sleep(150);send.classList.remove('hit');add('me',esc(s.me));box.textContent='';await sleep(500)}
+        else if(s.sys){add('sys',esc(s.sys));await sleep(900)}
+        else if(s.ai){const t=add('ai','<span class="typing"><i></i><i></i><i></i></span>');await sleep(900);if(my!==run)return;t.innerHTML='';for(let i=0;i<s.ai.length;i+=2){if(my!==run)return;t.textContent=s.ai.slice(0,i+2);body.scrollTop=body.scrollHeight;await sleep(18)}await sleep(600)}
+        else if(s.aiHtml){const t=add('ai','<span class="typing"><i></i><i></i><i></i></span>');await sleep(1100);if(my!==run)return;t.innerHTML=s.aiHtml;body.scrollTop=body.scrollHeight;await sleep(800)}
+      }
+      if(my===run)play.textContent='↻ 다시 보기';
+    }
+    play.onclick=()=>{if(play.textContent.startsWith('■')){run++;play.textContent='▶ 재생'}else go()};
+    d._play=go;d._stop=()=>{run++;play.textContent='▶ 재생'};
+    // handout / mobile: autoplay once when scrolled into view
+    new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!isDeck()&&!d._played){d._played=true;go()}}),{threshold:.4}).observe(d);
+  });
+  // deck mode: resize after demo content grows is unnecessary (slide scrolls internally); re-fit on first paint
+  setTimeout(fit,50);
+  if(isDeck()){const d0=slides[cur].querySelector('.demo[data-demo]');if(d0)setTimeout(d0._play,700)}
+
+  // QR
+  const url=location.href.split('#')[0];
+  function makeQR(el,size){if(!window.QRCode)return;el.innerHTML='';try{new QRCode(el,{text:url,width:size,height:size,correctLevel:QRCode.CorrectLevel.M})}catch(e){}}
+  makeQR(document.getElementById('qr'),120);
+  const ov=document.getElementById('qrOverlay');
+  document.getElementById('qrBtn').onclick=()=>{makeQR(document.getElementById('qrbig'),340);document.getElementById('qrUrl').textContent=url;ov.hidden=false};
+  document.getElementById('qrClose').onclick=()=>ov.hidden=true;
+  ov.addEventListener('click',e=>{if(e.target===ov)ov.hidden=true});
+
+  // icons
+  document.querySelectorAll('.ico').forEach(el=>{const k=el.dataset.ico;const i=ICONS[k];
+    if(i){el.innerHTML='<svg viewBox="0 0 24 24" role="img" aria-label="'+k+'"><path fill="'+i.h+'" d="'+i.p+'"/></svg>';if(k==='elevenlabs'||k==='suno'||k==='notion'||k==='github'||k==='tiktok'||k==='x')el.querySelector('path').setAttribute('fill','currentColor')}
+    else if(MONO[k]){el.classList.add('mono');el.style.background=MONO[k][1];el.textContent=MONO[k][0]}});
+
+  // ===== LIVE polls / quizzes =====
+  const JOIN=/[?#]join/.test(location.href);
+  const K='A B C D E F'.split(' ');
+  const online=!!(FB.databaseURL&&window.firebase);
+  let ref=null;if(online){try{firebase.initializeApp(FB);const dbr=firebase.database();ref=path=>dbr.ref('events/'+LIVE.event+'/'+path)}catch(e){ref=null}}
+  const sb=ref;
+  const joinUrl=location.href.split('#')[0].split('?')[0]+'?join';
+  let state={current:null,reveal:false};let counts={};let local={};
+  const byId=id=>POLLS.find(p=>p.id===id);
+
+  async function setState(patch){
+    state={...state,...patch};renderAll();
+    if(sb)await sb('state').update({current:state.current,reveal:state.reveal,updated_at:Date.now()});
+  }
+  if(sb){
+    sb('answers').on('value',snap=>{const v=snap.val()||{};const c={};for(const poll in v){c[poll]={};for(const u in v[poll]){const ch=v[poll][u];c[poll][ch]=(c[poll][ch]||0)+1}}counts=c;renderAll()});
+    sb('state').on('value',snap=>{const v=snap.val()||{};state={current:v.current||null,reveal:!!v.reveal};renderAll();renderJoin()});
+  }
+
+  const blocks=[...document.querySelectorAll('.poll')];
+  function renderAll(){blocks.forEach(renderBlock)}
+  function renderBlock(el){
+    const p=byId(el.dataset.poll);if(!p)return;
+    const c=online?(counts[p.id]||{}):(local[p.id]||{});const total=Object.values(c).reduce((a,b)=>a+b,0);
+    const open=state.current===p.id;const rev=(state.reveal&&open)||el.dataset.revealed==='1';
+    el.classList.toggle('live',online&&open);
+    if(!el.dataset.built){
+      el.innerHTML='<div class="ph"><h3></h3><span class="st"></span><button class="b-open"></button><button class="b-rev">정답 공개</button></div><div class="opts"></div><div class="foot"><span class="dot"></span><span class="ft"></span><span class="joinqr"><div></div><span>폰 참여</span></span></div>';
+      el.dataset.built='1';
+      const qr=el.querySelector('.joinqr div');if(window.QRCode){try{new QRCode(qr,{text:joinUrl,width:58,height:58})}catch(e){}}
+      el.querySelector('.b-open').onclick=()=>{if(state.current===p.id)setState({current:null,reveal:false});else setState({current:p.id,reveal:false})};
+      el.querySelector('.b-rev').onclick=()=>{if(online)setState({reveal:true});else{el.dataset.revealed='1';renderBlock(el)}};
+      el.querySelector('.opts').innerHTML=p.opts.map((o,i)=>'<button class="o" data-i="'+i+'"><i></i><span class="k">'+K[i]+'</span><span>'+o+'</span><span class="n"></span></button>').join('');
+      el.querySelectorAll('.o').forEach(b=>b.onclick=()=>{if(online)return;local[p.id]=local[p.id]||{};local[p.id][b.dataset.i]=(local[p.id][b.dataset.i]||0)+1;renderBlock(el)});
+    }
+    el.querySelector('h3').textContent=p.q;
+    el.querySelector('.st').textContent=total?total+'명 응답':'';
+    const bo=el.querySelector('.b-open');bo.textContent=open?'■ 닫기':'▶ 열기';bo.classList.toggle('primary',!open);bo.disabled=!online;
+    const br=el.querySelector('.b-rev');br.hidden=p.type!=='quiz';br.disabled=rev;
+    el.querySelectorAll('.o').forEach(b=>{const i=+b.dataset.i,n=c[i]||0,pct=total?Math.round(n/total*100):0;
+      b.querySelector('i').style.width=pct+'%';b.querySelector('.n').textContent=total?n+' · '+pct+'%':'';
+      b.classList.toggle('correct',rev&&p.type==='quiz'&&p.correct===i);b.classList.toggle('wrong',rev&&p.type==='quiz'&&p.correct!==i)});
+    const ft=el.querySelector('.ft');
+    ft.textContent=online?(open?'참가자 폰에 이 질문이 떠 있습니다':'열기를 누르면 참가자 폰에 뜹니다'):'오프라인 모드 — 손 들게 하고 강사가 직접 눌러 집계';
+    if(rev&&p.why)ft.textContent=p.why;
+  }
+  renderAll();
+
+  let uid=null;try{uid=localStorage.getItem('live_uid');if(!uid){uid=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('live_uid',uid)}}catch(e){uid='u'+Math.random().toString(36).slice(2)}
+  let mine={};try{mine=JSON.parse(localStorage.getItem('live_mine')||'{}')}catch(e){}
+  const jq=document.getElementById('jq'),jmsg=document.getElementById('jmsg');
+  function renderJoin(){
+    if(!JOIN)return;
+    const p=byId(state.current);
+    if(!online){jq.innerHTML='<div class="jwait"><b>⚠</b>실시간 기능이 아직 설정되지 않았습니다</div>';return}
+    if(!p){jq.innerHTML='<div class="jwait"><b>☕</b>지금은 열린 질문이 없습니다.<br>강사가 열면 여기 뜹니다.</div>';jmsg.textContent='';return}
+    const my=mine[p.id];
+    jq.innerHTML='<span class="eyebrow">'+(p.type==='quiz'?'퀴즈':'설문')+'</span><h2>'+p.q+'</h2><div class="jo">'+p.opts.map((o,i)=>'<button data-i="'+i+'" class="'+(my===i?'sel':'')+' '+(state.reveal&&p.type==='quiz'?(p.correct===i?'correct':'wrong'):'')+'"><b>'+K[i]+'</b>'+o+'</button>').join('')+'</div>';
+    jq.querySelectorAll('.jo button').forEach(b=>b.onclick=async()=>{
+      if(state.reveal)return;const i=+b.dataset.i;mine[p.id]=i;try{localStorage.setItem('live_mine',JSON.stringify(mine))}catch(e){}
+      renderJoin();jmsg.textContent='보내는 중…';
+      try{await sb('answers/'+p.id+'/'+uid).set(i);jmsg.textContent='제출됐습니다. 바꾸려면 다른 답을 누르세요.'}catch(e){jmsg.textContent='전송 실패 — 다시 눌러 주세요'}
+    });
+    if(state.reveal&&p.type==='quiz')jmsg.textContent=(my===p.correct?'정답입니다. ':'아쉽네요. ')+(p.why||'');
+    else if(my!=null)jmsg.textContent='제출됐습니다. 바꾸려면 다른 답을 누르세요.';
+    else jmsg.textContent='';
+  }
+  if(JOIN){document.body.classList.add('join');renderJoin()}
+})();
+</script>
+</body></html>
