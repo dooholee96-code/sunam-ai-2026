@@ -1,0 +1,6 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", ".firebaserc", "**/.*", "**/node_modules/**", "ai-desk-2026.html", "build.js", "*.md", "firebase_rules.json"]
+  }
+}
