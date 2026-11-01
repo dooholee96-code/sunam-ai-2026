@@ -2,8 +2,8 @@
 
 ## 파일
 - `ai-desk-2026.html` — 원본(소스). claude.ai 아티팩트용 형식(doctype/head 없음). 여기만 수정한다.
-- `build.js` — 원본에 doctype/head를 씌워 `site/index.html` 생성 + 인라인 스크립트 문법 검사. `node build.js`
-- `site/index.html` — GitHub Pages에 올리는 최종 파일 (Firebase 설정값 포함)
+- `build.js` — 원본에 doctype/head를 씌워 루트 `index.html` 생성 + 인라인 스크립트 문법 검사. `node build.js`
+- `index.html` — GitHub Pages 배포본 (Firebase 설정값 포함, build.js가 생성)
 - `firebase_rules.json` — Realtime Database 규칙 (연수 당일용 개방, 끝나면 `.write`를 false로)
 
 ## 구조 (27장, 4블록)
@@ -21,7 +21,7 @@
 - 아이콘: `ICONS`(Simple Icons 경로 내장) + `MONO`(머리글자 배지).
 
 ## 남은 일
-1. GitHub 저장소 `sunam-ai-2026`(Public) → `site/index.html`을 루트 `index.html`로 커밋 → Settings→Pages→main/(root)
+1. (완료: 저장소·커밋) Settings→Pages→Deploy from a branch→main/(root) 켜기 → https://dooholee96-code.github.io/sunam-ai-2026/
 2. 리허설(11/3): PC에서 설문 ▶열기 → 폰 QR → 막대 확인. 테스트 답은 Firebase 콘솔에서 삭제.
 3. 바이브코딩 슬라이드(22)에 강사 제작물 캡처 2~3장 (출석부 앱, 게임 등) — 현재 텍스트 카드만.
 4. 대본 문서(claude.ai Docs, "수남초 AI 연수 강의 대본")는 번호·내용이 옛 버전 — 27장 기준으로 블록별 재작성 필요.
