@@ -20,7 +20,7 @@
 - 데스크톱: 1280×720 기준 자동 스케일, ←→ 넘김, `#sN` 해시(각 슬라이드 id=sN). 폰·"전체 보기": 세로 교재 모드(해시로 해당 장까지 스크롤). 배포본은 `data-theme="light"`로 밝은 모드 고정.
 - 상단: 무료만 보기(유료 흐리게) / 전체 보기 / QR(현재 주소).
 - 미션 카드: 프롬프트 복사 + 타이머. 시연 플레이어(`.demo[data-demo]`, `DEMOS` 객체)는 슬라이드 진입 시 자동 재생.
-- 실시간 설문·퀴즈: `POLLS` 배열, Firebase RTDB `events/sunam-2026-11-04/{state,answers}`. 참가자 화면은 같은 주소 `?join`.
+- 실시간 설문·퀴즈: `POLLS` 배열, Firebase RTDB `events/sunam-2026-11-04/{state,answers}`. 참가자는 QR 한 번: 교재 화면(같은 주소)을 폰으로 열어 두면 강사가 질문을 열 때 화면 아래 `#livebar`에 설문·퀴즈가 뜨고 그 자리에서 답한다(760px 이하 또는 전체 보기 모드에서만 보임). 설문만 보는 별도 화면 `?join`도 그대로 있다. 설문 카드의 작은 QR도 교재 주소.
   `FB.databaseURL`이 비면 오프라인 모드(강사가 클릭 집계). claude.ai 아티팩트에서는 CSP로 Firebase가 막혀 항상 오프라인 — Pages 주소에서만 실시간.
 - 아이콘: `ICONS`(Simple Icons 경로 내장) + `MONO`(머리글자 배지).
 

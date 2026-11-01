@@ -242,19 +242,25 @@ body.join>*{display:none!important}
 body.join{display:block}
 body.join #joinview{display:flex!important;flex-direction:column;gap:14px;max-width:520px;margin:0 auto;padding-block:20px;min-height:100%}
 #joinview{display:none}
-#joinview .jtop{font-family:var(--font-display);font-weight:800;color:var(--navy);font-size:1.1rem}
-#joinview .jq{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px -20px rgba(0,0,0,.4)}
-#joinview .jq h2{font-size:1.25rem}
-#joinview .jq h2::after{display:none}
-#joinview .jo{display:flex;flex-direction:column;gap:8px}
-#joinview .jo button{border:1.5px solid var(--line);background:var(--paper2);color:var(--ink);border-radius:10px;padding:14px 14px;text-align:left;font-size:1rem;display:flex;gap:10px;align-items:center}
-#joinview .jo button b{color:var(--navy);min-width:1.4em}
-#joinview .jo button.sel{border-color:var(--navy);background:var(--navy-soft);font-weight:600}
-#joinview .jo button.correct{border-color:var(--free);background:var(--free-soft)}
-#joinview .jo button.wrong{opacity:.5}
-#joinview .jmsg{font-size:.92rem;color:var(--ink2);min-height:1.4em}
-#joinview .jwait{text-align:center;padding:30px 10px;color:var(--ink2)}
-#joinview .jwait b{display:block;font-size:2.4rem;margin-bottom:6px}
+#joinview .jtop, #livebar .jtop{font-family:var(--font-display);font-weight:800;color:var(--navy);font-size:1.1rem}
+#joinview .jq, #livebar .jq{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px -20px rgba(0,0,0,.4)}
+#joinview .jq h2, #livebar .jq h2{font-size:1.25rem}
+#joinview .jq h2::after, #livebar .jq h2::after{display:none}
+#joinview .jo, #livebar .jo{display:flex;flex-direction:column;gap:8px}
+#joinview .jo button, #livebar .jo button{border:1.5px solid var(--line);background:var(--paper2);color:var(--ink);border-radius:10px;padding:14px 14px;text-align:left;font-size:1rem;display:flex;gap:10px;align-items:center}
+#joinview .jo button b, #livebar .jo button b{color:var(--navy);min-width:1.4em}
+#joinview .jo button.sel, #livebar .jo button.sel{border-color:var(--navy);background:var(--navy-soft);font-weight:600}
+#joinview .jo button.correct, #livebar .jo button.correct{border-color:var(--free);background:var(--free-soft)}
+#joinview .jo button.wrong, #livebar .jo button.wrong{opacity:.5}
+#joinview .jmsg, #livebar .jmsg{font-size:.92rem;color:var(--ink2);min-height:1.4em}
+#joinview .jwait, #livebar .jwait{text-align:center;padding:30px 10px;color:var(--ink2)}
+#joinview .jwait b, #livebar .jwait b{display:block;font-size:2.4rem;margin-bottom:6px}
+#livebar{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:3px solid var(--navy);box-shadow:0 -12px 30px -20px rgba(0,0,0,.5);max-height:62vh;overflow:auto}
+#livebar .jq{box-shadow:none;padding:12px}
+#livebar .jq h2{font-size:1.1rem}
+#livebar .jo button{padding:11px 12px}
+@media (min-width:761px){body:not(.handout) #livebar{display:none!important}}
+body.join #livebar{display:none!important}
 
 /* demo player (gif-like chat replay) */
 .demo{border:1px solid var(--line);border-radius:10px;background:var(--paper2);overflow:hidden;display:flex;flex-direction:column}
@@ -359,7 +365,7 @@ body.handout .counter{display:none}
     <div class="card">
       <h3>이 화면을 폰으로 열기</h3>
       <div id="qrbox"><div id="qr"></div>
-        <p class="note">오늘 쓰는 프롬프트가 전부 여기 있습니다. 컴퓨터가 말을 안 들으면 폰으로 그대로 따라오세요. 각 미션 카드의 <b>복사</b> 버튼을 누르면 됩니다.</p></div>
+        <p class="note"><b>한 번만 찍으면 됩니다.</b> 오늘 쓰는 프롬프트가 전부 여기 있고, 설문·퀴즈도 강사가 열면 이 화면 아래에 바로 뜹니다. 컴퓨터가 말을 안 들으면 폰으로 그대로 따라오세요. 각 미션 카드의 <b>복사</b> 버튼을 누르면 됩니다.</p></div>
     </div>
   </div>
   <p class="note">강사: 무주교육지원청 교육지원과 이두호 · 예시는 학교지만 어느 사무실에나 같은 방식 · 참가자 도구는 전부 무료 계정 기준 · <span class="tag paid">👑 유료</span> 표시는 강사 시연</p>
@@ -951,6 +957,7 @@ body.handout .counter{display:none}
   <button id="next">다음 ▶</button>
 </nav>
 
+<div id="livebar" hidden><div class="jq" id="lbq"></div><div class="jmsg" id="lbmsg"></div></div>
 <div id="joinview">
   <div class="jtop">공무원 책상 위의 AI · 참가자 화면</div>
   <div class="jq" id="jq"><div class="jwait"><b>…</b>연결 중</div></div>
@@ -1230,7 +1237,7 @@ const POLLS=[
     if(!el.dataset.built){
       el.innerHTML='<div class="ph"><h3></h3><span class="st"></span><button class="b-open"></button><button class="b-rev">정답 공개</button></div><div class="opts"></div><div class="foot"><span class="dot"></span><span class="ft"></span><span class="joinqr"><div></div><span>폰 참여</span></span></div>';
       el.dataset.built='1';
-      const qr=el.querySelector('.joinqr div');if(window.QRCode){try{new QRCode(qr,{text:joinUrl,width:58,height:58})}catch(e){}}
+      const qr=el.querySelector('.joinqr div');if(window.QRCode){try{new QRCode(qr,{text:location.href.split('#')[0].split('?')[0],width:58,height:58})}catch(e){}}
       el.querySelector('.b-open').onclick=()=>{if(state.current===p.id)setState({current:null,reveal:false});else setState({current:p.id,reveal:false})};
       el.querySelector('.b-rev').onclick=()=>{if(online)setState({reveal:true});else{el.dataset.revealed='1';renderBlock(el)}};
       el.querySelector('.opts').innerHTML=p.opts.map((o,i)=>'<button class="o" data-i="'+i+'"><i></i><span class="k">'+K[i]+'</span><span>'+o+'</span><span class="n"></span></button>').join('');
@@ -1251,10 +1258,11 @@ const POLLS=[
 
   let uid=null;try{uid=localStorage.getItem('live_uid');if(!uid){uid=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('live_uid',uid)}}catch(e){uid='u'+Math.random().toString(36).slice(2)}
   let mine={};try{mine=JSON.parse(localStorage.getItem('live_mine')||'{}')}catch(e){}
-  const jq=document.getElementById('jq'),jmsg=document.getElementById('jmsg');
+  const livebar=document.getElementById('livebar');
+  const jq=JOIN?document.getElementById('jq'):document.getElementById('lbq'),jmsg=JOIN?document.getElementById('jmsg'):document.getElementById('lbmsg');
   function renderJoin(){
-    if(!JOIN)return;
     const p=byId(state.current);
+    if(!JOIN){livebar.hidden=!(online&&p);if(livebar.hidden)return}
     if(!online){jq.innerHTML='<div class="jwait"><b>⚠</b>실시간 기능이 아직 설정되지 않았습니다</div>';return}
     if(!p){jq.innerHTML='<div class="jwait"><b>☕</b>지금은 열린 질문이 없습니다.<br>강사가 열면 여기 뜹니다.</div>';jmsg.textContent='';return}
     const my=mine[p.id];
@@ -1268,6 +1276,6 @@ const POLLS=[
     else if(my!=null)jmsg.textContent='제출됐습니다. 바꾸려면 다른 답을 누르세요.';
     else jmsg.textContent='';
   }
-  if(JOIN){document.body.classList.add('join');renderJoin()}
+  if(JOIN)document.body.classList.add('join');renderJoin();
 })();
 </script>
