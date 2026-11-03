@@ -358,7 +358,7 @@ body.handout .counter{display:none}
       <table>
         <tr><td class="n">13:30</td><td>① 세 AI, 어디까지 왔나 — 비교와 화면</td></tr>
         <tr><td class="n">13:46</td><td>② 문서·업무 실습 (공문·엑셀·hwpx)</td></tr>
-        <tr><td class="n">14:19</td><td>③ AI 영상 1분짜리 직접 만들기</td></tr>
+        <tr><td class="n">14:19</td><td>③ AI 영상 — 만들기와 다듬기</td></tr>
         <tr><td class="n">14:42</td><td>④ 바이브코딩·행동하는 AI·보안</td></tr>
         <tr><td class="n">15:00</td><td>질문·정리</td></tr>
       </table>
@@ -662,7 +662,7 @@ body.handout .counter{display:none}
 <!-- 18 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
   <span class="num">18</span>
-  <div class="head"><span class="eyebrow">AI 영상, 2026년의 현실</span><h2>"생성"은 유료, 그래서 오늘은 "조립"</h2></div>
+  <div class="head"><span class="eyebrow">AI 영상은 두 가지</span><h2>AI로 <b>만드는</b> 영상, 찍은 영상을 AI로 <b>다듬기</b></h2></div>
   <div class="tbl"><table>
     <thead><tr><th>서비스</th><th>영상 생성</th><th>조건</th></tr></thead>
     <tbody>
@@ -672,7 +672,7 @@ body.handout .counter{display:none}
   <div class="cols">
     <div class="card"><h3>학교에 필요한 건</h3><p>10초짜리 신기한 영상이 아니라 <b>1분짜리 안내 영상</b>. 대본 + 목소리 + 자막 + 그림을 조립하면 됩니다.</p></div>
     <div class="card"><h3>오늘의 조립 재료 (전부 무료)</h3><p>대본 → 챗GPT · 그림 → 제미나이 · 목소리·자막·편집 → <b>브루(Vrew)</b>. 이미 PPT·PDF가 있으면 브루 "슬라이드로 비디오"로 바로.</p></div>
-    <div class="card"><h3>브루 하나로 끝내는 이유</h3><p>대본·목소리·자막·그림·내보내기가 한 화면이고, 한국어 UI에 무료 월 200크레딧.</p></div>
+    <div class="card"><h3>찍은 영상 다듬기도 브루로</h3><p>행사·수업 촬영본을 넣으면 말소리가 자막이 되고, <b>자막 글자를 지우면 영상도 같이 잘립니다.</b> 한국어 UI, 무료 월 200크레딧.</p></div>
     <div class="card"><h3>영상 길이를 움직여 보세요</h3>
       <div class="calc"><input type="range" id="lenRange" min="10" max="180" step="10" value="60"><output id="lenOut">60초</output></div>
       <p class="note" id="lenNote"></p></div>
@@ -682,13 +682,14 @@ body.handout .counter{display:none}
 <!-- 19 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
   <span class="num">19</span>
-  <div class="head"><span class="eyebrow">지금부터 20분</span><h2>영상 제작 3단계</h2></div>
-  <div class="stages" id="stages" style="grid-template-columns:repeat(3,1fr)">
-    <button class="stage on"><b>1 · 대본</b><span>챗GPT · 6문장</span><small>4분</small></button>
-    <button class="stage"><b>2 · 브루 조립</b><span>목소리 · 그림(AI 생성) · 자막</span><small>14분 (강사 한 바퀴 3 + 실습 11)</small></button>
-    <button class="stage"><b>3 · 내보내기</b><span>720p → 폰으로</span><small>2분</small></button>
+  <div class="head"><span class="eyebrow">지금부터 20분</span><h2>영상 4단계: 만들고, 다듬고, 올리기</h2></div>
+  <div class="stages" id="stages" style="grid-template-columns:repeat(4,1fr)">
+    <button class="stage on"><b>1 · 대본</b><span>챗GPT · 6문장</span><small>3분</small></button>
+    <button class="stage"><b>2 · 만들기</b><span>브루 텍스트로 비디오 · 목소리·그림·자막</span><small>8분 (강사 한 바퀴 2 + 실습 6)</small></button>
+    <button class="stage"><b>3 · 다듬기</b><span>시로 샘플 영상 · 자르기·자막 고치기</span><small>6분</small></button>
+    <button class="stage"><b>4 · 내보내기·올리기</b><span>720p → 폰 · 유튜브 일부 공개</span><small>3분</small></button>
   </div>
-  <p class="lead">그림까지 브루 안에서 만듭니다. 그림을 직접 고르고 싶은 분만 제미나이를 씁니다. 끝까지 가는 게 중요합니다.</p>
+  <p class="lead">앞의 둘은 <b>AI가 만드는 영상</b>, 셋째는 <b>찍은 영상을 AI로 다듬는</b> 연습입니다. 끝까지 가는 게 중요합니다.</p>
 </section>
 
 <!-- 20 -->
@@ -697,7 +698,7 @@ body.handout .counter{display:none}
   <div class="head"><span class="eyebrow">미션 5-1 · 대본</span><h2>6문장 내레이션</h2><span class="time">챗GPT 또는 제미나이, 새 대화방</span></div>
   <div class="mission">
     <div class="mhead"><h3>괄호 안만 바꾸기 — 동네 이름과 자랑거리</h3><span class="tag free">무료</span>
-      <div class="tim" data-min="4"><span class="t">04:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+      <div class="tim" data-min="3"><span class="t">03:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
     <pre class="prompt">내가 사는 동네 [장수군 장수읍]의 가을을 자랑하는 1분 세로 숏폼 내레이션을 써 줘.
 - 자랑거리: [사과, 방화동 단풍, 마을 장날]
 - 조건: 딱 6문장, 한 문장 20자 이내, 구어체, 첫 문장은 질문으로, 마지막 문장은 "올가을, 한 번 와 보세요"로.
@@ -722,10 +723,10 @@ body.handout .counter{display:none}
 <!-- 22 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
   <span class="num">22</span>
-  <div class="head"><span class="eyebrow">미션 5-2 · 브루 조립</span><h2>브루(Vrew)에서 목소리·그림·자막 한 번에</h2></div>
+  <div class="head"><span class="eyebrow">미션 5-2 · AI로 만들기</span><h2>브루(Vrew)에서 목소리·그림·자막 한 번에</h2></div>
   <div class="mission">
     <div class="mhead"><h3>순서대로 — 화면 왼쪽 위부터</h3><span class="tag free">무료 월 200크레딧 · 1분 영상 ≈ 10크레딧</span><span class="ring" id="vrewRing" style="--p:0"><span>0%</span></span>
-      <div class="tim" data-min="11"><span class="t">11:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+      <div class="tim" data-min="6"><span class="t">06:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
     <ol class="checks" style="padding-left:0">
       <li><input type="checkbox" id="v1"><label for="v1">브루 실행 → 로그인 → <b>새로 만들기</b> → <b>텍스트로 비디오 만들기</b></label></li>
       <li><input type="checkbox" id="v2"><label for="v2">화면 비율 <b>쇼츠(9:16)</b> 선택 → 비디오 스타일은 아무거나</label></li>
@@ -733,8 +734,8 @@ body.handout .counter{display:none}
       <li><input type="checkbox" id="v4"><label for="v4">AI 목소리: 한국어 하나 고르고 <b>미리듣기</b>(미리듣기는 크레딧 소모 없음)</label></li>
       <li><input type="checkbox" id="v5"><label for="v5">이미지: <b>AI 이미지 생성</b> 선택 (Basic 모델, 1크레딧/장). 직접 만든 그림이 있으면 "내 파일"</label></li>
       <li><input type="checkbox" id="v6"><label for="v6"><b>만들기</b> → 문장마다 그림·목소리·자막이 생긴 걸 확인</label></li>
-      <li><input type="checkbox" id="v7"><label for="v7">틀린 자막은 클릭해서 고치기 · 마음에 안 드는 그림은 클릭 → <b>이미지 교체</b>(다시 생성 또는 내 파일)</label></li>
-      <li><input type="checkbox" id="v8"><label for="v8">오른쪽 <b>자막 서식</b>에서 글자 크게·배경 넣기 → <b>배경음악</b> 무료 에셋 하나, 볼륨 낮게</label></li>
+      <li><input type="checkbox" id="v7"><label for="v7"><i>끝난 분</i> · 틀린 자막은 클릭해서 고치기 · 마음에 안 드는 그림은 클릭 → <b>이미지 교체</b>(다시 생성 또는 내 파일)</label></li>
+      <li><input type="checkbox" id="v8"><label for="v8"><i>끝난 분</i> · 오른쪽 <b>자막 서식</b>에서 글자 크게·배경 넣기 → <b>배경음악</b> 무료 에셋 하나, 볼륨 낮게</label></li>
     </ol>
   </div>
   <div class="cols" style="grid-template-columns:repeat(4,1fr)">
@@ -748,23 +749,34 @@ body.handout .counter{display:none}
 <!-- 23 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
   <span class="num">23</span>
-  <div class="head"><span class="eyebrow">미션 5-2 · 한 걸음 더</span><h2>브루, 이것도 됩니다</h2><span class="time">각자 조립하는 동안 참고 · 끝난 분부터</span></div>
-  <div class="cols" style="grid-template-columns:repeat(3,1fr)">
-    <div class="card"><h3>그림을 직접 고르고 싶으면</h3><p>제미나이에 "세로 9:16, 따뜻한 수채화 일러스트, [장면 설명], 사람 얼굴·글자 없이" → 다운로드 → 7번에서 "내 파일"로 교체. 같은 스타일로 3~4장이면 충분.</p></div>
-    <div class="card"><h3>업무용 지름길: PDF·슬라이드로 비디오</h3><p>새로 만들기 → <b>슬라이드로 비디오 만들기</b>에 설명회 PPT·지침 PDF를 넣으면 장마다 내레이션 영상. 안내 영상은 이게 제일 빠릅니다.</p></div>
-    <div class="card"><h3>촬영한 영상도</h3><p>행사 촬영본을 넣으면 자막 자동, 무음 삭제, 장면 전환 감지, 번역 자막 + AI 더빙. "내 목소리 만들기"는 한 문장 녹음.</p></div>
+  <div class="head"><span class="eyebrow">미션 5-3 · 찍은 영상 다듬기</span><h2>시로 샘플 영상의 흠 다섯 개 고치기</h2><span class="time">모두 같은 영상 · 얼굴 없음 · 흠은 일부러 심어 둠</span></div>
+  <div class="mission">
+    <div class="mhead"><h3>연수자료 폴더 <b>시로_샘플.mp4</b> (폰은 아래 링크)</h3><span class="tag free">무료</span><span class="ring" id="trimRing" style="--p:0"><span>0%</span></span>
+      <div class="tim" data-min="6"><span class="t">06:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <ol class="checks" style="padding-left:0">
+      <li><input type="checkbox" id="t1"><label for="t1">브루 <b>새로 만들기</b> → <b>PC에서 비디오·오디오 불러오기</b> → 시로_샘플.mp4 → 언어 한국어 → 말소리가 자막으로 자동 정리</label></li>
+      <li><input type="checkbox" id="t2"><label for="t2">흠 1 · 앞 6초, 목록 화면만 나오는 클립 → 선택하고 <b>삭제</b></label></li>
+      <li><input type="checkbox" id="t3"><label for="t3">흠 2 · 중간에 화면이 멈춘 6초 → 위 메뉴 <b>무음 구간 줄이기</b></label></li>
+      <li><input type="checkbox" id="t4"><label for="t4">흠 3 · "음… 그러니까…" 군말 → 그 자막 글자를 지우면 <b>영상도 같이 잘림</b></label></li>
+      <li><input type="checkbox" id="t5"><label for="t5">흠 4 · 잘못 받아 적힌 자막 하나 → 클릭해서 <b>V60</b>으로 고치기</label></li>
+      <li><input type="checkbox" id="t6"><label for="t6">흠 5 · 소리가 심심함 → <b>배경음악</b> 무료 에셋 하나, 볼륨 낮게</label></li>
+    </ol>
   </div>
-  <p class="lead">오늘은 6문장 영상 한 편을 끝까지 내보내는 것까지. 위 세 가지는 돌아가서 해 보세요.</p>
+  <div class="cols" style="grid-template-columns:repeat(3,1fr)">
+    <div class="card"><h3>집에서는 내 폰 영상으로</h3><p>순서가 똑같습니다. 행사 촬영본이면 자막 자동, 무음 삭제, 번역 자막까지.</p></div>
+    <div class="card"><h3>업무용 지름길</h3><p>설명회 PPT·지침 PDF는 <b>슬라이드로 비디오 만들기</b>로. 장마다 내레이션이 붙습니다.</p></div>
+    <div class="card"><h3>폰으로 하는 분</h3><p><a href="samples/shiro-sample.mp4" target="_blank" rel="noopener">시로_샘플.mp4 내려받기</a> → 브루 앱 → 새 프로젝트 → 갤러리에서 고르기.</p></div>
+  </div>
 </section>
 
 <!-- 24 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
   <span class="num">24</span>
-  <div class="head"><span class="eyebrow">미션 5-3 · 내보내기</span><h2>720p로 내보내고 폰으로 보내기</h2></div>
+  <div class="head"><span class="eyebrow">미션 5-4 · 내보내기·올리기</span><h2>720p로 내보내고, 올리기 전에 세 가지</h2></div>
   <div class="mission">
     <div class="mhead"><h3>오른쪽 위 내보내기 → 영상 파일 → 720p</h3><span class="tag free">무료는 워터마크 + 720p</span>
-      <div class="tim" data-min="2"><span class="t">02:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
-    <ul><li>1분 영상은 보통 1분 안에 나옵니다. 무료는 구석에 브루 워터마크(라이트 플랜부터 제거)</li><li>폰으로 보내기: 구글 드라이브에 올리거나 카카오톡 "나에게 보내기"(PC 카톡 로그인 필요). 폰 브루 앱은 갤러리에 바로 저장 — 오늘 집에 가져가는 결과물</li><li>내보내기 옵션: MP4 영상 · 자막 파일(SRT) · 오디오만 · 투명 자막 — 오늘은 MP4</li></ul>
+      <div class="tim" data-min="3"><span class="t">03:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
+    <ul><li>1분 영상은 보통 1분 안에 나옵니다. 무료는 구석에 브루 워터마크(라이트 플랜부터 제거)</li><li>폰으로 보내기: 구글 드라이브에 올리거나 카카오톡 "나에게 보내기"(PC 카톡 로그인 필요). 폰 브루 앱은 갤러리에 바로 저장 — 오늘 집에 가져가는 결과물</li><li>내보내기 옵션: MP4 영상 · 자막 파일(SRT) · 오디오만 · 투명 자막 — 오늘은 MP4</li><li><b>올리기 전에</b>: ① 유튜브는 <b>일부 공개</b>(링크 아는 사람만) ② 학생 얼굴·이름이 나오면 <b>초상권 동의</b> 확인 ③ 배경음악은 브루 무료 에셋처럼 출처가 분명한 것만</li></ul>
   </div>
   <div class="poll" data-poll="q3"></div>
 </section>
@@ -940,7 +952,7 @@ const POLLS=[
   {id:'q1',type:'quiz',q:'퀴즈 ① 둘 중 AI가 쓴 안내문은?',opts:['A','B','둘 다','둘 다 아님'],correct:2,why:'둘 다 AI가 썼습니다. 구분이 안 되니 검토가 중요합니다.'},
   {id:'q3',type:'quiz',q:'퀴즈 ② 세 회사 중 영상 생성이 무료인 곳은?',opts:['챗GPT(Sora)','제미나이(Omni)','클로드','없음'],correct:3,why:'셋 다 유료. 그래서 오늘은 조립(브루)으로 만들었습니다.'},
   {id:'q4',type:'quiz',q:'퀴즈 ③ 다음 중 AI에 넣어도 되는 것은?',opts:['학생 명단','공문 서식 예시','공무직 급여 내역','확정 안 된 예산안'],correct:1,why:'공개된 양식만. 개인정보와 미확정 내부 자료는 금지.'},
-  {id:'final',type:'survey',q:'내일 당장 써먹을 것 하나는?',opts:['ABA 프롬프트','엑셀(표 사진·함수·파일 분석)','hwpx 요약·안내문','브루로 영상','바이브코딩·커넥터']}
+  {id:'final',type:'survey',q:'내일 당장 써먹을 것 하나는?',opts:['ABA 프롬프트','엑셀(표 사진·함수·파일 분석)','hwpx 요약·안내문','브루로 영상 만들기·다듬기','바이브코딩·커넥터']}
 ];
 </script>
 <script>
@@ -1051,6 +1063,9 @@ const POLLS=[
     const long=lines.filter(x=>x.replace(/\s/g,'').length>20).length;
     ss.textContent=lines.length?`${lines.length}문장 (목표 6) · 20자 초과 ${long}개${lines.length===6&&!long?' — 통과, 브루로 가세요':''}`:'문장 수와 글자 수를 세어 20자 넘는 문장을 표시합니다.'};
 
+  // trim ring
+  const tboxes=[...document.querySelectorAll('#t1,#t2,#t3,#t4,#t5,#t6')],tring=document.getElementById('trimRing');
+  tboxes.forEach(c=>c.onchange=()=>{const p=Math.round(tboxes.filter(x=>x.checked).length/6*100);tring.style.setProperty('--p',p);tring.firstElementChild.textContent=p+'%'});
   // vrew ring
   const vboxes=[...document.querySelectorAll('#v1,#v2,#v3,#v4,#v5,#v6,#v7,#v8')],ring=document.getElementById('vrewRing');
   vboxes.forEach(c=>c.onchange=()=>{const p=Math.round(vboxes.filter(x=>x.checked).length/8*100);ring.style.setProperty('--p',p);ring.firstElementChild.textContent=p+'%'});
