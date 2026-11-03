@@ -104,6 +104,8 @@ body.handout .ptabrow{display:none}
 body.handout .ppane.off{display:flex}
 body.handout .ptitle{display:block}
 body.handout .ppane+.ppane{border-top:1px dashed var(--line);padding-top:10px}
+.terms td,.terms th{padding-top:5px;padding-bottom:5px}
+.terms td:first-child{white-space:nowrap}
 /* mission card */
 .mission{border:1.5px solid var(--acc);background:var(--paper);border-radius:8px;padding:0 0 14px;display:flex;flex-direction:column;gap:10px;overflow:hidden;box-shadow:0 12px 30px -20px var(--acc)}
 .mission>*{margin-inline:16px}
@@ -462,6 +464,30 @@ body.handout .counter{display:none}
 <!-- 6 -->
 <section class="slide" data-block="① 도입·트렌드 13:30–13:46">
   <span class="num">6</span>
+  <div class="head"><span class="eyebrow">용어 정리 · 같은 기능, 다른 이름</span><h2>이름은 달라도 하는 일은 같습니다</h2><span class="time">1분 · 왼쪽 열로 기억하세요</span></div>
+  <div class="tbl terms"><table>
+    <thead><tr><th>하는 일</th><th><i class="ico" data-ico="openai"></i>챗GPT</th><th><i class="ico" data-ico="gemini"></i>제미나이</th><th><i class="ico" data-ico="claude"></i>클로드</th></tr></thead>
+    <tbody>
+      <tr><td><b>업무별 방 — 파일·지침을 붙박이로</b></td><td>프로젝트</td><td>Gem · 노트북</td><td>프로젝트</td></tr>
+      <tr><td><b>내 비서 — 지침을 저장해 두고 재사용</b></td><td>GPT (맞춤형 GPT)</td><td>Gem</td><td>프로젝트 지침 · 스킬</td></tr>
+      <tr><td><b>옆 창에서 같이 고치는 문서·코드</b></td><td>캔버스</td><td>캔버스</td><td>아티팩트</td></tr>
+      <tr><td><b>오래 찾아보고 보고서로</b></td><td>심층 리서치</td><td>Deep Research</td><td>리서치 <span class="tag paid">유료</span></td></tr>
+      <tr><td><b>천천히 꼼꼼하게</b></td><td>생각하기 (Thinking)</td><td>생각 모드 (Thinking)</td><td>확장 사고</td></tr>
+      <tr><td><b>나를 기억</b></td><td>메모리</td><td>저장된 정보 · 개인 맥락</td><td>메모리</td></tr>
+      <tr><td><b>기록 안 남는 대화</b></td><td>임시 채팅</td><td>임시 채팅</td><td>시크릿 채팅</td></tr>
+      <tr><td><b>내 메일·드라이브 연결</b></td><td>앱 (구 커넥터)</td><td>앱 (@지메일·@드라이브)</td><td>커넥터</td></tr>
+      <tr><td><b>말로 대화</b></td><td>음성 모드</td><td>Gemini Live</td><td>음성 모드</td></tr>
+      <tr><td><b>그림 만들기</b></td><td>이미지 생성</td><td>이미지 생성 (나노 바나나)</td><td>없음</td></tr>
+      <tr><td><b>대신 클릭해 주기</b></td><td>에이전트 모드 <span class="tag paid">유료</span></td><td>에이전트 <span class="tag paid">유료</span></td><td>Chrome의 Claude <span class="tag paid">유료</span></td></tr>
+      <tr><td><b>내 대화 학습 끄기</b></td><td>설정 › 데이터 제어</td><td>Gemini 앱 활동 끄기</td><td>설정 › 개인정보 › 모델 개선</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">2026년 11월 기준 메뉴 이름입니다. 이름은 자주 바뀌니, 못 찾겠으면 AI에게 "<b>너한테 ○○ 같은 기능 있어? 어디 있어?</b>"라고 물어보세요. 유료 표시가 없는 것은 무료 계정에서도 (횟수 제한 안에서) 됩니다.</p>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-block="① 도입·트렌드 13:30–13:46">
+  <span class="num">7</span>
   <div class="head"><span class="eyebrow">세팅 미션</span><h2>세 탭 열고, 브루 한 번 실행</h2></div>
   <div class="mission">
     <div class="mhead"><h3>미션 0 · 세팅</h3><span class="tag free">무료</span>
@@ -477,9 +503,9 @@ body.handout .counter{display:none}
   </div>
 </section>
 
-<!-- 7 -->
+<!-- 8 -->
 <section class="slide" data-block="① 도입·트렌드 13:30–13:46">
-  <span class="num">7</span>
+  <span class="num">8</span>
   <div class="head"><span class="eyebrow">실습 전에 · 보안 3원칙</span><h2>오늘 AI에 넣지 않는 것</h2></div>
   <div class="cols" style="grid-template-columns:repeat(3,1fr)">
     <div class="card"><h3>1. 개인정보</h3><p>학생·학부모·직원의 이름, 연락처, 주민번호. 교사는 특히 <b>생기부 문구, 성적, 상담 기록</b>. 실습 파일은 전부 가상 데이터입니다.</p></div>
@@ -493,9 +519,9 @@ body.handout .counter{display:none}
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 9 -->
 <section class="slide" data-block="② 문서·업무 실습 13:46–14:19">
-  <span class="num">8</span>
+  <span class="num">9</span>
   <div class="head"><span class="eyebrow">올해의 프롬프트</span><h2>내가 쓰지 말고, AI에게 묻게 하기</h2></div>
   <div class="cols">
     <div class="card"><h3>① 어렵지 않습니다</h3><p>LLM은 어려워 보이지만 "내가 원하는 것"을 말로 명확히 하면 끝입니다. 사람에게 부탁하듯 쓰면 됩니다.</p></div>
@@ -516,9 +542,9 @@ body.handout .counter{display:none}
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 10 -->
 <section class="slide" data-block="② 문서·업무 실습 13:46–14:19">
-  <span class="num">9</span>
+  <span class="num">10</span>
   <div class="head"><span class="eyebrow">올해의 프롬프트 · 비교</span><h2>흔한 방식 vs 먼저 묻게 하기</h2></div>
   <div class="ba">
     <div class="card"><span class="eyebrow">흔한 방식</span>
@@ -532,9 +558,9 @@ body.handout .counter{display:none}
   </div>
 </section>
 
-<!-- 10 -->
+<!-- 11 -->
 <section class="slide" data-block="② 문서·업무 실습 13:46–14:19">
-  <span class="num">10</span>
+  <span class="num">11</span>
   <div class="head"><span class="eyebrow">퀴즈 ① · 폰으로 답하기</span><h2>둘 중 AI가 쓴 안내문은?</h2></div>
   <div class="cols" style="grid-template-columns:1fr 1fr 1.25fr">
     <div class="card"><span class="eyebrow">안내문 A</span><p>학부모님께. 학생 안전을 위해 11월 17일부터 28일까지 급식실 환기 설비 교체 공사를 실시합니다. 공사 기간 중 후문 통행이 제한되오니 정문을 이용하여 주시기 바랍니다. 문의: 행정실.</p></div>
@@ -544,9 +570,9 @@ body.handout .counter{display:none}
   <p class="note">구분이 안 된다는 게 핵심입니다. AI가 썼는지가 아니라 <b>내용이 맞는지</b>를 보는 눈이 오늘의 목표입니다.</p>
 </section>
 
-<!-- 11 -->
+<!-- 12 -->
 <section class="slide" data-block="② 문서·업무 실습 13:46–14:19">
-  <span class="num">11</span>
+  <span class="num">12</span>
   <div class="head"><span class="eyebrow">미션 1</span><h2>공문·안내문 초안, ABA로</h2><span class="time">챗GPT 또는 제미나이 · 끝나면 자기검증 한 줄</span></div>
   <div class="mission">
     <div class="mhead"><h3>미션 1 · 괄호에서 내 일에 가까운 주제 하나만 고르기</h3><span class="tag free">무료</span>
@@ -560,9 +586,9 @@ body.handout .counter{display:none}
   <p class="note">그 다음: 초안을 <b>범정부 오피스</b> 한글 플러그인 <b>G서식변신</b>에 넣으면 공문 서식으로 정렬(<a href="https://www.innovation.go.kr/" target="_blank" rel="noopener">혁신포털</a>, 교재 부록). 질문을 3개로 제한하는 이유: 제한이 없으면 열 개씩 묻습니다.</p>
 </section>
 
-<!-- 12 -->
+<!-- 13 -->
 <section class="slide" data-block="② 문서·업무 실습 13:46–14:19">
-  <span class="num">12</span>
+  <span class="num">13</span>
   <div class="head"><span class="eyebrow">미션 2-1</span><h2>표 사진을 엑셀로</h2></div>
   <div class="mission">
     <div class="mhead"><h3>미션 2-1 · 바탕화면 견적서 사진을 대화창에 끌어다 놓기</h3><span class="tag free">무료</span>
@@ -578,9 +604,9 @@ body.handout .counter{display:none}
   </div>
 </section>
 
-<!-- 13 -->
+<!-- 14 -->
 <section class="slide" data-block="② 문서·업무 실습 13:46–14:19">
-  <span class="num">13</span>
+  <span class="num">14</span>
   <div class="head"><span class="eyebrow">미션 2-2 · 엑셀 × AI</span><h2>엑셀에 AI 쓰는 세 가지 수준</h2><span class="time">1단계 지금 실습 · 2단계는 다음 장 · 3단계는 교재 부록 2</span></div>
   <div class="stages" style="grid-template-columns:repeat(3,1fr)">
     <div class="stage on"><b>1 · 함수 묻기</b><span>캡처 + "이 셀에 들어갈 함수"</span><small>지금 실습 · 무료</small></div>
@@ -595,9 +621,9 @@ body.handout .counter{display:none}
   </div>
 </section>
 
-<!-- 14 -->
+<!-- 15 -->
 <section class="slide" data-block="② 문서·업무 실습 13:46–14:19">
-  <span class="num">14</span>
+  <span class="num">15</span>
   <div class="head"><span class="eyebrow">미션 2-3 · 엑셀 × AI 2단계</span><h2>파일을 통째로 올리고 "정리해 줘"</h2><span class="time">제미나이(또는 클로드) 권장 — 챗GPT 무료는 파일 하루 3개 · 연수자료 폴더의 샘플 파일</span></div>
   <div class="mission">
     <div class="mhead"><h3>연수자료 › <b>물품대장_샘플.xlsx</b>를 대화창에 끌어다 놓고</h3><span class="tag free">무료 (업로드 한도 있음)</span>
@@ -611,9 +637,9 @@ body.handout .counter{display:none}
   </div>
 </section>
 
-<!-- 15 -->
+<!-- 16 -->
 <section class="slide" data-block="② 문서·업무 실습 13:46–14:19">
-  <span class="num">15</span>
+  <span class="num">16</span>
   <div class="head"><span class="eyebrow">미션 3-1</span><h2>한글 파일(hwpx), AI가 읽는다</h2><span class="time">챗GPT 또는 제미나이 · 고치는 건 다음 장</span></div>
   <div class="cols" style="grid-template-columns:1.2fr 1fr">
     <div class="card">
@@ -640,9 +666,9 @@ body.handout .counter{display:none}
   </div>
 </section>
 
-<!-- 16 -->
+<!-- 17 -->
 <section class="slide" data-block="② 문서·업무 실습 13:46–14:19">
-  <span class="num">16</span>
+  <span class="num">17</span>
   <div class="head"><span class="eyebrow">미션 3-2 · hwpx 받아서 답하기</span><h2>받은 공문으로 교직원 안내문까지</h2></div>
   <div class="mission">
     <div class="mhead"><h3>미션 3-1과 같은 대화방에서 이어서</h3><span class="tag free">무료</span>
@@ -657,9 +683,9 @@ body.handout .counter{display:none}
   <div class="demo" data-demo="hwpx" data-title="시연 — hwpx 읽기(공통) → 고쳐서 돌려받기(클로드)"></div>
 </section>
 
-<!-- 17 -->
+<!-- 18 -->
 <section class="slide" data-block="② 문서·업무 실습 13:46–14:19">
-  <span class="num">17</span>
+  <span class="num">18</span>
   <div class="head"><span class="eyebrow">10월 8일부터 무료</span><h2>클로드로 문서·슬라이드 바로 만들기</h2><span class="time"><span class="tag new">시간 없으면 시연만</span></span></div>
   <div class="card"><h3>미션 1의 안내문을 클로드에 붙이고 <span class="tag demo">시연</span> <span class="tag new">Docs · Slides · Design</span></h3>
     <pre class="prompt">위 안내문 내용으로 학부모 설명회용 슬라이드 3장을 만들어 줘. 1장 제목·일시, 2장 프로그램 표, 3장 신청 방법·문의처. 글자는 크게, 한 장에 글 세 줄 이내.</pre>
@@ -671,9 +697,9 @@ body.handout .counter{display:none}
   </div>
 </section>
 
-<!-- 18 -->
+<!-- 19 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
-  <span class="num">18</span>
+  <span class="num">19</span>
   <div class="head"><span class="eyebrow">AI 영상은 두 가지</span><h2>AI로 <b>만드는</b> 영상, 찍은 영상을 AI로 <b>다듬기</b></h2></div>
   <div class="tbl"><table>
     <thead><tr><th>서비스</th><th>영상 생성</th><th>조건</th></tr></thead>
@@ -692,9 +718,9 @@ body.handout .counter{display:none}
   </div>
 </section>
 
-<!-- 19 -->
+<!-- 20 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
-  <span class="num">19</span>
+  <span class="num">20</span>
   <div class="head"><span class="eyebrow">강사 시연 · 클로드 또는 제미나이 캔버스 무료</span><h2>말로 시키면 AI가 코드로 그려 주는 영상</h2><span class="time">시연 2분 · 요즘 인터넷에서 가장 화제인 방식</span></div>
   <div class="mission ptabs">
     <div class="mhead"><h3>프롬프트 6개 — 골라서 복사, 대괄호 안만 바꾸기</h3><span class="tag free">1~5 무료</span></div>
@@ -760,9 +786,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   </div>
 </section>
 
-<!-- 20 -->
+<!-- 21 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
-  <span class="num">20</span>
+  <span class="num">21</span>
   <div class="head"><span class="eyebrow">지금부터 18분</span><h2>영상 4단계: 만들고, 다듬고, 올리기</h2></div>
   <div class="stages" id="stages" style="grid-template-columns:repeat(4,1fr)">
     <button class="stage on"><b>1 · 대본</b><span>챗GPT · 6문장</span><small>3분</small></button>
@@ -773,9 +799,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   <p class="lead">앞의 둘은 <b>AI가 만드는 영상</b>, 셋째는 <b>찍은 영상을 AI로 다듬는</b> 연습입니다. 끝까지 가는 게 중요합니다.</p>
 </section>
 
-<!-- 21 -->
+<!-- 22 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
-  <span class="num">21</span>
+  <span class="num">22</span>
   <div class="head"><span class="eyebrow">미션 5-1 · 대본</span><h2>6문장 내레이션</h2><span class="time">챗GPT 또는 제미나이, 새 대화방</span></div>
   <div class="mission">
     <div class="mhead"><h3>괄호 안만 바꾸기 — 동네 이름과 자랑거리</h3><span class="tag free">무료</span>
@@ -789,9 +815,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   <div class="demo" data-demo="script" data-title="시연 — 6문장 대본이 나오는 모습"></div>
 </section>
 
-<!-- 22 -->
+<!-- 23 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
-  <span class="num">22</span>
+  <span class="num">23</span>
   <div class="head"><span class="eyebrow">미션 5-1 · 결과 확인</span><h2>6문장, 20자 — 통과했나요?</h2><span class="time">대본 받은 분부터 · 통과하면 바로 브루로</span></div>
   <div class="card check6">
     <h3>결과 검사기: AI가 준 6문장을 여기 붙여 보세요</h3>
@@ -801,9 +827,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   </div>
 </section>
 
-<!-- 23 -->
+<!-- 24 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
-  <span class="num">23</span>
+  <span class="num">24</span>
   <div class="head"><span class="eyebrow">미션 5-2 · AI로 만들기</span><h2>브루(Vrew)에서 목소리·그림·자막 한 번에</h2></div>
   <div class="mission">
     <div class="mhead"><h3>순서대로 — 화면 왼쪽 위부터</h3><span class="tag free">무료 월 200크레딧 · 1분 영상 ≈ 10크레딧</span><span class="ring" id="vrewRing" style="--p:0"><span>0%</span></span>
@@ -827,9 +853,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   </div>
 </section>
 
-<!-- 24 -->
+<!-- 25 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
-  <span class="num">24</span>
+  <span class="num">25</span>
   <div class="head"><span class="eyebrow">미션 5-3 · 찍은 영상 다듬기</span><h2>시로 샘플 영상의 흠 다섯 개 고치기</h2><span class="time">모두 같은 영상 · 얼굴 없음 · 흠은 일부러 심어 둠</span></div>
   <div class="mission">
     <div class="mhead"><h3>연수자료 폴더 <b>시로_샘플.mp4</b> (폰은 아래 링크)</h3><span class="tag free">무료</span><span class="ring" id="trimRing" style="--p:0"><span>0%</span></span>
@@ -850,9 +876,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   </div>
 </section>
 
-<!-- 25 -->
+<!-- 26 -->
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
-  <span class="num">25</span>
+  <span class="num">26</span>
   <div class="head"><span class="eyebrow">미션 5-4 · 내보내기·올리기</span><h2>720p로 내보내고, 올리기 전에 세 가지</h2></div>
   <div class="mission">
     <div class="mhead"><h3>오른쪽 위 내보내기 → 영상 파일 → 720p</h3><span class="tag free">무료는 워터마크 + 720p</span>
@@ -862,9 +888,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   <div class="poll" data-poll="q3"></div>
 </section>
 
-<!-- 26 -->
+<!-- 27 -->
 <section class="slide" data-block="④ 바이브코딩·행동하는 AI·보안 14:42–15:00">
-  <span class="num">26</span>
+  <span class="num">27</span>
   <div class="head"><span class="eyebrow">강사 시연 · 클로드 무료</span><h2>바이브코딩: 말로 만드는 업무 도구</h2></div>
   <pre class="prompt">우리 학교 급식 알레르기 조회표를 한 화면짜리 웹페이지로 만들어 줘. 학년·반을 고르면 알레르기 항목별 학생 수가 보이고, 항목을 누르면 대체 식단 안내가 나오게. 데이터는 가상으로 채워 줘. 큰 글씨, 폰에서도 보이게.</pre>
   <div class="demo" data-demo="vibe" data-title="시연 — 말 한 번에 조회표가 생기는 모습 (클로드)"></div>
@@ -874,9 +900,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   </div>
 </section>
 
-<!-- 27 -->
+<!-- 28 -->
 <section class="slide studio" data-block="④ 바이브코딩·행동하는 AI·보안 14:42–15:00">
-  <span class="num">27</span>
+  <span class="num">28</span>
   <div class="head"><span class="eyebrow">강사가 말로 만든 것들 · 이시로스튜디오</span><h2>코드 한 줄 안 쓰고 만든 사이트와 앱들</h2></div>
   <div class="cols" style="grid-template-columns:200px 1fr">
     <div class="card" style="align-items:center;text-align:center">
@@ -891,12 +917,12 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
       <div class="card"><h3>전북 학교 통합지도 <span class="tag free">업무용</span></h3><p>전북 14개 시군 유치원·초·중·고·특수학교 1,126곳을 지도 하나로. 농촌유학·특수학급 표시, 시군별 보기. 공개 자료만 써서 키·계정이 없음. <b>dooholee96-code.github.io/jeonbuk-map</b></p></div>
     </div>
   </div>
-  <p class="note">전부 26장과 같은 방식입니다 — 원하는 것을 한 문단으로 적고, 결과를 보고 "여기를 이렇게 고쳐 줘"를 반복. 고치고 싶은 곳을 말로 가리키면 됩니다.</p>
+  <p class="note">전부 27장과 같은 방식입니다 — 원하는 것을 한 문단으로 적고, 결과를 보고 "여기를 이렇게 고쳐 줘"를 반복. 고치고 싶은 곳을 말로 가리키면 됩니다.</p>
 </section>
 
-<!-- 28 -->
+<!-- 29 -->
 <section class="slide" data-block="④ 바이브코딩·행동하는 AI·보안 14:42–15:00">
-  <span class="num">28</span>
+  <span class="num">29</span>
   <div class="head"><span class="eyebrow">바이브코딩 · 원칙</span><h2>순서는 늘 같습니다</h2></div>
   <div class="cols" style="grid-template-columns:repeat(3,1fr)">
     <div class="card"><h3>어디까지 가나</h3><p>영국 물리 교과서 10개 단원을 한 사람이 AI로 3D 실험 학습 페이지로 만들어 무료 공개(Every Joule, 2026.10). 교과서도 말로 만드는 시대.</p></div>
@@ -905,9 +931,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   </div>
 </section>
 
-<!-- 29 -->
+<!-- 30 -->
 <section class="slide" data-block="④ 바이브코딩·행동하는 AI·보안 14:42–15:00">
-  <span class="num">29</span>
+  <span class="num">30</span>
   <div class="head"><span class="eyebrow">지난 두 달의 공통점</span><h2>답하는 AI에서 행동하는 AI로</h2></div>
   <div class="usb" id="usb">
     <div class="ai"><div class="box"><b>AI</b> (챗GPT · 제미나이 · 클로드)</div><div class="box">오른쪽 앱을 하나씩 눌러 꽂아 보세요</div></div>
@@ -924,9 +950,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   <p class="note"><b>MCP = AI에 꽂는 USB 규격.</b> 앱에서는 "커넥터"라는 이름으로 보입니다. 10/22 "스킬"(AI에게 주는 업무 매뉴얼 규격)도 리눅스재단 산하 표준이 됐습니다. USB가 도구 연결이면 스킬은 업무 지침서.</p>
 </section>
 
-<!-- 30 -->
+<!-- 31 -->
 <section class="slide paid" data-block="④ 바이브코딩·행동하는 AI·보안 14:42–15:00">
-  <span class="num">30</span>
+  <span class="num">31</span>
   <div class="head"><span class="eyebrow">강사 시연</span><h2>클로드 커넥터 — 한 문장으로 네 가지 일</h2><span class="time"><span class="tag paid">👑 Claude Pro</span> · 개인 구글 계정</span></div>
   <pre class="prompt">내 드라이브에서 학교회계 집행 지침 파일을 찾아서, 11월에 학교가 제출해야 하는 서류와 마감일을 표로 정리해 줘. 그리고 각 마감일 3일 전에 내 구글 캘린더에 알림 일정을 만들어 줘.</pre>
   <div class="demo" data-demo="mcp" data-title="시연 — 한 문장, 네 가지 행동 (클로드 + 커넥터)"></div>
@@ -937,9 +963,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   </div>
 </section>
 
-<!-- 31 -->
+<!-- 32 -->
 <section class="slide" data-block="④ 바이브코딩·행동하는 AI·보안 14:42–15:00">
-  <span class="num">31</span>
+  <span class="num">32</span>
   <div class="head"><span class="eyebrow">행동하는 AI의 그림자</span><h2>업무 계정에는 아직 연결하지 마세요</h2></div>
   <div class="cols" style="grid-template-columns:1fr 1fr">
     <div class="card"><h3>큰 회사도 예외 없음</h3><p>2026년 10월, 클로드 개발사가 공개 보고: 테스트 중 AI 모델이 외부 기관·미국 정부 사이트에 시키지 않은 제출(경찰 제보 등)을 했고, 이후 테스트 단계 인터넷 접근을 제한.</p></div>
@@ -947,9 +973,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   </div>
 </section>
 
-<!-- 32 -->
+<!-- 33 -->
 <section class="slide" data-block="④ 바이브코딩·행동하는 AI·보안 14:42–15:00">
-  <span class="num">32</span>
+  <span class="num">33</span>
   <div class="head"><span class="eyebrow">보안 3원칙 + 1 · 퀴즈 ③</span><h2>다음 중 AI에 넣어도 되는 것은?</h2><span class="time">학습데이터 끄기는 세 서비스 모두 있음(교재 부록)</span></div>
   <div class="cols" style="grid-template-columns:1fr 1.1fr">
     <div class="poll" data-poll="q4"></div>
@@ -967,9 +993,9 @@ Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
   </div>
 </section>
 
-<!-- 33 -->
+<!-- 34 -->
 <section class="slide" data-block="④ 바이브코딩·행동하는 AI·보안 14:42–15:00">
-  <span class="num">33</span>
+  <span class="num">34</span>
   <div class="head"><span class="eyebrow">마무리 · 내 업무로</span><h2>내일 아침 시킬 일 하나, 요청문 한 줄</h2></div>
   <div class="mission">
     <div class="mhead"><h3>마지막 실습 · 내 업무 하나를 골라 요청문을 써서 폰 메모장에 저장</h3><span class="tag free">무료</span>
