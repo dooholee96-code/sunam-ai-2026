@@ -235,6 +235,7 @@ h3 .ico,td .ico{vertical-align:-.3em}
 .poll .foot{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:0 14px 12px;font-size:.82rem;color:var(--ink2)}
 .poll .foot .dot{width:8px;height:8px;border-radius:50%;background:var(--line);display:inline-block}
 .poll.live .foot .dot{background:var(--free);box-shadow:0 0 0 3px var(--free-soft)}
+.poll .foot .b-resetall{border:1px solid var(--line);background:transparent;color:var(--ink2);border-radius:999px;padding:2px 10px;font-size:.75rem}.poll .foot .b-resetall[disabled]{opacity:.45}
 .poll .foot .joinqr{margin-left:auto;display:flex;align-items:center;gap:8px}
 .poll .foot .joinqr div{width:64px;height:64px;background:#fff;padding:3px;border:1px solid var(--line);border-radius:4px}
 .poll .foot .joinqr img,.poll .foot .joinqr canvas{width:58px!important;height:58px!important;display:block}
@@ -755,10 +756,10 @@ body.handout .counter{display:none}
       <div class="tim" data-min="6"><span class="t">06:00</span><button class="start">시작</button><button class="reset">초기화</button></div></div>
     <ol class="checks" style="padding-left:0">
       <li><input type="checkbox" id="t1"><label for="t1">브루 <b>새로 만들기</b> → <b>PC에서 비디오·오디오 불러오기</b> → 시로_샘플.mp4 → 언어 한국어 → 말소리가 자막으로 자동 정리</label></li>
-      <li><input type="checkbox" id="t2"><label for="t2">흠 1 · 앞 6초, 목록 화면만 나오는 클립 → 선택하고 <b>삭제</b></label></li>
-      <li><input type="checkbox" id="t3"><label for="t3">흠 2 · 중간에 화면이 멈춘 6초 → 위 메뉴 <b>무음 구간 줄이기</b></label></li>
+      <li><input type="checkbox" id="t2"><label for="t2">흠 1 · 쓸데없는 앞부분 → 그 클립 선택하고 <b>삭제</b></label></li>
+      <li><input type="checkbox" id="t3"><label for="t3">흠 2 · 말 없이 비는 구간 → 위 메뉴 <b>무음 구간 줄이기</b></label></li>
       <li><input type="checkbox" id="t4"><label for="t4">흠 3 · "음… 그러니까…" 군말 → 그 자막 글자를 지우면 <b>영상도 같이 잘림</b></label></li>
-      <li><input type="checkbox" id="t5"><label for="t5">흠 4 · 잘못 받아 적힌 자막 하나 → 클릭해서 <b>V60</b>으로 고치기</label></li>
+      <li><input type="checkbox" id="t5"><label for="t5">흠 4 · 잘못 받아 적힌 자막 → 클릭해서 <b>바르게 고치기</b></label></li>
       <li><input type="checkbox" id="t6"><label for="t6">흠 5 · 소리가 심심함 → <b>배경음악</b> 무료 에셋 하나, 볼륨 낮게</label></li>
     </ol>
   </div>
@@ -1181,6 +1182,7 @@ const POLLS=[
   const sb=ref;
   const joinUrl=location.href.split('#')[0].split('?')[0]+'?join';
   let state={current:null,reveal:false};let counts={};let local={};
+  let mine={};try{mine=JSON.parse(localStorage.getItem('live_mine')||'{}')}catch(e){}
   const byId=id=>POLLS.find(p=>p.id===id);
 
   async function setState(patch){
@@ -1189,9 +1191,27 @@ const POLLS=[
   }
   if(sb){
     sb('answers').on('value',snap=>{const v=snap.val()||{};const c={};for(const poll in v){c[poll]={};for(const u in v[poll]){const ch=v[poll][u];c[poll][ch]=(c[poll][ch]||0)+1}}counts=c;renderAll()});
-    sb('state').on('value',snap=>{const v=snap.val()||{};state={current:v.current||null,reveal:!!v.reveal};renderAll();renderJoin()});
+    sb('state').on('value',snap=>{const v=snap.val()||{};state={current:v.current||null,reveal:!!v.reveal};
+      if(v.reset_at){let seen=0;try{seen=+localStorage.getItem('live_reset_seen')||0}catch(e){}
+        if(v.reset_at>seen){(v.reset_ids||'').split(',').forEach(id=>{delete mine[id]});try{localStorage.setItem('live_mine',JSON.stringify(mine));localStorage.setItem('live_reset_seen',String(v.reset_at))}catch(e){}}}
+      renderAll();renderJoin()});
   }
 
+  // 응답 초기화: 리허설·테스트 답을 지운다. 규칙상 answers/$poll/$uid 단위로만 쓸 수 있어서 uid마다 null을 보낸다.
+  async function resetPolls(ids){
+    const all=ids.length>1;
+    const n=ids.reduce((a,id)=>a+Object.values((online?counts[id]:local[id])||{}).reduce((x,y)=>x+y,0),0);
+    if(!confirm((all?'모든 질문의 응답 ':'이 질문의 응답 ')+n+'개를 지울까요? 되돌릴 수 없습니다.'))return;
+    if(!online){ids.forEach(id=>{local[id]={}});blocks.forEach(el=>{if(ids.includes(el.dataset.poll))delete el.dataset.revealed});renderAll();return}
+    try{
+      const snap=await sb('answers').once('value');const v=snap.val()||{};const upd={};
+      ids.forEach(id=>{for(const u in (v[id]||{}))upd[id+'/'+u]=null});
+      if(Object.keys(upd).length)await sb('answers').update(upd);
+      const patch={reset_at:Date.now(),reset_ids:ids.join(','),updated_at:Date.now()};
+      if(all||ids.includes(state.current)){patch.current=null;patch.reveal=false}
+      await sb('state').update(patch);
+    }catch(e){alert('초기화 실패: '+(e&&e.message||e))}
+  }
   const blocks=[...document.querySelectorAll('.poll')];
   function renderAll(){blocks.forEach(renderBlock)}
   function renderBlock(el){
@@ -1200,15 +1220,18 @@ const POLLS=[
     const open=state.current===p.id;const rev=(state.reveal&&open)||el.dataset.revealed==='1';
     el.classList.toggle('live',online&&open);
     if(!el.dataset.built){
-      el.innerHTML='<div class="ph"><h3></h3><span class="st"></span><button class="b-open"></button><button class="b-rev">정답 공개</button></div><div class="opts"></div><div class="foot"><span class="dot"></span><span class="ft"></span><span class="joinqr"><div></div><span>폰 참여</span></span></div>';
+      el.innerHTML='<div class="ph"><h3></h3><span class="st"></span><button class="b-open"></button><button class="b-rev">정답 공개</button><button class="b-reset" title="이 질문의 응답을 모두 지웁니다">↺ 초기화</button></div><div class="opts"></div><div class="foot"><span class="dot"></span><span class="ft"></span><button class="b-resetall" title="모든 설문·퀴즈 응답을 지웁니다">모든 질문 응답 초기화</button><span class="joinqr"><div></div><span>폰 참여</span></span></div>';
       el.dataset.built='1';
       const qr=el.querySelector('.joinqr div');if(window.QRCode){try{new QRCode(qr,{text:location.href.split('#')[0].split('?')[0],width:58,height:58})}catch(e){}}
       el.querySelector('.b-open').onclick=()=>{if(state.current===p.id)setState({current:null,reveal:false});else setState({current:p.id,reveal:false})};
       el.querySelector('.b-rev').onclick=()=>{if(online)setState({reveal:true});else{el.dataset.revealed='1';renderBlock(el)}};
+      el.querySelector('.b-reset').onclick=()=>resetPolls([p.id]);
+      el.querySelector('.b-resetall').onclick=()=>resetPolls(POLLS.map(x=>x.id));
       el.querySelector('.opts').innerHTML=p.opts.map((o,i)=>'<button class="o" data-i="'+i+'"><i></i><span class="k">'+K[i]+'</span><span>'+o+'</span><span class="n"></span></button>').join('');
       el.querySelectorAll('.o').forEach(b=>b.onclick=()=>{if(online)return;local[p.id]=local[p.id]||{};local[p.id][b.dataset.i]=(local[p.id][b.dataset.i]||0)+1;renderBlock(el)});
     }
     el.querySelector('h3').textContent=p.q;
+    el.querySelector('.b-reset').disabled=!total;
     el.querySelector('.st').textContent=total?total+'명 응답':'';
     const bo=el.querySelector('.b-open');bo.textContent=open?'■ 닫기':'▶ 열기';bo.classList.toggle('primary',!open);bo.disabled=!online;
     const br=el.querySelector('.b-rev');br.hidden=p.type!=='quiz';br.disabled=rev;
@@ -1222,7 +1245,6 @@ const POLLS=[
   renderAll();
 
   let uid=null;try{uid=localStorage.getItem('live_uid');if(!uid){uid=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('live_uid',uid)}}catch(e){uid='u'+Math.random().toString(36).slice(2)}
-  let mine={};try{mine=JSON.parse(localStorage.getItem('live_mine')||'{}')}catch(e){}
   const livebar=document.getElementById('livebar');
   const jq=JOIN?document.getElementById('jq'):document.getElementById('lbq'),jmsg=JOIN?document.getElementById('jmsg'):document.getElementById('lbmsg');
   function renderJoin(){
