@@ -93,6 +93,17 @@ body.free-only .paid{opacity:.3;filter:grayscale(1);position:relative}
 body.free-only .paid::after{content:"유료";position:absolute;top:6px;right:8px;font-size:.7rem;color:var(--stamp);font-weight:700}
 body.free-only .tag.paid{opacity:1;filter:none}
 
+.ptabrow{display:flex;flex-wrap:wrap;gap:6px}
+.ptab{border:1px solid var(--line);background:var(--paper2);color:var(--ink);border-radius:4px;padding:5px 10px;font-size:.84rem;font-weight:600}
+.ptab.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.ptab:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.ppane{display:flex;flex-direction:column;gap:8px}
+.ppane.off{display:none}
+.ptitle{display:none;margin:0;font-size:.95rem}
+body.handout .ptabrow{display:none}
+body.handout .ppane.off{display:flex}
+body.handout .ptitle{display:block}
+body.handout .ppane+.ppane{border-top:1px dashed var(--line);padding-top:10px}
 /* mission card */
 .mission{border:1.5px solid var(--acc);background:var(--paper);border-radius:8px;padding:0 0 14px;display:flex;flex-direction:column;gap:10px;overflow:hidden;box-shadow:0 12px 30px -20px var(--acc)}
 .mission>*{margin-inline:16px}
@@ -685,17 +696,65 @@ body.handout .counter{display:none}
 <section class="slide" data-block="③ AI 영상 제작 14:19–14:42">
   <span class="num">19</span>
   <div class="head"><span class="eyebrow">강사 시연 · 클로드 또는 제미나이 캔버스 무료</span><h2>말로 시키면 AI가 코드로 그려 주는 영상</h2><span class="time">시연 2분 · 요즘 인터넷에서 가장 화제인 방식</span></div>
-  <div class="mission">
-    <div class="mhead"><h3>"만약에…" 해설 애니메이션 — 주제는 여러분이 정해 주세요</h3><span class="tag free">무료</span></div>
-    <pre class="prompt">만약에 [달이 지금보다 두 배 가까워진다면]? 을 주제로 60초짜리 해설 애니메이션을 HTML 파일 하나로 만들어 줘.
+  <div class="mission ptabs">
+    <div class="mhead"><h3>프롬프트 6개 — 골라서 복사, 대괄호 안만 바꾸기</h3><span class="tag free">1~5 무료</span></div>
+    <div class="ptabrow" role="tablist" aria-label="영상 프롬프트"><button class="ptab on" role="tab" aria-selected="true" data-i="0">1 만약에…</button><button class="ptab" role="tab" aria-selected="false" data-i="1">2 행사 카운트다운</button><button class="ptab" role="tab" aria-selected="false" data-i="2">3 교과 개념 1분</button><button class="ptab" role="tab" aria-selected="false" data-i="3">4 숫자로 보는 학교</button><button class="ptab" role="tab" aria-selected="false" data-i="4">5 그림책 + 낭독</button><button class="ptab" role="tab" aria-selected="false" data-i="5">6 실사 장면 (유료)</button></div>
+    <div class="ppane" data-i="0">
+      <h4 class="ptitle">1 만약에… <span class="tag free">클로드·제미나이 캔버스</span></h4>
+      <pre class="prompt">만약에 [달이 지금보다 두 배 가까워진다면]? 을 주제로 60초짜리 해설 애니메이션을 HTML 파일 하나로 만들어 줘.
 - 화면 16:9, 어두운 남색 배경에 납작한 도형과 둥근 선, 파스텔 강조색 3개. 사람은 동그란 머리의 간단한 캐릭터로.
 - 장면 7개, 각 7~10초: ① 사건이 일어나는 순간 ② 크게 줌아웃해 규모 보여 주기 ③ "당신"이 아침에 겪는 일 ④ 결과 세 가지(숫자로) ⑤ 웃긴 한 컷 ⑥ 처음 장면으로 돌아오기 ⑦ 제목 카드.
 - 장면마다 화면 아래에 내레이션 한 문장을 큰 한글 자막으로. 시작 전에 내레이션 7문장을 먼저 보여 주고, 내가 좋다고 하면 만들어.
 - 재생 버튼을 누르면 끝까지 자동으로 흐르고, 과학적으로 틀린 내용은 넣지 마.</pre>
-    <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">주제 예: 지구가 멈춘다면 · 모든 개미를 한 저울에 올리면 · 우리 학교가 달에 있다면. 잘 되는 프롬프트의 공통점은 <b>길이·장면별 초·화면 문구·색·끝 장면을 숫자로 정하기</b>입니다.</span></div>
+      <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">주제 예: 지구가 멈춘다면 · 모든 개미를 한 저울에 올리면 · 우리 학교가 달에 있다면. 마지막 줄이 학교용 안전장치입니다.</span></div>
+    </div>
+    <div class="ppane off" data-i="1">
+      <h4 class="ptitle">2 행사 카운트다운 <span class="tag free">클로드·제미나이 캔버스</span></h4>
+      <pre class="prompt">[수남초 학예회] 홍보용 30초 모션 그래픽을 HTML 파일 하나로 만들어 줘.
+- 세로 9:16, 밝고 통통 튀는 느낌, 주황·하늘색·흰색.
+- 0~3초: "두구두구" 큰 글자가 튀어나오며 등장
+- 3~12초: "D-7"에서 "D-DAY"까지 숫자가 넘어가며 색종이·별이 터짐
+- 12~24초: 프로그램 세 개가 카드로 하나씩 등장 [합창, 연극, 밴드]
+- 24~30초: 날짜·장소 [11월 20일(금) 10시 · 강당]와 "보러 오세요!"
+- 모든 글자는 폰에서도 읽히게 크게, 재생 버튼 하나로 끝까지.</pre>
+      <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">학예회·운동회 홍보로 내일 바로 씁니다. 세로라서 폰·학급 단톡방에 그대로.</span></div>
+    </div>
+    <div class="ppane off" data-i="2">
+      <h4 class="ptitle">3 교과 개념 1분 <span class="tag free">클로드·제미나이 캔버스</span></h4>
+      <pre class="prompt">초등 [4학년 과학 '물의 여행'(물의 순환)]을 1분짜리 애니메이션으로 HTML 파일 하나에 만들어 줘.
+- 주인공은 물방울 캐릭터 하나. 바다 → 증발 → 구름 → 비 → 강 → 바다로 돌아오는 여행 6장면, 각 10초.
+- 장면마다 용어 하나를 크게 띄우고, 아래에 4학년이 읽을 수 있는 한 문장 설명.
+- 장면 사이는 부드럽게, 끝에는 "물방울은 지금 어디에 있을까?" 질문으로 멈춤.
+- 스페이스바로 일시정지 되게(수업 중 멈춰서 설명하려고).</pre>
+      <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">스페이스바 일시정지가 수업용 핵심입니다. 학년·단원만 바꾸면 다른 교과도 됩니다.</span></div>
+    </div>
+    <div class="ppane off" data-i="3">
+      <h4 class="ptitle">4 숫자로 보는 학교 <span class="tag free">클로드·제미나이 캔버스</span></h4>
+      <pre class="prompt">아래 숫자로 "숫자로 보는 우리 학교 2026" 40초 애니메이션을 HTML 파일 하나로 만들어 줘.
+[학생 312명, 도서관 대출 4,820권, 방과후 강좌 18개, 현장체험 9회, 급식 잔반 작년보다 12% 감소]
+- 숫자 하나에 장면 하나. 숫자가 0에서 올라가는 카운터 + 그 숫자를 비유하는 그림(예: 책 4,820권을 쌓으면 몇 층 건물?).
+- 끝에 "함께 만든 숫자입니다" 한 줄.
+- 비유 계산은 화면 구석에 작게 적어 줘(내가 검증할 수 있게).</pre>
+      <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">숫자는 가상입니다. 실제 숫자를 넣어도 개인정보는 빼고, 비유 계산은 <b>내가 검증</b>합니다.</span></div>
+    </div>
+    <div class="ppane off" data-i="4">
+      <h4 class="ptitle">5 그림책 + 낭독 <span class="tag free">제미나이 스토리북</span></h4>
+      <pre class="prompt">스토리북을 만들어 줘. [초등 2학년]이 읽을 10쪽 그림책.
+주인공은 커피를 좋아하는 아기 토끼. 주제는 [처음으로 학교에 간 날, 떨리는 마음을 친구에게 말하기].
+그림은 따뜻한 수채화, 문장은 쪽마다 두 문장 이내, 마지막 쪽은 읽는 아이에게 던지는 질문 하나.</pre>
+      <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">제미나이에서 그림이 든 10쪽 그림책을 만들고 소리 내어 읽어 줍니다. 화면 녹화하면 2~3분 영상이 됩니다.</span></div>
+    </div>
+    <div class="ppane off" data-i="5">
+      <h4 class="ptitle">6 실사 장면 (유료) <span class="tag paid">Veo·Sora 유료 · 시연만</span></h4>
+      <pre class="prompt">A small white rabbit wearing a tiny apron pours hot water from a gooseneck kettle into a pour-over dripper on a wooden counter, early morning light from a window, steam rising.
+Camera: slow push-in from a low angle, shallow depth of field, 35mm.
+The rabbit looks at the camera and whispers in Korean: "천천히, 가는 물줄기로."
+Sound: soft kettle pouring, birds outside, quiet acoustic guitar.</pre>
+      <div class="mtools"><button class="copy">프롬프트 복사</button><span class="note">피사체·카메라·조명·대사·소리를 한 문단에. 영어가 더 안정적이고 대사만 한국어로. 한 번에 8~10초라 길면 장면을 나눠 잇습니다.</span></div>
+    </div>
   </div>
   <div class="cols" style="grid-template-columns:repeat(3,1fr)">
-    <div class="card"><h3>학교에서는 이렇게</h3><p><b>행사 카운트다운</b>(D-7 → D-DAY, 프로그램 카드) · <b>교과 개념 1분</b>(물방울의 여행, 스페이스바로 멈춤) · <b>숫자로 보는 우리 학교</b>(숫자가 올라가는 막대).</p></div>
+    <div class="card"><h3>어느 걸 고를까</h3><p><b>1</b> 흥미 끌기 · <b>2</b> 행사 홍보 · <b>3</b> 수업 · <b>4</b> 회의·설명회 · <b>5</b> 그림책 낭독 · <b>6</b> 실사(유료). 공통 비결: <b>길이·장면별 초·화면 문구·색을 숫자로</b>.</p></div>
     <div class="card"><h3>영상으로 만들기</h3><p>재생하고 <b>윈도우+Shift+R</b>(캡처 도구 녹화) 또는 <b>윈도우+Alt+R</b>(게임 바)로 찍기 → 브루에 넣으면 AI 목소리·자막까지. 길게 만들려면 1분짜리 여러 편을 이어 붙이기.</p></div>
     <div class="card"><h3>강점과 한계</h3><p>무료, 화면 속 한글이 안 깨지고, "두 번째 장면 더 천천히"처럼 말로 고칩니다. 사람·실사 장면은 못 만듭니다 — 그건 유료 영상 생성의 몫.</p></div>
   </div>
@@ -1032,10 +1091,16 @@ const POLLS=[
   const todayBtn=document.getElementById('todayBtn');
   if(todayBtn)todayBtn.onclick=()=>{const on=todayBtn.getAttribute('aria-pressed')!=='true';todayBtn.setAttribute('aria-pressed',on);document.querySelectorAll('#ranktbl tbody tr').forEach(r=>r.classList.toggle('dim',on&&!r.dataset.today))};
 
+  // prompt tabs
+  document.querySelectorAll('.ptabs').forEach(box=>{
+    const tabs=[...box.querySelectorAll('.ptab')],panes=[...box.querySelectorAll('.ppane')];
+    tabs.forEach(t=>t.onclick=()=>{tabs.forEach(x=>{const on=x===t;x.classList.toggle('on',on);x.setAttribute('aria-selected',on)});panes.forEach(p=>p.classList.toggle('off',p.dataset.i!==t.dataset.i))});
+  });
+
   // copy
   document.querySelectorAll('.copy').forEach(btn=>{
     btn.onclick=()=>{
-      const pre=btn.closest('.mission,.slide').querySelector('pre.prompt');const txt=pre.textContent;
+      const pre=btn.closest('.ppane,.mission,.slide').querySelector('pre.prompt');const txt=pre.textContent;
       const done=()=>{btn.textContent='복사됨';btn.classList.add('done');setTimeout(()=>{btn.textContent='프롬프트 복사';btn.classList.remove('done')},1800)};
       const fallback=()=>{const r=document.createRange();r.selectNodeContents(pre);const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='선택됨 — Ctrl+C'};
       if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback)}else fallback();
